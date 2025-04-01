@@ -1,8 +1,5 @@
 import React from 'react'
 
-import Hero from './hero';
-import CarMainContent from './Car_MainContent';
-import ContactForm from './Contactform';
 import Navbar from '../components/Navbar';
 import Footer from './footer';
 import LuxuryCarSearch from './Car_MainContent';
