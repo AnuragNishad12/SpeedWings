@@ -275,7 +275,7 @@ export default function LuxuryTransportSelector() {
                       </div>
                       
                       <a
-                        href={`/#/${selected.path}`}
+                        href={`#${selected.path}`}
                         className="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-opacity-90 text-purple-900 rounded-xl font-medium transition-all transform hover:scale-[1.03] active:scale-[0.97]"
                       >
                         Reserve Now
