@@ -11,7 +11,7 @@ const options = [
     description: "Experience unparalleled luxury and efficiency with our premium private jet services.",
     features: ["Personalized flight plans", "Gourmet catering", "Global access to 5,000+ airports"],
     price: "From $15,000 per flight",
-    path: "/p",
+    path: "/#/p",
     icon: "✈️"
   },
   {
@@ -22,7 +22,7 @@ const options = [
     description: "Fast and convenient helicopter services for city transport and exclusive aerial tours.",
     features: ["Door-to-door service", "No traffic delays", "Breathtaking city views"],
     price: "From $3,500 per hour",
-    path: "/helicopter",
+    path: "/#/helicopter",
     icon: "🚁"
   },
   {
@@ -33,7 +33,7 @@ const options = [
     description: "Exceptional luxury and sports cars curated for those who demand the extraordinary.",
     features: ["Premium fleet selection", "Professional chauffeurs", "24/7 concierge service"],
     price: "From $1,200 per day",
-    path: "/c",
+    path: "/#/c",
     icon: "🏎️"
   },
   {
@@ -44,7 +44,7 @@ const options = [
     description: "Exquisite yachts for unforgettable ocean adventures, events, and coastal getaways.",
     features: ["Professional crew", "Customized itineraries", "Gourmet dining experiences"],
     price: "From $8,500 per day",
-    path: "/yacht",
+    path: "/#/yacht",
     icon: "🛥️"
   }
 ];
