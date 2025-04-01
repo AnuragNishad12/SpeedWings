@@ -1,0 +1,32 @@
+{
+  "reviews": [
+    {
+      "name": "Nancy mm",
+      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "stars": 5,
+      "date": "Jan 15, 2024",
+      "image": "/img/nancy.jpeg"
+    },
+    {
+      "name": "P.M Modi",
+      "review": "Pellentesque ac ligula in tellus feugiat aliquet.",
+      "stars": 4,
+      "date": "Feb 22, 2024",
+      "image": "/img/modi-ji.jpeg"
+    },
+    {
+      "name": "Amitabh Bachchan",
+      "review": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "stars": 5,
+      "date": "Mar 12, 2024",
+      "image": "/img/amitabh.jpeg"
+    },
+    {
+      "name": "Doctor Johny",
+      "review": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.",
+      "stars": 3,
+      "date": "Apr 10, 2024",
+      "image": "/img/doctor.jpeg"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "offers": [
+    {
+      "id": 1,
+      "discount": "50% OFF",
+      "icon": "fa-plane",
+      "title": "Return Trip to Paris",
+      "description": "Book a discounted flight on our luxury private jet returning from Paris. Fly at half price and enjoy unmatched comfort!",
+      "originalPrice": 5000,
+      "discountedPrice": 2500,
+      "endTime": "2024-10-27T23:59:59",
+      "buttonText": "Book Now"
+    },
+    {
+      "id": 2,
+      "discount": "30% OFF",
+      "icon": "fa-ship",
+      "title": "Yacht from Monaco",
+      "description": "Sail from Monaco at 30% off on our luxury yacht returning to the Mediterranean base. A perfect chance to experience the sea.",
+      "originalPrice": 10000,
+      "discountedPrice": 7000,
+      "endTime": "2024-10-25T23:59:59",
+      "buttonText": "Book Now"
+    },
+    {
+      "id": 3,
+      "discount": "40% OFF",
+      "icon": "fa-car",
+      "title": "Luxury Car from Milan",
+      "description": "Drive back in luxury at 40% off! Our top-of-the-line cars are available for a special return trip from Milan.",
+      "originalPrice": 3000,
+      "discountedPrice": 1800,
+      "endTime": "2024-10-29T23:59:59",
+      "buttonText": "Book Now"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+
+
+#custom-footer {
+    background-color: #003366;
+    color: #f3f7fa;
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column {
+    flex: 1;
+    margin: 10px;
+    min-width: 250px;
+  }
+  
+  .footer-logo img {
+    width: 150px;
+  }
+  
+  .footer-description p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .footer-line {
+    border: 0;
+    height: 1px;
+    background: #66B2FF;
+    margin: 20px 0;
+  }
+  
+ 
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li {
+    margin: 5px 0;
+  }
+  
+  .footer-links ul li a {
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links ul li a:hover {
+    color: #66B2FF;
+  }
+  
+
+  .social-icons a {
+    margin-right: 15px;
+    font-size: 20px;
+    color: #FFD700;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #66B2FF;
+  }
+  
+
+  .contact-info {
+    font-size: 16px;
+  }
+  
+  .contact-info div {
+    margin-bottom: 10px;
+  }
+  
+  .contact-info i {
+    margin-right: 10px;
+  }
+  
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-row {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .footer-description {
+      margin: 20px 0;
+    }
+  
+    .footer-links ul {
+      justify-content: center;
+    }
+  
+    .footer-social-contact {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .floating-btn {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .circle-progress {
+      width: 60px;
+      height: 60px;
+    }
+  
+    #cdn-icon {
+      font-size: 24px;
+    }
+  }
+  
+  .floating-btn {
+    position: relative;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    z-index: 999;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #003366;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .floating-btn:hover {
+    transform: scale(1.1);
+    background-color: #005599;
+  }
+  

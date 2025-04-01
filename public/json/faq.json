@@ -1,0 +1,22 @@
+[
+    {
+        "question": "What services do you offer?",
+        "answer": "We offer luxury travel services including private jet charters, helicopter rides, yacht rentals, and luxury car bookings to make your travel experience unforgettable."
+    },
+    {
+        "question": "How can I book a private jet or other services?",
+        "answer": "Simply visit our booking page, select your desired service, enter your travel details, and complete the booking process. Our team will confirm your booking shortly."
+    },
+    {
+        "question": "Are your services available worldwide?",
+        "answer": "Yes, we provide services across many international destinations. Please check our destinations page for more details or contact us for specific requests."
+    },
+    {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept major credit cards, bank transfers, and secure online payment options for your convenience. Contact our support team for any specific payment inquiries."
+    },
+    {
+        "question": "How far in advance should I book a service?",
+        "answer": "We recommend booking at least 48 hours in advance to ensure availability, especially for private jets and yachts during peak travel seasons."
+    }
+]

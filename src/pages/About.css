@@ -1,0 +1,283 @@
+.about-container {
+    font-family: Arial, sans-serif;
+  }
+  
+
+  .hero-section {
+    height: 80vh;
+    background-image: url('https://cdnwebsite.databox.com/wp-content/uploads/2020/12/01062702/about-us-page-examples.png'); 
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .hero-titles {
+    font-size: 3rem;
+    font-weight: bold;
+    color:#FFD700;
+    opacity: 1;
+    text-shadow: 1px 1px 0 #1e1d1d, 2px 2px 0 #0a0909, 3px 3px 0 #0b0a0a, 4px 4px 0 #101010; 
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+  }
+  
+
+  .info {
+    padding: 50px 20px;
+    background-color: #f9f9f9; 
+    text-align: center;
+  }
+  
+  .about-company {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #333;
+    background-color: #f4f4f4;
+    border-left: 5px solid #007bff; 
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .about-company p {
+    margin-bottom: 1rem; 
+  }
+  
+
+  .mission-section {
+    padding: 50px;
+    text-align: center;
+    background-color:rgba(0, 0, 0, 0)
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .mission-text {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+
+  .team-section {
+    padding: 50px;
+    background-color: #fff;
+   
+  }
+  
+  .about {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  
+  .team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap; 
+  }
+  
+  .team-member {
+    text-align: center;
+    flex: 1;
+    max-width: 250px;
+    margin-bottom: 20px; 
+  }
+  
+  .team-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .team-name {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+  
+  .team-role {
+    color: gray;
+  }
+  
+
+  .flip-card {
+    background-color: transparent;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    perspective: 1000px; 
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; 
+    backface-visibility: hidden;
+  }
+  
+  .flip-card-front {
+    background-color: rgba(0, 0, 0, 0.1); 
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .flip-card-back {
+    background-color: #f4f4f4; 
+    color: black;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+  
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+  
+    .mission-text, .about-company, .flip-card {
+      padding: 20px;
+    }
+  
+    .flip-card-inner {
+      height: 250px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+  
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+  
+    .section-title {
+      font-size: 1.5rem;
+    }
+  
+    .flip-card-inner {
+      height: 200px;
+    }
+  
+    .team-img {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .team-member {
+      max-width: 100%;
+    }
+  }
+  
+
+  .timeline-section {
+    background-color: #f9f9f9; 
+    padding: 50px 20px;
+    text-align: center; 
+  }
+  
+  .section-title {
+    font-size: 2.5em; 
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .timeline {
+    position: relative;
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 20px; 
+  }
+  
+
+  .timeline::after {
+    content: '';
+    position: absolute; 
+    left: 18px; 
+    top: 0; 
+    bottom: 0;
+    width: 4px; 
+    background: #007BFF; 
+    z-index: 1; 
+  }
+  
+  .timeline-item {
+    position: relative; 
+    margin: 20px 0; 
+    padding-left: 30px;
+  }
+  
+  .timeline-item h3 {
+    font-size: 1.5em; 
+    color: #007BFF; 
+    margin: 0; 
+  }
+  
+  .timeline-item p {
+    font-size: 1.1em; 
+    color: #555;
+    margin: 5px 0 0; 
+  }
+  
+  
+  .timeline-item::before {
+    content: '';
+    position: absolute; 
+    left: -10px;
+    top: 0; 
+    width: 20px; 
+    border-radius: 50%;
+    background: #fff; 
+    border: 4px solid #007BFF; 
+    z-index: 2; 
+  }
+  
