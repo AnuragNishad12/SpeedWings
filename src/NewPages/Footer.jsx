@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-black text-white py-10 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-        <img src={logo} alt="Xelevate Logo" className="h-30 w-auto" />
+        <img src={logo} alt="Xelevate Logo" className="h-20 w-auto" />
 
           <p className="text-sm mt-3">
             JetSetGo, a trusted choice for those valuing time, service, and reliability. Explore unique features to customize your private flying experience your way.
@@ -50,7 +50,7 @@ export default function Footer() {
   placeholder="Enter your email" 
   className="p-1 text-black flex-grow" 
 />
-<button className="bg-purple-600 text-white px-3 py-1">Subscribe</button>
+<button className="bg-[#F9672C] text-white px-3 py-1">Subscribe</button>
  </div>
           {/* <div className="mt-4 flex gap-3">
             <RxCross2 className="text-xl" />
@@ -60,19 +60,19 @@ export default function Footer() {
             <FaLinkedinIn className="text-xl" />
           </div> */}
           <div className="mt-4 flex gap-3">
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <RxCross2 className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaInstagram className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaFacebookF className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaYoutube className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaLinkedinIn className="text-xl" />
   </div>
 </div>
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-10 border-t border-gray-600 pt-4 text-center text-sm">
-        &copy; 2014-2024 All rights reserved by JetSetGo Aviation Services Private Limited.
+        &copy; 2014-2024 All rights reserved by Xelevate Aviation Services Private Limited.
       </div>
     </footer>
   );

@@ -12,7 +12,7 @@ export default function ImagePage() {
         alt="Unsplash Image"
         className="w-full h-full object-cover"
       />
-      <p className="absolute bottom-6 left-6 text-[#9333ea] text-5xl font-sans font-extrabold italic drop-shadow-lg">
+      <p className="absolute bottom-6 left-6 text-[#F9672C] text-5xl font-sans font-extrabold italic drop-shadow-lg">
         Private Jet
       </p>
     </div>

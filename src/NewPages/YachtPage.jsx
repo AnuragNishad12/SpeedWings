@@ -62,7 +62,7 @@ const YachtPage = () => {
           <p className="text-gray-600">Massive Volume</p>
         </div>
         <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-          <ClockIcon className="h-12 w-12 text-purple-600 mx-auto" />
+          <ClockIcon className="h-12 w-12 text-[#F9672C] mx-auto" />
           <h3 className="text-2xl font-bold mt-4">20 Knots</h3>
           <p className="text-gray-600">Top Speed</p>
         </div>

@@ -133,7 +133,7 @@ export default function LuxuryCarSearch() {
                 placeholder="Enter car name"
                 value={carName}
                 onChange={(e) => setCarName(e.target.value)}
-                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9672C] focus:border-blue-500 transition-all"
               />
             </div>
             
@@ -147,14 +147,14 @@ export default function LuxuryCarSearch() {
                 placeholder="Max Price (INR)"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9672C] focus:border-blue-500 transition-all"
               />
             </div>
             
             <div className="flex items-end">
               <button
                 onClick={handleFilter}
-                className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all"
+                className="w-full px-6 py-3 bg-[#F9672C] text-white font-medium rounded-lg hover:bg-[#F9672C] focus:outline-none focus:ring-2 focus:ring-[#F9672C] focus:ring-offset-2 transition-all"
               >
                 {isLoading ? (
                   <span>Searching...</span>
@@ -172,7 +172,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("all")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "all"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#F9672C] text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
@@ -182,7 +182,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("luxury")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "luxury"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#F9672C] text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
@@ -192,7 +192,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("sports")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "sports"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#F9672C] text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
@@ -202,7 +202,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("convertible")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "convertible"
-                ? "bg-blue-600 text-white"
+                ? "bg-[#F9672C] text-white"
                 : "bg-white text-gray-700 hover:bg-gray-100"
             }`}
           >
@@ -217,7 +217,7 @@ export default function LuxuryCarSearch() {
           </h3>
           <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-2">Sort by:</span>
-            <select className="border rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select className="border rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F9672C]">
               <option>Price: High to Low</option>
               <option>Price: Low to High</option>
               <option>Newest First</option>
@@ -240,7 +240,7 @@ export default function LuxuryCarSearch() {
                   setMaxPrice("");
                   setFilteredCars(cardData);
                 }}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#F9672C] hover:bg-[#F9672C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Reset filters
               </button>
@@ -255,7 +255,7 @@ export default function LuxuryCarSearch() {
               >
                 <div className="relative">
                   <img src={car.img} alt={car.title} className="w-full h-60 object-cover" />
-                  <div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-4 right-4 bg-[#F9672C] text-white text-sm font-bold px-3 py-1 rounded-full">
                     Premium
                   </div>
                 </div>
@@ -286,9 +286,9 @@ export default function LuxuryCarSearch() {
                   <div className="flex justify-between items-end">
                     <div>
                       <p className="text-gray-500 text-sm">Starting from</p>
-                      <p className="text-2xl font-bold text-blue-600">{car.price}</p>
+                      <p className="text-2xl font-bold text-[#F9672C]">{car.price}</p>
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
+                    <button className="bg-[#F9672C] hover:bg-[#F9672C] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
                       View Details
                     </button>
                   </div>
@@ -305,7 +305,7 @@ export default function LuxuryCarSearch() {
               <a href="#" className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 Previous
               </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">
+              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-blue-50 text-sm font-medium text-[#F9672C]">
                 1
               </a>
               <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">

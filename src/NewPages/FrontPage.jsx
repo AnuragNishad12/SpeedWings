@@ -46,7 +46,7 @@ const HomePage = () => {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
         <p className="text-lg uppercase">Fly Beyond.™</p>
         <h1 className="text-5xl font-bold">The India's Best</h1>
-        <h2 className="text-5xl font-bold text-purple-500 mt-2">Private Aviation Network</h2>
+        <h2 className="text-5xl font-bold text-[#F9672C] mt-2">Private Aviation Network</h2>
       </div>
     </div>
   );

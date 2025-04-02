@@ -34,7 +34,7 @@ function ServiceCard({ children, className }) {
 function IconContainer({ children }) {
   return (
     <div className="mb-4 flex justify-center">
-      <div className="p-4 bg-gradient-to-br from-[#6d28d9] to-[#9333ea] rounded-full shadow-lg">
+      <div className="p-4 bg-gradient-to-br from-[#6d28d9] to-[#F9672C] rounded-full shadow-lg">
         {children}
       </div>
     </div>
@@ -49,7 +49,7 @@ export default function Services() {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Premium Transportation Solutions
           </h2>
-          <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#6d28d9] to-[#9333ea] rounded-full mb-6" />
+          <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#6d28d9] to-[#F9672C] rounded-full mb-6" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Elevate your travel experience with our exclusive range of luxury services
           </p>

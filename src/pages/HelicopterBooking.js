@@ -82,7 +82,7 @@ const HelicopterBooking = () => {
       icon: "fas fa-shield-alt",
       title: "100% Safety Record",
       description: "Your safety is our highest priority",
-      background: "bg-gradient-to-r from-purple-500 to-pink-600"
+      background: "bg-gradient-to-r from-[#F9672C] to-pink-600"
     }
   ];
 
@@ -175,7 +175,7 @@ const HelicopterBooking = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Our Helicopter Service</h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
           </div>
           
@@ -185,7 +185,7 @@ const HelicopterBooking = () => {
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-clock text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Time Efficiency</h3>
@@ -197,7 +197,7 @@ const HelicopterBooking = () => {
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-gem text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Unmatched Luxury</h3>
@@ -209,7 +209,7 @@ const HelicopterBooking = () => {
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-shield-alt text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Safety First</h3>
@@ -224,7 +224,7 @@ const HelicopterBooking = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Premium Fleet</h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
           </div>
           
@@ -232,19 +232,19 @@ const HelicopterBooking = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button 
               onClick={() => setActiveCategory('All')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               All
             </button>
             <button 
               onClick={() => setActiveCategory('VIP')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               VIP
             </button>
             <button 
               onClick={() => setActiveCategory('Executive')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Executive
             </button>
@@ -267,7 +267,7 @@ const HelicopterBooking = () => {
                     alt={helicopter.title} 
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-4 right-4 bg-[#F9672C] text-white text-xs font-bold px-3 py-1 rounded-full">
                     {helicopter.category}
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent py-4 px-6">
@@ -306,7 +306,7 @@ const HelicopterBooking = () => {
                   
                   <a 
                     href="#/helicopter" 
-                    className="mt-6 block w-full bg-purple-600 text-white text-center py-3 rounded-lg font-medium hover:bg-yellow-600 transition-colors"
+                    className="mt-6 block w-full bg-[#F9672C] text-white text-center py-3 rounded-lg font-medium hover:bg-yellow-600 transition-colors"
                   >
                     Book This Helicopter
                   </a>
@@ -323,7 +323,7 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">Our Achievements</h2>
 
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-300 max-w-2xl mx-auto">A decade of excellence in providing luxury helicopter services.</p>
           </div>
           
@@ -351,7 +351,7 @@ const HelicopterBooking = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
           </div>
           
@@ -439,14 +439,14 @@ const HelicopterBooking = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Book Your Helicopter Experience</h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
           </div>
           
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               <div className="md:flex">
-                <div className="md:w-1/2 bg-purple-600 p-12 text-white flex flex-col justify-center">
+                <div className="md:w-1/2 bg-[#F9672C] p-12 text-white flex flex-col justify-center">
                   <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
                   <div className="space-y-6">
                     <div className="flex items-start">
@@ -554,7 +554,7 @@ const HelicopterBooking = () => {
                     </div>
                     <button 
                       type="submit" 
-                      className="w-full bg-purple-600 text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
+                      className="w-full bg-[#F9672C] text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
                     >
                       Request Booking
                     </button>
@@ -571,7 +571,7 @@ const HelicopterBooking = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
-            <div className="w-24 h-1 bg-purple-600 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Find answers to common questions about our helicopter services.</p>
           </div>
           

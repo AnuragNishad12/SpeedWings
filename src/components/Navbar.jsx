@@ -55,7 +55,7 @@ const Navbar = () => {
           <li>
             {/* <a className="login-button" href="/Enqiry" onClick={() => setShowModal(true)}>Enquiry</a> */}
             <a 
-  className="bg-[#9333ea] text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 transition"
+  className="bg-[#F9672C] text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 transition"
   href="https://wa.me/918429014352?text=Hello!%20I%20need%20help." 
 >
   Chat Now

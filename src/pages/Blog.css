@@ -64,7 +64,7 @@
 }
 
 .hero-search button {
-  background: #d4af37;
+  background: #F9672C;
   color: white;
   border: none;
   padding: 0 25px;
@@ -96,7 +96,7 @@
 .section-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, #d4af37, transparent);
+  background: linear-gradient(to right, #F9672C, transparent);
 }
 
 /* Blog Grid */
@@ -142,7 +142,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: #d4af37;
+  background-color: #F9672C;
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
@@ -188,8 +188,8 @@
 
 .read-more-btn {
   background-color: transparent;
-  color: #d4af37;
-  border: 1px solid #d4af37;
+  color: #F9672C;
+  border: 1px solid #F9672C;
   padding: 8px 20px;
   border-radius: 30px;
   font-size: 0.9rem;
@@ -200,7 +200,7 @@
 }
 
 .read-more-btn:hover {
-  background-color: #d4af37;
+  background-color: #F9672C;
   color: white;
 }
 
@@ -247,7 +247,7 @@
 }
 
 .newsletter-form button {
-  background: #d4af37;
+  background: #F9672C;
   color: white;
   border: none;
   padding: 0 30px;

@@ -60,7 +60,7 @@ const CustomerReviews = () => {
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Customer Experiences
           </h2>
-          <div className="inline-block w-20 h-1 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full mb-6" />
+          <div className="inline-block w-20 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full mb-6" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover what our clients say about our premium sportswear collection
           </p>
@@ -98,7 +98,7 @@ const CustomerReviews = () => {
                   {review.text}
                 </p>
                 <div className="border-t border-gray-100 pt-4">
-                  <span className="text-sm font-medium text-purple-600">
+                  <span className="text-sm font-medium text-[#F9672C]">
                     Verified Purchase
                   </span>
                 </div>

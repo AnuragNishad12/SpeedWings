@@ -102,7 +102,7 @@ export default function LuxuryTransportSelector() {
                   key={option.name}
                   className={`p-4 rounded-xl flex items-center justify-between ${
                     selected.name === option.name
-                      ? "bg-gradient-to-r from-purple-600 to-violet-700 text-white"
+                      ? "bg-gradient-to-r from-[#F9672C] to-violet-700 text-white"
                       : "bg-white/5 border border-white/10"
                   }`}
                   onClick={() => {
@@ -143,7 +143,7 @@ export default function LuxuryTransportSelector() {
                 key={option.name}
                 className={`relative overflow-hidden rounded-xl text-left transition duration-300 group ${
                   selected.name === option.name
-                    ? "bg-gradient-to-r from-purple-600 to-violet-700"
+                    ? "bg-gradient-to-r from-[#F9672C] to-violet-700"
                     : "bg-white/5 hover:bg-white/10 border border-white/10"
                 }`}
                 onMouseEnter={() => setHoverIndex(index)}
@@ -156,7 +156,7 @@ export default function LuxuryTransportSelector() {
                 {/* Background hover effect */}
                 {hoverIndex === index && selected.name !== option.name && (
                   <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-violet-700/20"
+                    className="absolute inset-0 bg-gradient-to-r from-[#F9672C]/20 to-violet-700/20"
                     layoutId="hoverBackground"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
@@ -276,7 +276,7 @@ export default function LuxuryTransportSelector() {
                       
                       <a
                         href={`#${selected.path}`}
-                        className="inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-opacity-90 text-purple-900 rounded-xl font-medium transition-all transform hover:scale-[1.03] active:scale-[0.97]"
+                        className="inline-flex items-center justify-center px-6 py-3 bg-[#F9672C] hover:bg-opacity-90 text-white rounded-xl font-medium transition-all transform hover:scale-[1.03] active:scale-[0.97]"
                       >
                         Reserve Now
                         <ChevronRight size={18} className="ml-2" />

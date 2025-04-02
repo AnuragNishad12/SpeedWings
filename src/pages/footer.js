@@ -48,7 +48,7 @@ export default function Footer() {
   placeholder="Enter your email" 
   className="p-1 text-black flex-grow" 
 />
-<button className="bg-purple-600 text-white px-3 py-1">Subscribe</button>
+<button className="bg-[#F9672C] text-white px-3 py-1">Subscribe</button>
  </div>
           {/* <div className="mt-4 flex gap-3">
             <RxCross2 className="text-xl" />
@@ -58,19 +58,19 @@ export default function Footer() {
             <FaLinkedinIn className="text-xl" />
           </div> */}
           <div className="mt-4 flex gap-3">
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <RxCross2 className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaInstagram className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaFacebookF className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaYoutube className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-purple-600 text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
     <FaLinkedinIn className="text-xl" />
   </div>
 </div>

@@ -30,7 +30,7 @@ const FaqSection = () => {
             >
               {item.question}
               <i
-                className={`fas ${item.active ? "fa-minus" : "fa-plus"} text-[#9333ea]`}
+                className={`fas ${item.active ? "fa-minus" : "fa-plus"} text-[#F9672C]`}
               ></i>
             </div>
             {item.active && (
