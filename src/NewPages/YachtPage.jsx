@@ -104,7 +104,7 @@ const YachtPage = () => {
         {/* Right Column */}
         <div className="space-y-8">
           {/* Charter Rates */}
-          <div className="bg-blue-600 text-white p-8 rounded-2xl shadow-xl">
+          <div className="bg-[#F9672C] text-white p-8 rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold mb-4">Charter Rates</h2>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -116,7 +116,7 @@ const YachtPage = () => {
               </div>
               {/* Add winter rate... */}
             </div>
-            <button className="w-full mt-6 bg-white text-blue-600 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+            <button className="w-full mt-6 bg-white text-[#F9672C] py-3 rounded-lg font-bold hover:bg-gray-100 transition">
               Request Charter
             </button>
           </div>
