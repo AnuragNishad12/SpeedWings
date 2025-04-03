@@ -167,12 +167,12 @@ const FaqSection = () => {
 
         <div className="mt-8 text-center">
           <p className="text-gray-600 mb-4">Still have questions?</p>
-          <button 
+          <a href="/#/contact"
             className="px-6 py-3 rounded-lg font-medium text-white shadow-md transition-all hover:shadow-lg"
             style={{ backgroundColor: "#F9672C" }}
           >
             Contact Support
-          </button>
+          </a>
         </div>
       </div>
     </section>
