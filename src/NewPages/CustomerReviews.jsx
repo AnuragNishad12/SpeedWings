@@ -54,13 +54,13 @@ const CustomerReviews = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-10 bg-[#161617]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Customer Experiences
           </h2>
-          <div className="inline-block w-20 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full mb-6" />
+          <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mt-2" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover what our clients say about our premium sportswear collection
           </p>
@@ -69,7 +69,7 @@ const CustomerReviews = () => {
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div key={index} className="px-4 py-6 focus:outline-none">
-              <div className="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl h-full">
+              <div className="bg-grey rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl h-full">
                 <div className="flex items-center mb-4">
                   <img
                     src={review.image}
@@ -77,7 +77,7 @@ const CustomerReviews = () => {
                     className="w-14 h-14 rounded-full object-cover border-2 border-purple-200 shadow-sm"
                   />
                   <div className="ml-4">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-blue-900">
                       {review.name}
                     </h3>
                     <div className="flex items-center mt-1">
@@ -98,7 +98,7 @@ const CustomerReviews = () => {
                   {review.text}
                 </p>
                 <div className="border-t border-gray-100 pt-4">
-                  <span className="text-sm font-medium text-[#F9672C]">
+                  <span className="text-sm font-medium text-[#00FF00]">
                     Verified Purchase
                   </span>
                 </div>

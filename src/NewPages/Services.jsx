@@ -25,7 +25,7 @@ const services = [
 
 function ServiceCard({ children, className }) {
   return (
-    <div className={`group relative bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 ${className}`}>
+    <div className={`group relative bg-grey p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 ${className}`}>
       {children}
     </div>
   );
@@ -34,7 +34,7 @@ function ServiceCard({ children, className }) {
 function IconContainer({ children }) {
   return (
     <div className="mb-4 flex justify-center">
-      <div className="p-4 bg-gradient-to-br from-[#6d28d9] to-[#F9672C] rounded-full shadow-lg">
+      <div className="p-4 bg-gradient-to-br from-[#161617] to-[#161617] rounded-full shadow-lg">
         {children}
       </div>
     </div>
@@ -43,13 +43,13 @@ function IconContainer({ children }) {
 
 export default function Services() {
   return (
-    <section className="py-20 px-4 bg-gray-50">
-      <div className="container mx-auto max-w-7xl">
+    <section className=" bg-gray-50 bg-[#161617]">
+      <div className="container mx-auto max-w-7xl bg-[#161617]">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Premium Transportation Solutions
           </h2>
-          <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#6d28d9] to-[#F9672C] rounded-full mb-6" />
+          <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mb-6" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Elevate your travel experience with our exclusive range of luxury services
           </p>
@@ -59,7 +59,7 @@ export default function Services() {
           {services.map((service, index) => (
             <ServiceCard key={index}>
               <IconContainer>{service.icon}</IconContainer>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-xl font-semibold text-white mb-3">
                 {service.title}
               </h3>
               <p className="text-gray-600 leading-relaxed text-md">

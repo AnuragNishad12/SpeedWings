@@ -12,7 +12,7 @@
 :root {
     --primary-color: #003366;
     --secondary-color: #66B2FF;
-    --background-color: #ecf0f3;
+    --background-color: #161617;
     --text-color: #2C2C2C;
     --accent-color: #FFD700;
 }
@@ -23,7 +23,7 @@
     font-family: 'Poppins', sans-serif;
 }
 body {
-    background: #ecf0f3;
+    background: #161617;
 }
 nav {
     width: 100%;

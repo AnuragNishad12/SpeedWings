@@ -5,7 +5,7 @@ import { ref, get } from 'firebase/database';
 
 const RentalCard = ({ name, location, rating, reviewCount, ratingText, price, imageUrl }) => {
   return (
-    <div className="relative bg-white rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs">
+    <div className="relative bg-grey rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs">
       <div className="relative">
         <img src={imageUrl} alt={name} className="w-full h-52 object-cover" />
         <button className="absolute top-3 right-3 bg-white p-1.5 rounded-full shadow-md">
@@ -15,19 +15,22 @@ const RentalCard = ({ name, location, rating, reviewCount, ratingText, price, im
         </button>
       </div>
       <div className="p-3">
-        <h2 className="text-base font-bold">{name}</h2>
+        <h2 className="text-blue-900 font-bold">{name}</h2>
         <p className="text-gray-600 text-xs">{location}</p>
         
         <div className="flex items-center mt-1">
           <div className="bg-blue-700 text-white font-bold px-1.5 py-0.5 rounded text-xs">{rating}</div>
-          <span className="ml-1.5 font-medium text-xs">{ratingText}</span>
+          <span className="ml-1.5 font-medium text-xs text-gray-500">{ratingText}</span>
           <span className="text-gray-500 text-xs ml-1">· {reviewCount} reviews</span>
         </div>
         
         <div className="mt-3 pt-2 border-t border-gray-200">
           <p className="text-right">
             <span className="text-gray-500 text-xs">Starting from </span>
-            <span className="font-bold text-base text-[#F9672C]">₹ {price}</span>
+            <span className="font-bold text-base bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
+  ₹ {price}
+</span>
+
           </p>
         </div>
       </div>
@@ -121,12 +124,14 @@ const HomeCarousel = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Deal of The Day</h1>
-      </div>
+    <div className="max-w-6xl mx-auto px-4 py-6 bg-[#161617]">
+      <div className="flex flex-col justify-center items-center  bg-[#161617]">
+  <h1 className="text-2xl font-bold text-white">Deal of The Day</h1>
+  <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mt-2" />
+</div>
+
       
-      <div className="relative">
+      <div className="relative bg-[#161617]">
         <Slider {...settings}>
           {rentalData.map((rental, index) => (
             <RentalCard 

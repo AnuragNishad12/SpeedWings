@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: black;
-  padding: 10px 15px;
+  padding: 10px;
   position: fixed;
   width: 100%;
   top: 0;
@@ -15,19 +15,20 @@
 }
 
 .logo a {
-  font-family: 'Dancing Script', cursive;
-  font-size: 20px;
+  font-family: 'Roboto', cursive;
+  font-size: 10px;
 }
 
 .navbar.scrolled {
-  background: black;
+  background: rgba(43, 43, 43, 0.868);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Logo */
 .logo {
   color: #ffffff;
-  font-size: 30px;
+  font-size: 10px;
+  font-family: 'Roboto', cursive;
   font-weight: bold;
   letter-spacing: 0.5px;
   transition: transform 0.3s ease;
@@ -52,9 +53,9 @@
 .nav-links a {
   text-decoration: none;
   color: #e0e0e0;
-  font-size: 14px; /* Reduced text size */
+  font-size: 12px; /* Reduced text size */
   font-weight: 500;
-  padding: 8px 12px; /* Reduced padding */
+  padding: 5px; /* Reduced padding */
   border-radius: 5px;
   transition: all 0.3s ease;
   position: relative;
@@ -68,7 +69,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #F9672C;
+  background-color: #1E3A8A;
   transform: scaleX(0);
   transition: transform 0.3s ease;
   transform-origin: right;
@@ -80,13 +81,13 @@
 }
 
 .nav-links a:hover {
-  color: #F9672C;
+  color: #1E3A8A;
   background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Active Link */
 .nav-links .active {
-  color: #F9672C;
+  color: #1E3A8A;
   font-weight: 600;
 }
 
@@ -98,7 +99,7 @@
 .dropdown .submenu {
   display: none;
   position: absolute;
-  background-color: #F9672C;
+  background-color: #0A0A0A;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -126,7 +127,7 @@
   color: #e0e0e0;
   display: block;
   padding: 6px 10px; /* Reduced padding */
-  font-size: 13px; /* Reduced font size */
+  font-size: 12px; /* Reduced font size */
   transition: background 0.3s ease;
 }
 
