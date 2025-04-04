@@ -114,7 +114,7 @@ const FaqSection = () => {
             className="mr-3" 
             style={{ color: "#00FF00" }} 
           />
-          <h2 className="text-3xl font-bold text-blue-700">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-bold text-white">Frequently Asked Questions</h2>
         </div>
 
         <div className="bg-black rounded-xl shadow-lg overflow-hidden">

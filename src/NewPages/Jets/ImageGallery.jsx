@@ -495,7 +495,7 @@ const AircraftShowcase = () => {
     <div>
       <div className="bg-[#161617] py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-center text-blue-900 mb-12">Premium Aircraft Collection</h1>
+          <h1 className="text-4xl font-bold text-center text-white mb-12">Premium Aircraft Collection</h1>
           
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mb-6 md:mb-0">

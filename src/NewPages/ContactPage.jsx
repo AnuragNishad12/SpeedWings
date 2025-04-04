@@ -25,7 +25,7 @@ const ContactPage = () => {
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold  sm:text-4xl text-blue-900">
+          <h2 className="text-3xl font-extrabold  sm:text-4xl text-white">
             Contact Us
           </h2>
           <p className="mt-4 text-lg text-gray-500">

@@ -50,7 +50,7 @@ function AboutUs() {
       <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="md:w-1/2 bg-[#161617]">
-          <h2 className="text-4xl font-bold mt-6 mb-6 text-blue-900">Our Mission</h2>
+          <h2 className="text-4xl font-bold mt-6 mb-6 text-white">Our Mission</h2>
 
             <div className="h-1 w-16 bg-[#F9672C] mb-8"></div>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
@@ -87,7 +87,7 @@ function AboutUs() {
       <div className="bg-[#161617] py-16">
         <div className="container mx-auto px-6 bg-[#161617]">
           <div className="text-center mb-12 bg-[#161617]">
-            <h2 className="text-4xl font-bold text-blue-900">Our Leadership Team</h2>
+            <h2 className="text-4xl font-bold text-white">Our Leadership Team</h2>
             <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
               Meet the experts behind SkyWings Aviation's success, driving innovation and excellence in private aviation.
@@ -137,7 +137,7 @@ function AboutUs() {
       {/* Values Section */}
       <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-blue-900">Our Core Values</h2>
+          <h2 className="text-4xl font-bold text-white">Our Core Values</h2>
           <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
         </div>
         

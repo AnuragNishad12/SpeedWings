@@ -174,7 +174,7 @@ const HelicopterBooking = () => {
       <section className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Why Choose Our Helicopter Service</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Why Choose Our Helicopter Service</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
           </div>
@@ -223,7 +223,7 @@ const HelicopterBooking = () => {
       <section id="fleet" className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Our Premium Fleet</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Premium Fleet</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
           </div>
@@ -321,7 +321,7 @@ const HelicopterBooking = () => {
       <section className="py-20 bg-[#161617] text-white">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Our Achievements</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Achievements</h2>
 
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-300 max-w-2xl mx-auto">A decade of excellence in providing luxury helicopter services.</p>
@@ -350,7 +350,7 @@ const HelicopterBooking = () => {
       <section className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">What Our Clients Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
           </div>
@@ -438,7 +438,7 @@ const HelicopterBooking = () => {
       <section id="booking" className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Book Your Helicopter Experience</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Book Your Helicopter Experience</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
           </div>
@@ -570,7 +570,7 @@ const HelicopterBooking = () => {
       <section className="py-20 bg-[#161617]">
       <div className="container mx-auto px-4 bg-black rounded-lg">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-700 max-w-2xl mx-auto">Find answers to common questions about our helicopter services.</p>
           </div>
