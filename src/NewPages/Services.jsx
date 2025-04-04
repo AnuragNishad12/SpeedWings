@@ -46,7 +46,7 @@ export default function Services() {
     <section className=" bg-[#161617]">
       <div className="container mx-auto max-w-7xl bg-[#161617]">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-blue-700 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4">
             Premium Transportation Solutions
           </h2>
           <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mb-6" />
