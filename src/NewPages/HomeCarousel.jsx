@@ -5,7 +5,7 @@ import { ref, get } from 'firebase/database';
 
 const RentalCard = ({ name, location, rating, reviewCount, ratingText, price, imageUrl }) => {
   return (
-    <div className="relative bg-grey rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs">
+    <div className="relative bg-black rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs">
       <div className="relative">
         <img src={imageUrl} alt={name} className="w-full h-52 object-cover" />
         <button className="absolute top-3 right-3 bg-white p-1.5 rounded-full shadow-md">
@@ -126,7 +126,7 @@ const HomeCarousel = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 bg-[#161617]">
       <div className="flex flex-col justify-center items-center  bg-[#161617]">
-  <h1 className="text-2xl font-bold text-white">Deal of The Day</h1>
+  <h1 className="text-2xl font-bold text-blue-700">Deal of The Day</h1>
   <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mt-2" />
 </div>
 

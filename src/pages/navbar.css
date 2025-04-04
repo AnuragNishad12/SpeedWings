@@ -19,10 +19,10 @@
   font-size: 10px;
 }
 
-.navbar.scrolled {
+/* .navbar.scrolled {
   background: rgba(43, 43, 43, 0.868);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+} */
 
 /* Logo */
 .logo {
@@ -52,7 +52,7 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #e0e0e0;
+  color: #808080;
   font-size: 12px; /* Reduced text size */
   font-weight: 500;
   padding: 5px; /* Reduced padding */
@@ -69,7 +69,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #1E3A8A;
+  background-color: white;
   transform: scaleX(0);
   transition: transform 0.3s ease;
   transform-origin: right;
@@ -81,7 +81,7 @@
 }
 
 .nav-links a:hover {
-  color: #1E3A8A;
+  color: white;
   background-color: rgba(255, 255, 255, 0.1);
 }
 

@@ -101,9 +101,9 @@ const BlogPage = () => {
       <article key={blog.id} className="blog-card" data-aos="fade-up">
         <div className="blog-image-container">
           <img src={blog.image} alt={blog.title} className="blog-image" />
-          <span className="blog-category">{blog.category}</span>
+          <span className="blog-category ">{blog.category}</span>
         </div>
-        <div className="blog-content">
+        <div className="blog-content bg-black">
           <h2 className="blog-title">{blog.title}</h2>
           <div className="blog-meta">
             <span className="blog-author">by {blog.author}</span>
@@ -117,10 +117,10 @@ const BlogPage = () => {
   };
 
   return (
-    <div className="blog-page">
+    <div className="blog-page bg-[#161617]">
       <Navbar />
 
-      <div className="blog-container">
+      <div className="blog-container bg-[#161617]">
         {/* Hero Section */}
         <section className="blog-hero" data-aos="fade-down">
           <div className="hero-content">

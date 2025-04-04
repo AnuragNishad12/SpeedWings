@@ -57,7 +57,7 @@ const CustomerReviews = () => {
     <section className="py-10 bg-[#161617]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-4xl font-bold text-blue-700 mb-4">
             Customer Experiences
           </h2>
           <div className="inline-block w-16 h-1 bg-gradient-to-r from-[#161617] to-[#F9672C] rounded-full mt-2" />
@@ -69,7 +69,7 @@ const CustomerReviews = () => {
         <Slider {...settings}>
           {reviews.map((review, index) => (
             <div key={index} className="px-4 py-6 focus:outline-none">
-              <div className="bg-grey rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl h-full">
+              <div className="bg-black rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl h-full">
                 <div className="flex items-center mb-4">
                   <img
                     src={review.image}

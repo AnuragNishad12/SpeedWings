@@ -101,7 +101,7 @@ export default function LuxuryCarSearch() {
   }, []);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-[#161617] min-h-screen">
       {/* Hero Section */}
       <div className="relative h-96 bg-gray-900 overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -118,13 +118,13 @@ export default function LuxuryCarSearch() {
       </div>
 
       {/* Search Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Find Your Perfect Car</h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
+        <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold  mb-6 text-blue-900">Find Your Perfect Car</h2>
           
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div>
-              <label htmlFor="carName" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="carName" className="block text-sm font-medium text-white mb-2">
                 Car Model
               </label>
               <input
@@ -138,7 +138,7 @@ export default function LuxuryCarSearch() {
             </div>
             
             <div>
-              <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="maxPrice" className="block text-sm font-medium text-white mb-2">
                 Budget
               </label>
               <input
@@ -154,7 +154,7 @@ export default function LuxuryCarSearch() {
             <div className="flex items-end">
               <button
                 onClick={handleFilter}
-                className="w-full px-6 py-3 bg-[#F9672C] text-white font-medium rounded-lg hover:bg-[#F9672C] focus:outline-none focus:ring-2 focus:ring-[#F9672C] focus:ring-offset-2 transition-all"
+                className="w-full px-6 py-3 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-[#F9672C] focus:ring-offset-2 transition-all"
               >
                 {isLoading ? (
                   <span>Searching...</span>
@@ -172,8 +172,8 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("all")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "all"
-                ? "bg-[#F9672C] text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100"
+                ? "bg-blue-900 text-black"
+                : "bg-white text-black hover:bg-gray-100"
             }`}
           >
             All Cars
@@ -182,8 +182,8 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("luxury")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "luxury"
-                ? "bg-[#F9672C] text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100"
+                ? "bg-blue-900 text-black"
+                : "bg-white text-black hover:bg-gray-100"
             }`}
           >
             Luxury
@@ -192,8 +192,8 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("sports")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "sports"
-                ? "bg-[#F9672C] text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100"
+                ? "bg-blue-900 text-black"
+                : "bg-white text-black hover:bg-gray-100"
             }`}
           >
             Sports
@@ -202,8 +202,8 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("convertible")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "convertible"
-                ? "bg-[#F9672C] text-white"
-                : "bg-white text-gray-700 hover:bg-gray-100"
+                ? "bg-blue-900 text-black"
+                : "bg-white text-black hover:bg-gray-100"
             }`}
           >
             Convertible
@@ -212,7 +212,7 @@ export default function LuxuryCarSearch() {
 
         {/* Results Count */}
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-lg font-medium text-gray-700">
+          <h3 className="text-lg font-medium text-white">
             {filteredCars.length} cars found
           </h3>
           <div className="flex items-center">
@@ -251,17 +251,17 @@ export default function LuxuryCarSearch() {
             {filteredCars.map((car, index) => (
               <div
                 key={index}
-                className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-black rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative">
                   <img src={car.img} alt={car.title} className="w-full h-60 object-cover" />
-                  <div className="absolute top-4 right-4 bg-[#F9672C] text-white text-sm font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-4 right-4 bg-blue-900 text-white text-sm font-bold px-3 py-1 rounded-full">
                     Premium
                   </div>
                 </div>
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-gray-900">{car.title}</h3>
+                    <h3 className="text-xl font-bold text-blue-900">{car.title}</h3>
                     <span className="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
                       Available
                     </span>
@@ -288,7 +288,7 @@ export default function LuxuryCarSearch() {
                       <p className="text-gray-500 text-sm">Starting from</p>
                       <p className="text-2xl font-bold text-[#F9672C]">{car.price}</p>
                     </div>
-                    <button className="bg-[#F9672C] hover:bg-[#F9672C] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
+                    <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
                       View Details
                     </button>
                   </div>

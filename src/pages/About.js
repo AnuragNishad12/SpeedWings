@@ -3,7 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css"; // Import AOS styles
 import "./About.css"; 
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../NewPages/Footer";
 
 
 const About = () => {

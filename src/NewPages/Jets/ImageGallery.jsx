@@ -165,7 +165,7 @@ const ImageGallery = ({ images }) => {
         {images.map((image, index) => (
           <div 
             key={index}
-            className={`h-16 w-16 cursor-pointer border-2 ${activeImage === index ? 'border-[#F9672C]' : 'border-gray-300'}`}
+            className={`h-16 w-16 cursor-pointer border-2 ${activeImage === index ? 'border-blue-900' : 'border-gray-300'}`}
             onClick={() => setActiveImage(index)}
           >
             <img 
@@ -185,8 +185,8 @@ const AircraftCard = ({ aircraft }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-md shadow-md overflow-hidden mb-6">
-  <div className="md:flex bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+    <div className="max-w-5xl mx-auto bg-blue-900 rounded-md shadow-md overflow-hidden mb-6">
+  <div className="md:flex bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
   <div className="md:w-1/2 p-6">
     <ImageGallery images={aircraft.images} />
   </div>
@@ -194,7 +194,7 @@ const AircraftCard = ({ aircraft }) => {
   <div className="md:w-1/2 p-8 flex flex-col justify-between">
     <div>
       <div className="mb-5">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2 font-serif">
+        <h2 className="text-3xl font-bold text-white mb-2 font-serif">
           {aircraft.name}
         </h2>
         <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
@@ -209,28 +209,28 @@ const AircraftCard = ({ aircraft }) => {
     <div>
       <button 
         onClick={() => setShowDetails(!showDetails)}
-        className="mb-6 w-full py-3 bg-gradient-to-r from-[#F9672C] to-[#F9672C] text-white rounded-lg font-medium hover:from-[#F9672C] hover:to-[#F9672C] transition-all duration-300"
+        className="mb-6 w-full py-3 bg-blue-900 text-white rounded-lg font-medium hover:from-[#F9672C] hover:to-[#F9672C] transition-all duration-300"
       >
         {showDetails ? "Hide Specifications" : "View Full Specifications"}
       </button>
 
       <div className="space-y-4 border-t border-gray-100 pt-6">
         <div className="flex items-center">
-          <svg className="w-5 h-5 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
           </svg>
-          <span className="text-gray-700 font-medium">
-            Route: <span className="text-gray-900 font-semibold">{aircraft.destination}</span>
+          <span className="text-white font-medium">
+            Route: <span className="text-white font-semibold">{aircraft.destination}</span>
           </span>
         </div>
 
         <div className="flex items-center">
-          <svg className="w-5 h-5 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <span className="text-gray-700 font-medium">
-            Starting from <span className="text-2xl text-purple-700 font-bold">{aircraft.price}</span>
+          <span className="text-white font-medium">
+            Starting from <span className="text-2xl text-[#00FF00] font-bold">{aircraft.price}</span>
           </span>
         </div>
       </div>
@@ -248,7 +248,7 @@ const AircraftCard = ({ aircraft }) => {
       onClick={(e) => e.stopPropagation()}
     >
       {/* Header with blue to purple gradient - matching your example */}
-      <div className="bg-gradient-to-r from-[#F9672C] to-[#F9672C] p-6 relative mt-6">
+      <div className="bg-black p-6 relative mt-6">
 
         <h2 className="text-2xl font-bold text-white">Aircraft Details</h2>
         <p className="text-blue-100 mt-1 text-sm">Complete specifications and features</p>
@@ -277,11 +277,11 @@ const AircraftCard = ({ aircraft }) => {
       </div>
       
       {/* Content with scrollable area */}
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] p-6 custom-scrollbar">
+      <div className="overflow-y-auto max-h-[calc(85vh-80px)] p-6 custom-scrollbar bg-[#161617]">
         {/* Aircraft Details Section - with updated colors and margin */}
-        <div className="mb-8 mt-6">
-          <h3 className="text-xl font-bold text-[#F9672C] mb-6 flex items-center">
-            <svg className="w-6 h-6 mr-2 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <div className="mb-8 mt-6 ">
+          <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
+            <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             Aircraft Details
@@ -321,8 +321,8 @@ const AircraftCard = ({ aircraft }) => {
         
         {/* Technical Specifications Section - with updated colors and margin */}
         <div className="mt-12">
-          <h3 className="text-xl font-bold text-[#F9672C] mb-6 flex items-center">
-            <svg className="w-6 h-6 mr-2 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
+            <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
             </svg>
             Technical Specifications
@@ -330,8 +330,8 @@ const AircraftCard = ({ aircraft }) => {
           
           {/* Exterior Section */}
           <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-            <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-              <svg className="w-4 h-4 mr-2 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
+              <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
               </svg>
               Exterior
@@ -355,7 +355,7 @@ const AircraftCard = ({ aircraft }) => {
           {/* Range Section */}
           <div className="mb-6 bg-gray-700 p-4 rounded-lg">
             <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-              <svg className="w-4 h-4 mr-2 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
               Range
@@ -371,7 +371,7 @@ const AircraftCard = ({ aircraft }) => {
           {/* Speed Section */}
           <div className="mb-6 bg-gray-700 p-4 rounded-lg">
             <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-              <svg className="w-4 h-4 mr-2 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Speed
@@ -433,12 +433,12 @@ const AircraftFilter = ({ onFilterChange }) => {
   };
   
   return (
-    <div className="bg-white p-4 rounded-md shadow-sm border-1 border-[#F9672C]">
-  <h2 className="text-lg font-semibold mb-3">Filter By</h2>
+    <div className="bg-black p-4 rounded-md shadow-sm border-1 border-blue-900">
+  <h2 className="text-lg font-semibold mb-3 text-white">Filter By</h2>
   <div className="border-b border-gray-200 my-3"></div>
 
   <div className="mt-3">
-    <h3 className="text-sm font-medium uppercase mb-3">AIRCRAFT TYPE</h3>
+    <h3 className="text-sm font-medium uppercase mb-3 text-white">AIRCRAFT TYPE</h3>
 
     <div className="space-y-1">
       {aircraftTypes.map((type) => (
@@ -446,17 +446,17 @@ const AircraftFilter = ({ onFilterChange }) => {
           <input
             id={`filter-${type.id}`}
             type="checkbox"
-            className="h-3.5 w-3.5 text-[#F9672C] border-gray-300 rounded"
+            className="h-3.5 w-3.5 text-white border-gray-300 rounded"
             onChange={() => handleCheckboxChange(type.id)}
             checked={selectedTypes.includes(type.id)}
           />
           <label htmlFor={`filter-${type.id}`} className="ml-2 flex-grow">
             {type.id === 'super-midsize-jet' ? (
-              <span className="bg-[#F9672C] text-white px-1.5 py-0.5 rounded text-xs">
+              <span className=" text-white px-1.5 py-0.5 rounded text-xs">
                 {type.name}
               </span>
             ) : (
-              <span className="text-gray-800">{type.name}</span>
+              <span className="text-white">{type.name}</span>
             )}
             <span className="text-gray-600 ml-1 text-xs">({type.count})</span>
           </label>
@@ -493,9 +493,9 @@ const AircraftShowcase = () => {
   
   return (
     <div>
-      <div className="bg-gray-100 py-12 px-4">
+      <div className="bg-[#161617] py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-center text-gray-900 mb-12">Premium Aircraft Collection</h1>
+          <h1 className="text-4xl font-bold text-center text-blue-900 mb-12">Premium Aircraft Collection</h1>
           
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mb-6 md:mb-0">

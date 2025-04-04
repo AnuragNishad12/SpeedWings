@@ -31,11 +31,11 @@ const teamMembers = [
 
 function AboutUs() {
   return (
-    <div className="font-sans bg-gray-50 ">
+    <div className="font-sans  bg-[#161617]">
       <Navbar />
       
       {/* Hero Section */}
-      {/* <div className="relative bg-black text-white py-20">
+      {/* <div className="relative bg-black text-gray-700 py-20">
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1551590192-8070a16d9f67?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center"></div>
         <div className="container mx-auto px-6 relative z-10">
           <h1 className="text-6xl font-bold mb-4">About Us</h1>
@@ -47,10 +47,10 @@ function AboutUs() {
       </div> */}
       
       {/* Mission Section */}
-      <div className="container mx-auto px-6 py-16 ">
+      <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          <div className="md:w-1/2">
-          <h2 className="text-4xl font-bold mt-6 mb-6 text-gray-800">Our Mission</h2>
+          <div className="md:w-1/2 bg-[#161617]">
+          <h2 className="text-4xl font-bold mt-6 mb-6 text-blue-900">Our Mission</h2>
 
             <div className="h-1 w-16 bg-[#F9672C] mb-8"></div>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
@@ -66,11 +66,11 @@ function AboutUs() {
                 <h3 className="text-2xl font-bold mb-2">100+</h3>
                 <p>Global Destinations</p>
               </div>
-              <div className="bg-gray-800 p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-blue-900 p-8 text-white rounded-lg shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">15+</h3>
                 <p>Years Experience</p>
               </div>
-              <div className="bg-gray-800 p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-blue-900 p-8 text-white rounded-lg shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">50+</h3>
                 <p>Modern Aircraft</p>
               </div>
@@ -84,10 +84,10 @@ function AboutUs() {
       </div>
       
       {/* Team Section */}
-      <div className="bg-gray-100 py-16">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800">Our Leadership Team</h2>
+      <div className="bg-[#161617] py-16">
+        <div className="container mx-auto px-6 bg-[#161617]">
+          <div className="text-center mb-12 bg-[#161617]">
+            <h2 className="text-4xl font-bold text-blue-900">Our Leadership Team</h2>
             <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
               Meet the experts behind SkyWings Aviation's success, driving innovation and excellence in private aviation.
@@ -105,10 +105,10 @@ function AboutUs() {
                       className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <div className="px-6 py-6 bg-white border-t-4 border-[#F9672C]">
-                    <h3 className="text-xl font-bold text-gray-800">{member.name}</h3>
-                    <p className="text-[#F9672C] font-medium mb-3">{member.role}</p>
-                    <p className="text-gray-600 text-sm">{member.bio}</p>
+                  <div className="px-6 py-6 bg-black border-t-4 border-blue-900">
+                    <h3 className="text-xl font-bold text-blue-900">{member.name}</h3>
+                    <p className="text-blue-900 font-medium mb-3">{member.role}</p>
+                    <p className="text-gray-700 text-sm">{member.bio}</p>
                     <div className="flex mt-4 space-x-3">
                       <a href="#" className="text-gray-500 hover:text-[#F9672C]">
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -135,44 +135,44 @@ function AboutUs() {
       </div>
       
       {/* Values Section */}
-      <div className="container mx-auto px-6 py-16">
+      <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800">Our Core Values</h2>
+          <h2 className="text-4xl font-bold text-blue-900">Our Core Values</h2>
           <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#F9672C]">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-8 h-8 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#161617]">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
+            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6 ">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Safety First</h3>
+            <h3 className="text-xl font-bold mb-4 text-blue-900">Safety First</h3>
             <p className="text-gray-600">
               We maintain the highest safety standards across our fleet and operations, ensuring peace of mind for every passenger.
             </p>
           </div>
           
-          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#F9672C]">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-8 h-8 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
+            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Innovation</h3>
+            <h3 className="text-xl font-bold mb-4 text-blue-900">Innovation</h3>
             <p className="text-gray-600">
               We continuously explore new technologies and approaches to enhance the aviation experience and lead industry advancement.
             </p>
           </div>
           
-          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#F9672C]">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-8 h-8 text-[#F9672C]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
+            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
               </svg>
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800">Sustainability</h3>
+            <h3 className="text-xl font-bold mb-4 text-blue-900">Sustainability</h3>
             <p className="text-gray-600">
               We're committed to environmentally responsible operations, investing in fuel-efficient aircraft and green initiatives.
             </p>
@@ -181,7 +181,7 @@ function AboutUs() {
       </div>
       
       {/* Call to Action */}
-      {/* <div className="bg-[#F9672C] text-white py-16">
+      {/* <div className="bg-[#F9672C] text-gray-700 py-16">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Experience Luxury in the Skies?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -191,7 +191,7 @@ function AboutUs() {
             <a href="/contact" className="bg-white text-[#F9672C] px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors">
               Contact Us
             </a>
-            <a href="/enquiry" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-medium hover:bg-white hover:text-[#F9672C] transition-colors">
+            <a href="/enquiry" className="bg-transparent border-2 border-white text-gray-700 px-8 py-3 rounded-full font-medium hover:bg-white hover:text-[#F9672C] transition-colors">
               Make an Enquiry
             </a>
           </div>

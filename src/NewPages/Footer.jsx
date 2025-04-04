@@ -9,17 +9,17 @@ export default function Footer() {
         <div>
         <img src={logo} alt="Xelevate Logo" className="h-20 w-auto" />
 
-          <p className="text-sm mt-3">
-            JetSetGo, a trusted choice for those valuing time, service, and reliability. Explore unique features to customize your private flying experience your way.
+          <p className="text-xs mt-3 text-[#808080]">
+            Xelevate, a trusted choice for those valuing time, service, and reliability. Explore unique features to customize your private flying experience your way.
           </p>
           <div className="flex items-center gap-2 mt-4 text-gold">
             <FaPhoneAlt />
-            <span className="text-gold">IN +91-11-40845858</span>
+            <span className="text-gold text-[#808080]">IN +91-11-40845858</span>
           </div>
         </div>
         <div>
-          <h3 className="font-semibold">Our Services</h3>
-          <ul className="mt-3 space-y-2 text-sm">
+          <h3 className="font-semibold text-[#808080]">Our Services</h3>
+          <ul className="mt-3 space-y-2 text-xs text-[#808080]">
             <li>Our Products</li>
             <li>Membership</li>
             <li>Our Fleet</li>
@@ -30,8 +30,8 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h3 className="font-semibold">Quick Links</h3>
-          <ul className="mt-3 space-y-2 text-sm">
+          <h3 className="font-semibold text-[#808080]">Quick Links</h3>
+          <ul className="mt-3 space-y-2 text-xs text-[#808080]">
             <li>Blogs</li>
             <li>Career</li>
             <li>Contact Us</li>
@@ -43,14 +43,14 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h3 className="font-semibold">Get the latest Updates</h3>
-          <div className="mt-3 flex">
+          <h3 className="font-semibold text-[#808080]">Get the latest Updates</h3>
+          <div className="mt-3 flex text-[#808080]">
           <input 
   type="email" 
   placeholder="Enter your email" 
   className="p-1 text-black flex-grow" 
 />
-<button className="bg-[#F9672C] text-white px-3 py-1">Subscribe</button>
+<button className="bg-blue-900 text-white px-3 py-1">Subscribe</button>
  </div>
           {/* <div className="mt-4 flex gap-3">
             <RxCross2 className="text-xl" />
@@ -60,27 +60,27 @@ export default function Footer() {
             <FaLinkedinIn className="text-xl" />
           </div> */}
           <div className="mt-4 flex gap-3">
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <RxCross2 className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaInstagram className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaFacebookF className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaYoutube className="text-xl" />
   </div>
-  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F9672C] text-white">
+  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaLinkedinIn className="text-xl" />
   </div>
 </div>
 
-          <p className="mt-4 text-sm">Delhi | Mumbai | Bengaluru | Dubai | New York</p>
+          <p className="mt-4 text-xs text-[#808080]">Delhi | Mumbai | Bengaluru | Dubai | New York</p>
         </div>
       </div>
-      <div className="mt-10 border-t border-gray-600 pt-4 text-center text-sm">
+      <div className="mt-10 border-t border-gray-600 pt-4 text-center text-xs text-[#808080]">
         &copy; 2014-2024 All rights reserved by Xelevate Aviation Services Private Limited.
       </div>
     </footer>

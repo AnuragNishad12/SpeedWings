@@ -21,11 +21,11 @@ const ContactPage = () => {
   return (
     <div>
         <Navbar/>
-        <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="min-h-screen bg-[#161617] py-12 px-4 sm:px-6 lg:px-8 mt-12">
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold  sm:text-4xl text-blue-900">
             Contact Us
           </h2>
           <p className="mt-4 text-lg text-gray-500">
@@ -36,9 +36,9 @@ const ContactPage = () => {
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-black p-6 rounded-lg shadow-lg">
               <EnvelopeIcon className="h-8 w-8 text-blue-600" />
-              <h3 className="mt-4 text-xl font-bold text-gray-900">Email</h3>
+              <h3 className="mt-4 text-xl font-bold text-blue-900">Email</h3>
               <p className="mt-2 text-gray-600">Our support team will get back to you</p>
               <a 
                 href="mailto:support@example.com" 
@@ -48,9 +48,9 @@ const ContactPage = () => {
               </a>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-black p-6 rounded-lg shadow-lg">
               <PhoneIcon className="h-8 w-8 text-green-600" />
-              <h3 className="mt-4 text-xl font-bold text-gray-900">Phone</h3>
+              <h3 className="mt-4 text-xl font-bold text-blue-900">Phone</h3>
               <p className="mt-2 text-gray-600">Mon-Fri from 9am to 5pm</p>
               <a 
                 href="tel:+1234567890" 
@@ -60,9 +60,9 @@ const ContactPage = () => {
               </a>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-black p-6 rounded-lg shadow-lg">
               <ChatBubbleBottomCenterTextIcon className="h-8 w-8 text-green-500" />
-              <h3 className="mt-4 text-xl font-bold text-gray-900">WhatsApp</h3>
+              <h3 className="mt-4 text-xl font-bold text-green-600">WhatsApp</h3>
               <p className="mt-2 text-gray-600">24/7 instant messaging support</p>
               <a 
                 href="https://wa.me/918429014352?text=Hello!%20I%20need%20help." 
@@ -76,10 +76,10 @@ const ContactPage = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-black p-6 rounded-lg shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="name" className="block text-sm font-medium text-white">
                   Name
                 </label>
                 <div className="mt-1">
@@ -90,13 +90,13 @@ const ContactPage = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="email" className="block text-sm font-medium text-white">
                   Email
                 </label>
                 <div className="mt-1">
@@ -107,13 +107,13 @@ const ContactPage = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="message" className="block text-sm font-medium text-white">
                   Message
                 </label>
                 <div className="mt-1">
@@ -124,7 +124,7 @@ const ContactPage = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   ></textarea>
                 </div>
               </div>

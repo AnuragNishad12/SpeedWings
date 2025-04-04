@@ -26,7 +26,7 @@ const YachtPage = () => {
   return (
     <div>
         <Navbar/>
-<div className="min-h-screen bg-gray-50">
+<div className="min-h-screen bg-[#161617]">
       {/* Hero Section */}
       <div
   className="relative h-96 text-white"
@@ -50,18 +50,18 @@ const YachtPage = () => {
 
 
       {/* Key Stats */}
-      <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+      <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#161617]">
+        <div className="bg-black p-6 rounded-xl shadow-lg text-center">
           <UserIcon className="h-12 w-12 text-blue-600 mx-auto" />
           <h3 className="text-2xl font-bold mt-4">22 Guests</h3>
           <p className="text-gray-600">11 Luxury Cabins</p>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+        <div className="bg-black p-6 rounded-xl shadow-lg text-center">
           <ChartBarIcon className="h-12 w-12 text-green-600 mx-auto" />
           <h3 className="text-2xl font-bold mt-4">9,022 GT</h3>
           <p className="text-gray-600">Massive Volume</p>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-lg text-center">
+        <div className="bg-black p-6 rounded-xl shadow-lg text-center">
           <ClockIcon className="h-12 w-12 text-[#F9672C] mx-auto" />
           <h3 className="text-2xl font-bold mt-4">20 Knots</h3>
           <p className="text-gray-600">Top Speed</p>
@@ -73,8 +73,8 @@ const YachtPage = () => {
         {/* Left Column */}
         <div className="lg:col-span-2 space-y-12">
           {/* Highlights */}
-          <div className="bg-white p-8 rounded-2xl shadow-xl">
-            <h2 className="text-3xl font-bold mb-6">Yacht Highlights</h2>
+          <div className="bg-black p-8 rounded-2xl shadow-xl">
+            <h2 className="text-3xl font-bold mb-6 text-blue-900">Yacht Highlights</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
@@ -89,8 +89,8 @@ const YachtPage = () => {
           </div>
 
           {/* Specifications */}
-          <div className="bg-white p-8 rounded-2xl shadow-xl">
-            <h2 className="text-3xl font-bold mb-6">Technical Specifications</h2>
+          <div className="bg-black p-8 rounded-2xl shadow-xl">
+            <h2 className="text-3xl font-bold mb-6 text-blue-900">Technical Specifications</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="border-b pb-2">
                 <span className="text-gray-600">Length</span>
@@ -104,8 +104,8 @@ const YachtPage = () => {
         {/* Right Column */}
         <div className="space-y-8">
           {/* Charter Rates */}
-          <div className="bg-[#F9672C] text-white p-8 rounded-2xl shadow-xl">
-            <h2 className="text-2xl font-bold mb-4">Charter Rates</h2>
+          <div className="bg-black text-white p-8 rounded-2xl shadow-xl">
+            <h2 className="text-2xl font-bold mb-4 text-blue-900">Charter Rates</h2>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -116,14 +116,14 @@ const YachtPage = () => {
               </div>
               {/* Add winter rate... */}
             </div>
-            <button className="w-full mt-6 bg-white text-[#F9672C] py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+            <button className="w-full mt-6 bg-blue-900 text-white py-3 rounded-lg font-bold hover:bg-gray-100 transition">
               Request Charter
             </button>
           </div>
 
           {/* Features Card */}
-          <div className="bg-white p-8 rounded-2xl shadow-xl">
-            <h3 className="text-xl font-bold mb-4">Premium Features</h3>
+          <div className="bg-black p-8 rounded-2xl shadow-xl">
+            <h3 className="text-xl font-bold mb-4 text-white">Premium Features</h3>
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-center">
                 <SparklesIcon className="h-5 w-5 text-green-500 mr-2" />
@@ -137,7 +137,7 @@ const YachtPage = () => {
 
       {/* Full Gallery */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8">Gallery</h2>
+        <h2 className="text-3xl font-bold mb-8 text-white">Gallery</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {images.map((img, index) => (
             <img

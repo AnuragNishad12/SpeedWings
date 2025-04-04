@@ -142,7 +142,7 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: #F9672C;
+  background-color: #1E3A8A;
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
@@ -161,6 +161,7 @@
   line-height: 1.4;
   height: 2.8em;
   overflow: hidden;
+  color: white;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -188,8 +189,8 @@
 
 .read-more-btn {
   background-color: transparent;
-  color: #F9672C;
-  border: 1px solid #F9672C;
+  color: #1E3A8A;
+  border: 1px solid #1E3A8A;
   padding: 8px 20px;
   border-radius: 30px;
   font-size: 0.9rem;

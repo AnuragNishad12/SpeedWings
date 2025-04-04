@@ -146,7 +146,7 @@ const HelicopterBooking = () => {
             transition={{ duration: 1 }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
-              Elevate Your Journey with <span className="text-yellow-400">Luxury Helicopter</span> Travel
+              Elevate Your Journey with <span className="text-blue-900">Luxury Helicopter</span> Travel
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
               Experience unparalleled convenience, speed, and luxury with our exclusive helicopter charter services.
@@ -171,21 +171,21 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-[#161617]">
+        <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Our Helicopter Service</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Why Choose Our Helicopter Service</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-clock text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Time Efficiency</h3>
@@ -193,11 +193,11 @@ const HelicopterBooking = () => {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-gem text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Unmatched Luxury</h3>
@@ -205,11 +205,11 @@ const HelicopterBooking = () => {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <div className="w-16 h-16 bg-[#F9672C] rounded-full flex items-center justify-center text-white mb-6">
+              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-shield-alt text-2xl"></i>
               </div>
               <h3 className="text-xl font-bold mb-3">Safety First</h3>
@@ -220,10 +220,10 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Fleet Section */}
-      <section id="fleet" className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4">
+      <section id="fleet" className="py-20 bg-[#161617]">
+        <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Premium Fleet</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Our Premium Fleet</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
           </div>
@@ -232,30 +232,30 @@ const HelicopterBooking = () => {
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button 
               onClick={() => setActiveCategory('All')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               All
             </button>
             <button 
               onClick={() => setActiveCategory('VIP')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               VIP
             </button>
             <button 
               onClick={() => setActiveCategory('Executive')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-[#F9672C] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               Executive
             </button>
           </div>
           
           {/* Helicopter Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 ">
             {filteredHelicopters.map((helicopter) => (
               <motion.div 
                 key={helicopter.id}
-                className="bg-white rounded-2xl shadow-xl overflow-hidden"
+                className="bg-black rounded-2xl shadow-xl overflow-hidden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -267,7 +267,7 @@ const HelicopterBooking = () => {
                     alt={helicopter.title} 
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-[#F9672C] text-white text-xs font-bold px-3 py-1 rounded-full">
+                  <div className="absolute top-4 right-4 bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">
                     {helicopter.category}
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent py-4 px-6">
@@ -281,15 +281,15 @@ const HelicopterBooking = () => {
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-2">
                       <i className="fas fa-users text-yellow-500"></i>
-                      <span className="text-gray-700 font-medium">{helicopter.capacity} Passengers</span>
+                      <span className="text-white font-medium">{helicopter.capacity} Passengers</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <i className="fas fa-tachometer-alt text-yellow-500"></i>
-                      <span className="text-gray-700 font-medium">{helicopter.speed}</span>
+                      <span className="text-white font-medium">{helicopter.speed}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <i className="fas fa-route text-yellow-500"></i>
-                      <span className="text-gray-700 font-medium">{helicopter.range}</span>
+                      <span className="text-white font-medium">{helicopter.range}</span>
                     </div>
                   </div>
                   
@@ -297,7 +297,7 @@ const HelicopterBooking = () => {
                     <h4 className="font-semibold mb-2">Features:</h4>
                     <div className="flex flex-wrap gap-2">
                       {helicopter.features.map((feature, idx) => (
-                        <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                        <span key={idx} className="bg-[#161617] text-white px-3 py-1 rounded-full text-sm">
                           {feature}
                         </span>
                       ))}
@@ -306,7 +306,7 @@ const HelicopterBooking = () => {
                   
                   <a 
                     href="#/helicopter" 
-                    className="mt-6 block w-full bg-[#F9672C] text-white text-center py-3 rounded-lg font-medium hover:bg-yellow-600 transition-colors"
+                    className="mt-6 block w-full bg-blue-900 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   >
                     Book This Helicopter
                   </a>
@@ -318,10 +318,10 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-[#161617] text-white">
+        <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">Our Achievements</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Our Achievements</h2>
 
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-300 max-w-2xl mx-auto">A decade of excellence in providing luxury helicopter services.</p>
@@ -347,20 +347,20 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-[#161617]">
+        <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">What Our Clients Say</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -5 }}
             >
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 ">
                 <div className="text-yellow-500">
                   <i className="fas fa-star"></i>
                   <i className="fas fa-star"></i>
@@ -382,7 +382,7 @@ const HelicopterBooking = () => {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -5 }}
             >
               <div className="flex items-center mb-4">
@@ -407,7 +407,7 @@ const HelicopterBooking = () => {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 p-8 rounded-xl shadow-lg"
+              className="bg-black p-8 rounded-xl shadow-lg"
               whileHover={{ y: -5 }}
             >
               <div className="flex items-center mb-4">
@@ -435,10 +435,10 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Booking Section */}
-      <section id="booking" className="py-20 bg-gray-100">
-        <div className="container mx-auto px-4">
+      <section id="booking" className="py-20 bg-[#161617]">
+        <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Book Your Helicopter Experience</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Book Your Helicopter Experience</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
           </div>
@@ -446,7 +446,7 @@ const HelicopterBooking = () => {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               <div className="md:flex">
-                <div className="md:w-1/2 bg-[#F9672C] p-12 text-white flex flex-col justify-center">
+                <div className="md:w-1/2 bg-blue-900 p-12 text-white flex flex-col justify-center">
                   <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
                   <div className="space-y-6">
                     <div className="flex items-start">
@@ -470,7 +470,7 @@ const HelicopterBooking = () => {
                 <div className="md:w-1/2 p-12">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="block text-gray-700 mb-2" htmlFor="name">Full Name</label>
+                      <label className="block text-white mb-2" htmlFor="name">Full Name</label>
                       <input 
                         type="text" 
                         id="name"
@@ -484,7 +484,7 @@ const HelicopterBooking = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-gray-700 mb-2" htmlFor="email">Email Address</label>
+                        <label className="block text-white mb-2" htmlFor="email">Email Address</label>
                         <input 
                           type="email" 
                           id="email"
@@ -497,7 +497,7 @@ const HelicopterBooking = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-700 mb-2" htmlFor="phone">Phone Number</label>
+                        <label className="block text-white mb-2" htmlFor="phone">Phone Number</label>
                         <input 
                           type="tel" 
                           id="phone"
@@ -512,7 +512,7 @@ const HelicopterBooking = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-gray-700 mb-2" htmlFor="date">Preferred Date</label>
+                        <label className="block text-white mb-2" htmlFor="date">Preferred Date</label>
                         <input 
                           type="date" 
                           id="date"
@@ -524,7 +524,7 @@ const HelicopterBooking = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-700 mb-2" htmlFor="helicopterType">Helicopter Type</label>
+                        <label className="block text-white mb-2" htmlFor="helicopterType">Helicopter Type</label>
                         <select 
                           id="helicopterType"
                           name="helicopterType"
@@ -541,7 +541,7 @@ const HelicopterBooking = () => {
                       </div>
                     </div>
                     <div>
-                      <label className="block text-gray-700 mb-2" htmlFor="message">Additional Information</label>
+                      <label className="block text-white mb-2" htmlFor="message">Additional Information</label>
                       <textarea 
                         id="message"
                         name="message"
@@ -554,7 +554,7 @@ const HelicopterBooking = () => {
                     </div>
                     <button 
                       type="submit" 
-                      className="w-full bg-[#F9672C] text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
+                      className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
                     >
                       Request Booking
                     </button>
@@ -567,12 +567,12 @@ const HelicopterBooking = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-[#161617]">
+      <div className="container mx-auto px-4 bg-black rounded-lg">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Frequently Asked Questions</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">Find answers to common questions about our helicopter services.</p>
+            <p className="text-gray-700 max-w-2xl mx-auto">Find answers to common questions about our helicopter services.</p>
           </div>
           
           <div className="max-w-3xl mx-auto">

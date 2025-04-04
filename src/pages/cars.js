@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Navbar from '../components/Navbar';
-import Footer from './footer';
+import Footer from '../NewPages/Footer';
 import LuxuryCarSearch from './Car_MainContent';
 
 
