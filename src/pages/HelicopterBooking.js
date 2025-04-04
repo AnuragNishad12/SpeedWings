@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from './footer';
 import { motion } from 'framer-motion';
+import FaqSection from '../components/FaqSection';
+// import FaqSection from './components/FaqSection.jsx';
 
 const HelicopterBooking = () => {
   // JSON data for helicopters
@@ -470,7 +472,7 @@ const HelicopterBooking = () => {
                 <div className="md:w-1/2 p-12">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                      <label className="block text-white mb-2" htmlFor="name">Full Name</label>
+                      <label className="block text-black mb-2" htmlFor="name">Full Name</label>
                       <input 
                         type="text" 
                         id="name"
@@ -484,7 +486,7 @@ const HelicopterBooking = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-white mb-2" htmlFor="email">Email Address</label>
+                        <label className="block text-black mb-2" htmlFor="email">Email Address</label>
                         <input 
                           type="email" 
                           id="email"
@@ -497,7 +499,7 @@ const HelicopterBooking = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-white mb-2" htmlFor="phone">Phone Number</label>
+                        <label className="block text-black mb-2" htmlFor="phone">Phone Number</label>
                         <input 
                           type="tel" 
                           id="phone"
@@ -512,7 +514,7 @@ const HelicopterBooking = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-white mb-2" htmlFor="date">Preferred Date</label>
+                        <label className="block text-black mb-2" htmlFor="date">Preferred Date</label>
                         <input 
                           type="date" 
                           id="date"
@@ -524,7 +526,7 @@ const HelicopterBooking = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-white mb-2" htmlFor="helicopterType">Helicopter Type</label>
+                        <label className="block text-black mb-2" htmlFor="helicopterType">Helicopter Type</label>
                         <select 
                           id="helicopterType"
                           name="helicopterType"
@@ -567,7 +569,7 @@ const HelicopterBooking = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-[#161617]">
+      {/* <section className="py-20 bg-[#161617]">
       <div className="container mx-auto px-4 bg-black rounded-lg">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
@@ -576,7 +578,7 @@ const HelicopterBooking = () => {
           </div>
           
           <div className="max-w-3xl mx-auto">
-            {/* You can implement an accordion here */}
+        
             <div className="space-y-6">
               <div className="border-b border-gray-200 pb-6">
                 <h3 className="text-xl font-bold mb-2">How far in advance should I book?</h3>
@@ -597,8 +599,8 @@ const HelicopterBooking = () => {
             </div>
           </div>
         </div>
-      </section>
-
+      </section> */}
+       <FaqSection/>
       <Footer />
     </div>
   );
