@@ -120,7 +120,7 @@ export default function LuxuryCarSearch() {
       {/* Search Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
         <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-semibold  mb-6 text-blue-900">Find Your Perfect Car</h2>
+          <h2 className="text-2xl font-bold  mb-6 text-blue-800">Find Your Perfect Car</h2>
           
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div>
@@ -266,27 +266,27 @@ export default function LuxuryCarSearch() {
                       Available
                     </span>
                   </div>
-                  <p className="text-gray-600 mb-4">{car.description}</p>
+                  <p className="text-[#8b868a] mb-4">{car.description}</p>
                   
                   <div className="flex flex-col space-y-2 mb-4">
                     <div className="flex items-center text-sm text-gray-500">
                       <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span>{car.totalTime}</span>
+                      <span className="text-[#8b868a]">{car.totalTime}</span>
                     </div>
                     <div className="flex items-center text-sm text-gray-500">
                       <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
-                      <span>{car.pax} Passengers</span>
+                      <span className="text-[#8b868a]">{car.pax} Passengers</span>
                     </div>
                   </div>
                   
                   <div className="flex justify-between items-end">
                     <div>
                       <p className="text-gray-500 text-sm">Starting from</p>
-                      <p className="text-2xl font-bold text-[#F9672C]">{car.price}</p>
+                      <p className="text-2xl font-bold text-white">{car.price}</p>
                     </div>
                     <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
                       View Details
