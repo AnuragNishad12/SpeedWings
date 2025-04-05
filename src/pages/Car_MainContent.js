@@ -1,104 +1,76 @@
 import React, { useState, useEffect } from 'react';
-
-const cardData = [
-  {
-    img: "https://img.freepik.com/free-photo/luxurious-car-parked-highway-with-illuminated-headlight-sunset_181624-60607.jpg?t=st=1729595890~exp=1729599490~hmac=39628bd738d3d79f62b0683e1cec809efbf1438e5a92503cf2f540f0b23eb7b5&w=900",
-
-    title: "Audi A5",
-    description: "Convertable",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://th.bing.com/th/id/OIP.Ogo7SswTG3ARSaqUgNyCmAHaEK?rs=1&pid=ImgDetMain",
-    title: "Bugatti Chiron",
-    description: "Bugatti Chiron",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://www.classicdriver.com/sites/default/files/cars_images/feed_681175/mclaren-p1-033.jpg",
-    title: "Lamborghini Aventador",
-    description: "Lamborghini Aventador",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://s1.cdn.autoevolution.com/images/gallery/PORSCHE-918-Spyder-5142_26.jpg",
-    title: "McLaren P1",
-    description: "McLaren P1",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://th.bing.com/th/id/OIP.MA4MAptPvidIi1XFQy25SQHaEK?rs=1&pid=ImgDetMain",
-    title: "Porsche 918 Spyder",
-    description: "Porsche 918 Spyder",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://koenigsegg-cdn-g7eehhd6f0ewcaff.z02.azurefd.net/drupal/styles/autox720/azure/2023-07/KenoZache_IMG_9162.jpg?itok=-K-Fscdv",
-    title: "Koenigsegg Jesko",
-    description: "Koenigsegg Jesko",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  },
-  {
-    img: "https://media.hagerty.com/media/wp-content/uploads/2023/03/Aston-Martin-Valkyrie-Dynamic-75-scaled-1-e1678124190760.jpeg",
-    title: "Aston Martin Valkyrie",
-    description: "Twin Engine Turboprop",
-    totalTime: "19 Hrs 30 Min",
-    pax: 6,
-    price: "INR 28,75,400/-"
-  }
-];
+import { ref, onValue, query, orderByChild } from 'firebase/database';
+import { database } from '../firebaseConfig'; // Import from your firebase.js file
 
 export default function LuxuryCarSearch() {
   const [carName, setCarName] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [filteredCars, setFilteredCars] = useState(cardData);
-  const [isLoading, setIsLoading] = useState(false);
+  const [cars, setCars] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
+
+  // Fetch data from Firebase
+  useEffect(() => {
+    const carsRef = ref(database, 'cars');
+    
+    onValue(carsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const carsData = [];
+        snapshot.forEach((childSnapshot) => {
+          const car = childSnapshot.val();
+          carsData.push({
+            id: childSnapshot.key,
+            ...car
+          });
+        });
+        setCars(carsData);
+        setFilteredCars(carsData);
+      } else {
+        // If no data, provide fallback
+        setCars([]);
+        setFilteredCars([]);
+      }
+      setIsLoading(false);
+    }, (error) => {
+      console.error("Error fetching data:", error);
+      setIsLoading(false);
+    });
+  }, []);
 
   const handleFilter = () => {
     setIsLoading(true);
     
     setTimeout(() => {
-      const filtered = cardData.filter(
+      const filtered = cars.filter(
         (car) =>
           (carName ? car.title.toLowerCase().includes(carName.toLowerCase()) : true) &&
-          (maxPrice ? parseInt(car.price.replace(/[^0-9]/g, ""), 10) <= parseInt(maxPrice, 10) : true)
+          (maxPrice ? parsePrice(car.price) <= parseInt(maxPrice, 10) : true)
       );
       setFilteredCars(filtered);
       setIsLoading(false);
     }, 500); // Simulate loading
   };
 
+  // Parse price string to number
+  const parsePrice = (priceString) => {
+    if (!priceString) return 0;
+    return parseInt(priceString.replace(/[^0-9]/g, ""), 10);
+  };
+
   const handleCategoryFilter = (category) => {
     setActiveFilter(category);
     
     if (category === "all") {
-      setFilteredCars(cardData);
+      setFilteredCars(cars);
     } else {
-      // This is just a placeholder. In a real app, you would filter by actual categories
-      const filtered = cardData.filter(car => 
-        category === "luxury" ? car.price.includes("28,75,400") : true
+      // Filter by category field in Firebase data
+      const filtered = cars.filter(car => 
+        car.category === category
       );
       setFilteredCars(filtered);
     }
   };
-
-  useEffect(() => {
-    // Apply initial filter when component mounts
-    handleFilter();
-  }, []);
 
   return (
     <div className="bg-[#161617] min-h-screen">
@@ -120,7 +92,7 @@ export default function LuxuryCarSearch() {
       {/* Search Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
         <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold  mb-6 text-blue-800">Find Your Perfect Car</h2>
+          <h2 className="text-2xl font-bold mb-6 text-blue-800">Find Your Perfect Car</h2>
           
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div>
@@ -213,7 +185,7 @@ export default function LuxuryCarSearch() {
         {/* Results Count */}
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-medium text-white">
-            {filteredCars.length} cars found
+            {isLoading ? "Loading..." : `${filteredCars.length} cars found`}
           </h3>
           <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-2">Sort by:</span>
@@ -226,7 +198,11 @@ export default function LuxuryCarSearch() {
         </div>
 
         {/* Car Grid */}
-        {filteredCars.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-900"></div>
+          </div>
+        ) : filteredCars.length === 0 ? (
           <div className="bg-white rounded-lg p-8 text-center">
             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -238,7 +214,7 @@ export default function LuxuryCarSearch() {
                 onClick={() => {
                   setCarName("");
                   setMaxPrice("");
-                  setFilteredCars(cardData);
+                  setFilteredCars(cars);
                 }}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#F9672C] hover:bg-[#F9672C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
@@ -248,9 +224,9 @@ export default function LuxuryCarSearch() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredCars.map((car, index) => (
+            {filteredCars.map((car) => (
               <div
-                key={index}
+                key={car.id}
                 className="bg-black rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative">
