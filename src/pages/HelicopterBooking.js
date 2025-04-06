@@ -6,7 +6,6 @@ import FaqSection from '../components/FaqSection';
 // import FaqSection from './components/FaqSection.jsx';
 
 const HelicopterBooking = () => {
-  // JSON data for helicopters
   const [helicopters, setHelicopters] = useState({
     featured: [
       {
