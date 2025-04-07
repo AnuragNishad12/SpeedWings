@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { database } from '../firebaseConfig'; // Make sure this file exists with your Firebase config
-import { ref, onValue, off } from 'firebase/database';
+import { database } from '../firebaseConfig';
+import { ref, onValue, off, push } from 'firebase/database';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { motion } from 'framer-motion';
 
 // Assuming you have these components defined elsewhere
@@ -19,6 +22,8 @@ const HelicopterBooking = () => {
     helicopterType: '',
     message: ''
   });
+  const [testimonials, setTestimonials] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Stats data (still static as it wasn't requested to be moved to database)
   const stats = [
@@ -52,7 +57,7 @@ const HelicopterBooking = () => {
   useEffect(() => {
     const helicoptersRef = ref(database, 'helicopters');
     
-    const unsubscribe = onValue(helicoptersRef, (snapshot) => {
+    const fetchHelicopters = onValue(helicoptersRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         const helicoptersArray = Object.entries(data).map(([id, value]) => ({
@@ -67,7 +72,28 @@ const HelicopterBooking = () => {
 
     window.scrollTo(0, 0);
 
-    return () => off(helicoptersRef, 'value', unsubscribe);
+    return () => off(helicoptersRef, 'value', fetchHelicopters);
+  }, []);
+
+  useEffect(() => {
+    const testimonialsRef = ref(database, 'testimonials');
+    
+    const fetchTestimonials = onValue(testimonialsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const testimonialsArray = Object.entries(data).map(([id, value]) => ({
+          id,
+          ...value
+        }));
+        setTestimonials(testimonialsArray);
+      } else {
+        setTestimonials([]);
+      }
+    }, (error) => {
+      console.error('Error fetching testimonials:', error);
+    });
+
+    return () => off(testimonialsRef, 'value', fetchTestimonials);
   }, []);
 
   const filteredHelicopters = activeCategory === 'All' 
@@ -76,20 +102,61 @@ const HelicopterBooking = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [name]: value
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Booking request received! We will contact you shortly.');
+    setIsSubmitting(true);
+
+    try {
+      // Create a reference to the bookings node in your database
+      const bookingsRef = ref(database, 'bookings');
+      
+      // Add a timestamp to the booking data
+      const bookingData = {
+        ...formData,
+        timestamp: new Date().toISOString(),
+        status: 'new' // Initial status for new bookings
+      };
+
+      // Push the data to Firebase (creates a new entry with unique ID)
+      await push(bookingsRef, bookingData);
+
+      // Show success message with toast
+      toast.success("Thank you! We will contact you soon for your inquiry.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        helicopterType: '',
+        message: ''
+      });
+      
+    } catch (error) {
+      console.error("Error submitting booking:", error);
+      toast.error("There was an error submitting your booking. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ToastContainer />
       <Navbar />
       
       {/* Hero Section */}
@@ -130,7 +197,7 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Why Choose Our Helicopter Service</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -138,24 +205,24 @@ const HelicopterBooking = () => {
               <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-clock text-2xl"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">Time Efficiency</h3>
-              <p className="text-gray-600">Skip the traffic and reduce travel time by up to 80%. Get to your destination in minutes instead of hours.</p>
+              <h3 className="text-xl font-bold mb-3 text-white">Time Efficiency</h3>
+              <p className="text-gray-400">Skip the traffic and reduce travel time by up to 80%. Get to your destination in minutes instead of hours.</p>
             </motion.div>
             
             <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }}>
               <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-gem text-2xl"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">Unmatched Luxury</h3>
-              <p className="text-gray-600">Our helicopters feature premium interiors designed for maximum comfort and style during your journey.</p>
+              <h3 className="text-xl font-bold mb-3 text-white">Unmatched Luxury</h3>
+              <p className="text-gray-400">Our helicopters feature premium interiors designed for maximum comfort and style during your journey.</p>
             </motion.div>
             
             <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }}>
               <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
                 <i className="fas fa-shield-alt text-2xl"></i>
               </div>
-              <h3 className="text-xl font-bold mb-3">Safety First</h3>
-              <p className="text-gray-600">With experienced pilots and rigorous maintenance protocols, safety is always our highest priority.</p>
+              <h3 className="text-xl font-bold mb-3 text-white">Safety First</h3>
+              <p className="text-gray-400">With experienced pilots and rigorous maintenance protocols, safety is always our highest priority.</p>
             </motion.div>
           </div>
         </div>
@@ -167,25 +234,25 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Premium Fleet</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
           </div>
           
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button 
               onClick={() => setActiveCategory('All')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               All
             </button>
             <button 
               onClick={() => setActiveCategory('VIP')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               VIP
             </button>
             <button 
               onClick={() => setActiveCategory('Executive')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-blue-900 text-black' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
               Executive
             </button>
@@ -216,7 +283,7 @@ const HelicopterBooking = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-600 mb-4">{helicopter.description}</p>
+                  <p className="text-gray-400 mb-4">{helicopter.description}</p>
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-2">
                       <i className="fas fa-users text-yellow-500"></i>
@@ -231,8 +298,8 @@ const HelicopterBooking = () => {
                       <span className="text-white font-medium">{helicopter.range}</span>
                     </div>
                   </div>
-                  <div className="border-t border-gray-100 pt-4">
-                    <h4 className="font-semibold mb-2">Features:</h4>
+                  <div className="border-t border-gray-700 pt-4">
+                    <h4 className="font-semibold mb-2 text-white">Features:</h4>
                     <div className="flex flex-wrap gap-2">
                       {helicopter.features.map((feature, idx) => (
                         <span key={idx} className="bg-[#161617] text-white px-3 py-1 rounded-full text-sm">
@@ -242,7 +309,7 @@ const HelicopterBooking = () => {
                     </div>
                   </div>
                   <a 
-                    href="#/helicopter" 
+                    href="#booking" 
                     className="mt-6 block w-full bg-blue-900 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   >
                     Book This Helicopter
@@ -283,38 +350,48 @@ const HelicopterBooking = () => {
 
       {/* Testimonials */}
       <section className="py-20 bg-[#161617]">
-        <div className="container mx-auto px-4 bg-[#161617]">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
-            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -5 }}>
-              <div className="flex items-center mb-4">
-                <div className="text-yellow-500">
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                </div>
-              </div>
-              <p className="text-gray-600 italic mb-6">"The helicopter service exceeded all my expectations..."</p>
-              <div className="flex items-center">
-                <div className="mr-4">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                </div>
-                <div>
-                  <h4 className="font-bold">Michael Johnson</h4>
-                  <p className="text-gray-500 text-sm">CEO, Global Enterprises</p>
-                </div>
-              </div>
-            </motion.div>
-            {/* Add other testimonials similarly */}
-          </div>
+      <div className="container mx-auto px-4 bg-[#161617]">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
+          <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
+          <p className="text-gray-300 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
         </div>
-      </section>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.length === 0 ? (
+            <p className="text-white text-center col-span-3">No testimonials available.</p>
+          ) : (
+            testimonials.map((testimonial) => (
+              <motion.div 
+                key={testimonial.id}
+                className="bg-black p-8 rounded-xl shadow-lg"
+                whileHover={{ y: -5 }}
+              >
+                <p className="text-gray-400 italic mb-6">"{testimonial.message}"</p>
+                <div className="flex items-center">
+                  <div className="mr-4">
+                    {/* If imageUrl exists, use it; otherwise, use the placeholder */}
+                    {testimonial.imageUrl ? (
+                      <img 
+                        src={testimonial.imageUrl} 
+                        alt={testimonial.name} 
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white">{testimonial.name}</h4>
+                    <p className="text-gray-500 text-sm">{testimonial.designation}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          )}
+        </div>
+      </div>
+    </section>
 
       {/* Booking Section */}
       <section id="booking" className="py-20 bg-[#161617]">
@@ -322,7 +399,7 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Book Your Helicopter Experience</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -435,9 +512,10 @@ const HelicopterBooking = () => {
                     </div>
                     <button 
                       type="submit" 
-                      className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
+                      className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold hover:bg-blue-800 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
+                      disabled={isSubmitting}
                     >
-                      Request Booking
+                      {isSubmitting ? 'Processing...' : 'Request Booking'}
                     </button>
                   </form>
                 </div>
