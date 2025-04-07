@@ -96,7 +96,7 @@
 .section-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, #F9672C, transparent);
+  background: linear-gradient(to right, #1E3A8A transparent);
 }
 
 /* Blog Grid */
@@ -201,7 +201,7 @@
 }
 
 .read-more-btn:hover {
-  background-color: #F9672C;
+  background-color: #1E3A8A;
   color: white;
 }
 
@@ -248,7 +248,7 @@
 }
 
 .newsletter-form button {
-  background: #F9672C;
+  background: #1E3A8A;
   color: white;
   border: none;
   padding: 0 30px;
@@ -260,7 +260,7 @@
 }
 
 .newsletter-form button:hover {
-  background: #c4a030;
+  background: #1E3A8A;
 }
 
 /* Responsive Design */
