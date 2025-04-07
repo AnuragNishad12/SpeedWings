@@ -77,10 +77,10 @@ const BlogPage = () => {
           <div className="hero-content">
             <h1 className="hero-title">Luxury Jets Blog</h1>
             <p className="hero-quote">"The sky is not the limit; it's just the beginning of your journey."</p>
-            <div className="hero-search">
+            {/* <div className="hero-search">
               <input type="text" placeholder="Search articles..." />
               <button><i className="fas fa-search"></i></button>
-            </div>
+            </div> */}
           </div>
         </section>
 
