@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronDown, Clock, MapPin, Shield, ArrowLeft } from "lucide-react";
+import { ChevronRight, ChevronDown, Clock, MapPin, Shield, ArrowLeft, Menu, X } from "lucide-react";
 
 const options = [
   {
@@ -89,33 +89,60 @@ export default function LuxuryTransportSelector() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-gray-900 to-black text-white overflow-hidden">
-      {/* Brand Logo */}
-      <div className="absolute top-6 left-6 z-50">
-        <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center">
-            <span className="font-bold text-white text-xl">L</span>
+      {/* Professional Header with Logo and Navigation */}
+      <div className="absolute top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center">
+              <span className="font-bold text-white text-xl">X</span>
+            </div>
+            <span className="font-bold text-xl text-white">Xelevate</span>
           </div>
+          
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-full border border-white/20 flex items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-white" />
+              ) : (
+                <Menu className="w-6 h-6 text-white" />
+              )}
+            </button>
+          )}
+          
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <div className="flex items-center gap-6">
+              {options.map((option) => (
+                <button
+                  key={option.name}
+                  className={`py-2 px-4 rounded-full text-sm font-medium transition-all ${
+                    selected.name === option.name
+                      ? "bg-gradient-to-r from-[#F9672C] to-violet-700 text-white"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                  onClick={() => handleOptionSelect(option)}
+                >
+                  <span className="mr-2">{option.icon}</span>
+                  {option.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Mobile Menu Toggle Button - Only visible when content is not showing */}
-      {isMobile && !showContentOnMobile && (
-        <div className="fixed top-6 right-6 z-50">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
-          >
-            <ChevronDown className={`w-5 h-5 text-white transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-          </button>
-        </div>
-      )}
-
       {/* Mobile Back Button - Only visible when content is showing */}
       {isMobile && showContentOnMobile && (
-        <div className="fixed top-6 left-6 z-50">
+        <div className="fixed top-20 left-6 z-40">
           <button
             onClick={handleBackToMenu}
-            className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 ml-12"
+            className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
@@ -131,7 +158,7 @@ export default function LuxuryTransportSelector() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 bg-black/95 z-40 pt-20 px-6 pb-8 flex flex-col"
           >
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 mt-8">
               {options.map((option) => (
                 <button
                   key={option.name}
@@ -150,22 +177,15 @@ export default function LuxuryTransportSelector() {
                 </button>
               ))}
             </div>
-            
-            <button 
-              onClick={() => setIsMenuOpen(false)}
-              className="mt-auto mx-auto px-6 py-3 rounded-full bg-white/10 text-sm"
-            >
-              Close Menu
-            </button>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Desktop Sidebar / Mobile Full Menu View */}
-      {(!isMobile || !showContentOnMobile) && (
-        <div className={`${isMobile ? 'fixed inset-0 z-40' : 'hidden md:flex w-64 lg:w-80 h-full flex-shrink-0'}`}>
+      {(!isMobile || !showContentOnMobile) && !isMenuOpen && (
+        <div className={`${isMobile ? 'fixed inset-0 z-30 mt-16' : 'hidden md:flex w-64 lg:w-80 h-full flex-shrink-0 pt-20'}`}>
           {/* Side Navigation */}
-          <div className={`w-full bg-black/40 backdrop-blur-md px-6 py-20 flex flex-col ${isMobile ? 'h-full' : ''}`}>
+          <div className={`w-full bg-black/40 backdrop-blur-md px-6 py-8 flex flex-col ${isMobile ? 'h-full' : ''}`}>
             <h2 className="text-2xl font-bold mb-8 px-4">Luxury Transport</h2>
             
             <div className="flex flex-col space-y-3">
@@ -211,8 +231,8 @@ export default function LuxuryTransportSelector() {
       )}
 
       {/* Content Area - Desktop always visible, Mobile conditionally visible */}
-      {(!isMobile || showContentOnMobile) && (
-        <div className="flex-1 relative overflow-hidden">
+      {(!isMobile || showContentOnMobile) && !isMenuOpen && (
+        <div className="flex-1 relative overflow-hidden pt-16">
           {/* Background Gradient */}
           <motion.div 
             key={`bg-${selected.name}`}
