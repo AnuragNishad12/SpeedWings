@@ -6,10 +6,10 @@ const HomePage = () => {
     <div className="relative w-full h-screen overflow-hidden">
 <div className="relative w-full h-full">
   {/* Video Background */}
-  <video autoPlay loop muted className="absolute w-full h-full object-cover">
-    <source src={video} type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
+  <video autoPlay loop muted playsInline className="absolute w-full h-full object-cover">
+  <source src={video} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
   {/* Black Overlay */}
   <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
