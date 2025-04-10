@@ -14,7 +14,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-2 mt-4 text-gold">
             <FaPhoneAlt />
-            <span className="text-gold text-[#808080]">IN +91-11-40845858</span>
+            <span className="text-gold text-[#808080]">IN  +91-9916989179</span>
           </div>
         </div>
         <div>
