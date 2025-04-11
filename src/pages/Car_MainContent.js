@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ref, onValue, query, orderByChild } from 'firebase/database';
-import { database } from '../firebaseConfig'; // Import from your firebase.js file
+import { ref, onValue } from 'firebase/database';
+import { database } from '../firebaseConfig';
 
 export default function LuxuryCarSearch() {
   const [carName, setCarName] = useState("");
@@ -9,6 +9,8 @@ export default function LuxuryCarSearch() {
   const [filteredCars, setFilteredCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [showDialog, setShowDialog] = useState(false);
 
   // Fetch data from Firebase
   useEffect(() => {
@@ -27,7 +29,6 @@ export default function LuxuryCarSearch() {
         setCars(carsData);
         setFilteredCars(carsData);
       } else {
-        // If no data, provide fallback
         setCars([]);
         setFilteredCars([]);
       }
@@ -49,10 +50,9 @@ export default function LuxuryCarSearch() {
       );
       setFilteredCars(filtered);
       setIsLoading(false);
-    }, 500); // Simulate loading
+    }, 500);
   };
 
-  // Parse price string to number
   const parsePrice = (priceString) => {
     if (!priceString) return 0;
     return parseInt(priceString.replace(/[^0-9]/g, ""), 10);
@@ -64,12 +64,122 @@ export default function LuxuryCarSearch() {
     if (category === "all") {
       setFilteredCars(cars);
     } else {
-      // Filter by category field in Firebase data
       const filtered = cars.filter(car => 
         car.category === category
       );
       setFilteredCars(filtered);
     }
+  };
+
+  const openDetailsDialog = (car) => {
+    setSelectedCar(car);
+    setShowDialog(true);
+  };
+
+  const closeDetailsDialog = () => {
+    setShowDialog(false);
+    setSelectedCar(null);
+  };
+
+  // The detailed dialog component - Fixed to follow React Hooks rules
+  const CarDetailsDialog = () => {
+    // Defining the state outside of any condition
+    const [activeImage, setActiveImage] = useState('');
+    
+    // If there's a coverImg property, we assume the car might have additional images
+    // In a real implementation, you would fetch these from Firebase
+    const additionalImages = selectedCar ? [
+      selectedCar.coverImg,
+      // For demo purposes - in a real app, these would come from Firebase
+      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Fside_view.jpg?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Finterior.jpg?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Fback_view.jpg?alt=media"
+    ] : [];
+    
+    // Update activeImage when selectedCar changes
+    useEffect(() => {
+      if (selectedCar && selectedCar.coverImg) {
+        setActiveImage(selectedCar.coverImg);
+      }
+    }, [selectedCar]);
+
+   
+    if (!selectedCar || !showDialog) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center mt-10 z-50 p-4">
+        <div className="bg-white rounded-xl max-w-4xl w-full max-h-full overflow-auto">
+          <div className="flex justify-between items-center p-6 border-b">
+            <h2 className="text-2xl font-bold text-gray-900">{selectedCar.title}</h2>
+            <button onClick={closeDetailsDialog} className="text-gray-500 hover:text-gray-700">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="p-6">
+       
+            <div className="relative h-80 mb-4">
+              <img src={activeImage} alt={selectedCar.title} className="w-full h-full object-cover rounded-lg" />
+            </div>
+            
+      
+            <div className="grid grid-cols-4 gap-2 mb-6">
+              {additionalImages.map((img, index) => (
+                <div 
+                  key={index}
+                  onClick={() => setActiveImage(img)}
+                  className={`cursor-pointer h-20 overflow-hidden rounded-lg border-2 ${activeImage === img ? 'border-blue-600' : 'border-transparent'}`}
+                >
+                  <img src={img} alt={`${selectedCar.title} view ${index + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+            
+            {/* Car details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Vehicle Details</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between border-b border-gray-200 py-2">
+                    <span className="text-gray-600">Model</span>
+                    <span className="font-medium">{selectedCar.title}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-gray-200 py-2">
+                    <span className="text-gray-600">Price</span>
+                    <span className="font-medium">{selectedCar.price}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-gray-200 py-2">
+                    <span className="text-gray-600">Kilometers</span>
+                    <span className="font-medium">{selectedCar.kilometers} km</span>
+                  </div>
+                  <div className="flex justify-between border-b border-gray-200 py-2">
+                    <span className="text-gray-600">Passengers</span>
+                    <span className="font-medium">{selectedCar.pax}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-gray-200 py-2">
+                    <span className="text-gray-600">Duration</span>
+                    <span className="font-medium">{selectedCar.totalTime} hours</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
+                <p className="text-gray-600">{selectedCar.description}</p>
+                
+                <div className="mt-8">
+                  <button className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 px-4 rounded-lg font-medium transition-colors">
+                    Enquiry Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -144,7 +254,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("all")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "all"
-                ? "bg-blue-900 text-black"
+                ? "bg-blue-900 text-white"
                 : "bg-white text-black hover:bg-gray-100"
             }`}
           >
@@ -154,7 +264,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("luxury")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "luxury"
-                ? "bg-blue-900 text-black"
+                ? "bg-blue-900 text-white"
                 : "bg-white text-black hover:bg-gray-100"
             }`}
           >
@@ -164,7 +274,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("sports")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "sports"
-                ? "bg-blue-900 text-black"
+                ? "bg-blue-900 text-white"
                 : "bg-white text-black hover:bg-gray-100"
             }`}
           >
@@ -174,7 +284,7 @@ export default function LuxuryCarSearch() {
             onClick={() => handleCategoryFilter("convertible")}
             className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
               activeFilter === "convertible"
-                ? "bg-blue-900 text-black"
+                ? "bg-blue-900 text-white"
                 : "bg-white text-black hover:bg-gray-100"
             }`}
           >
@@ -230,7 +340,11 @@ export default function LuxuryCarSearch() {
                 className="bg-black rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative">
-                  <img src={car.img} alt={car.title} className="w-full h-60 object-cover" />
+                  <img 
+                    src={car.coverImg || car.img} 
+                    alt={car.title} 
+                    className="w-full h-60 object-cover" 
+                  />
                   <div className="absolute top-4 right-4 bg-blue-900 text-white text-sm font-bold px-3 py-1 rounded-full">
                     Premium
                   </div>
@@ -244,18 +358,30 @@ export default function LuxuryCarSearch() {
                   </div>
                   <p className="text-[#8b868a] mb-4">{car.description}</p>
                   
-                  <div className="flex flex-col space-y-2 mb-4">
+                  <div className="grid grid-cols-2 gap-2 mb-4">
                     <div className="flex items-center text-sm text-gray-500">
                       <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="text-[#8b868a]">{car.totalTime}</span>
+                      <span className="text-[#8b868a]">{car.totalTime} hour</span>
                     </div>
                     <div className="flex items-center text-sm text-gray-500">
                       <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                       <span className="text-[#8b868a]">{car.pax} Passengers</span>
+                    </div>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      <span className="text-[#8b868a]">{car.kilometers} km</span>
+                    </div>
+                    <div className="flex items-center text-sm text-gray-500">
+                      <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-[#8b868a]">Verified</span>
                     </div>
                   </div>
                   
@@ -264,7 +390,10 @@ export default function LuxuryCarSearch() {
                       <p className="text-gray-500 text-sm">Starting from</p>
                       <p className="text-2xl font-bold text-white">{car.price}</p>
                     </div>
-                    <button className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
+                    <button 
+                      onClick={() => openDetailsDialog(car)}
+                      className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+                    >
                       View Details
                     </button>
                   </div>
@@ -297,6 +426,9 @@ export default function LuxuryCarSearch() {
           </div>
         )}
       </div>
+      
+      {/* Car Details Dialog */}
+      {showDialog && <CarDetailsDialog />}
     </div>
   );
 }
