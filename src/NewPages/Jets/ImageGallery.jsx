@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../Footer';
 import '../../index.css';
+import ContactForm from '../ContactForm'
 import { getDatabase, ref, onValue } from 'firebase/database';
 
 // Image Gallery Component
@@ -350,10 +351,12 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
   };
   
   return (
+    <div>
     <div className="bg-black p-4 rounded-md shadow-sm border-1 border-blue-900">
       <h2 className="text-lg font-semibold mb-3 text-white">Filter By</h2>
+    
       <div className="border-b border-gray-200 my-3"></div>
-
+     
       <div className="mt-3">
         <h3 className="text-sm font-medium uppercase mb-3 text-white">AIRCRAFT TYPE</h3>
 
@@ -375,6 +378,8 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
           ))}
         </div>
       </div>
+    </div>
+    
     </div>
   );
 };
@@ -505,6 +510,8 @@ const AircraftShowcase = () => {
           </div>
         </div>
       </div>
+      <h2 className="text-4xl font-bold text-center text-white mb-12">Get in Touch</h2>
+      <ContactForm/>
       <Footer/>
     </div>
   );

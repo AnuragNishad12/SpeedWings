@@ -245,16 +245,22 @@ const HelicopterBooking = () => {
               All
             </button>
             <button 
-              onClick={() => setActiveCategory('VIP')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'VIP' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              onClick={() => setActiveCategory('CHOPPERS ON REQUEST')}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS ON REQUEST' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
-              VIP
+              CHOPPERS ON REQUEST
             </button>
             <button 
-              onClick={() => setActiveCategory('Executive')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'Executive' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              onClick={() => setActiveCategory('CHOPPERS ON STAND-BY')}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS ON STAND-BY' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
             >
-              Executive
+              CHOPPERS ON STAND-BY
+            </button>
+            <button 
+              onClick={() => setActiveCategory('CHOPPERS BY SEAT')}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS BY SEAT' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+            >
+              CHOPPERS BY SEAT
             </button>
           </div>
           
@@ -397,7 +403,7 @@ const HelicopterBooking = () => {
       <section id="booking" className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Book Your Helicopter Experience</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Enquiry About Chopper Booking</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-300 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
           </div>
@@ -413,7 +419,7 @@ const HelicopterBooking = () => {
                     </div>
                     <div className="flex items-start">
                       <i className="fas fa-phone-alt mt-1 mr-4"></i>
-                      <p>+1 (555) 123-4567</p>
+                      <p>+91-9916989179</p>
                     </div>
                     <div className="flex items-start">
                       <i className="fas fa-envelope mt-1 mr-4"></i>
@@ -482,21 +488,22 @@ const HelicopterBooking = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-black mb-2" htmlFor="helicopterType">Helicopter Type</label>
-                        <select 
-                          id="helicopterType"
-                          name="helicopterType"
-                          value={formData.helicopterType}
-                          onChange={handleInputChange}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                          required
-                        >
-                          <option value="">Select a helicopter</option>
-                          {helicopters.map(heli => (
-                            <option key={heli.id} value={heli.title}>{heli.title}</option>
-                          ))}
-                        </select>
-                      </div>
+  <label className="block text-black mb-2" htmlFor="tripType">Trip Type</label>
+  <select 
+    id="tripType"
+    name="tripType"
+    value={formData.tripType}
+    onChange={handleInputChange}
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+    required
+  >
+    <option value="">Select a trip type</option>
+    <option value="One Way">One Way</option>
+    <option value="Round Trip">Round Trip</option>
+    <option value="Multi-Trip">Multi-Trip</option>
+  </select>
+</div>
+
                     </div>
                     <div>
                       <label className="block text-black mb-2" htmlFor="message">Additional Information</label>
