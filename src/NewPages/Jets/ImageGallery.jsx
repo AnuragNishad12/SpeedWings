@@ -51,15 +51,15 @@ const AircraftCard = ({ aircraft }) => {
         
         <div className="md:w-1/2 p-8 flex flex-col justify-between">
           <div>
-            <div className="mb-5">
+            <div className="mb-2">
               <h2 className="text-3xl font-bold text-white mb-2 font-serif">
                 {aircraft.name}
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
             </div>
 
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">Description</h3>
-            <p className="text-gray-600 leading-relaxed mb-5">
+            <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
+            <p className="text-xs text-gray-600 leading-relaxed mb-5">
               {aircraft.shortDescription}
             </p>
           </div>
