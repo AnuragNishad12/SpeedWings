@@ -1,30 +1,31 @@
 import React from 'react';
 import Footer from './Footer';
 import Navbar from '../components/Navbar';
+import person from '../assets/person.png'
 
 const teamMembers = [
   { 
-    name: 'Kanika Tekriwal', 
+    name: 'Mayank', 
     role: 'Founder', 
-    image: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: 'https://static.vecteezy.com/system/resources/previews/000/546/107/original/businessman-in-suit-head-vector-icon.jpg',
     bio: 'Visionary leader with over 15 years in aviation, pioneering innovative flight solutions.'
   },
   { 
     name: 'Akshat Aggarwal', 
     role: 'CFO', 
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: 'https://static.vecteezy.com/system/resources/previews/000/546/107/original/businessman-in-suit-head-vector-icon.jpg',
     bio: 'Strategic financial expert ensuring sustainable growth and operational excellence.'
   },
   { 
     name: 'Arijit Moulik', 
     role: 'Sr. VP Commercial', 
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: 'https://static.vecteezy.com/system/resources/previews/000/546/107/original/businessman-in-suit-head-vector-icon.jpg',
     bio: 'Leading market expansion and partnership development across global markets.'
   },
   { 
     name: 'Hinata', 
     role: 'Co-Founder', 
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: 'https://static.vecteezy.com/system/resources/previews/000/546/107/original/businessman-in-suit-head-vector-icon.jpg',
     bio: 'Technology innovator with expertise in aviation systems and passenger experience.'
   },
 ];
