@@ -27,7 +27,7 @@ const RentalCard = ({ name, location, rating, reviewCount, ratingText, price, im
         <div className="mt-3 pt-2 border-t border-gray-700">
           <p className="text-right">
             <span className="text-gray-400 text-xs">Starting from </span>
-            <span className="font-bold text-base bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="font-bold text-base bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500 bg-clip-text text-transparent">
               ₹ {price}
             </span>
           </p>
@@ -199,13 +199,13 @@ const HomeCarousel = () => {
     id="right-line"
   ></div>
   
-  <a href="#apply" className="inline-block relative px-8 py-3 text-white font-medium overflow-hidden group z-10">
+  <a href="#/Contact" className="inline-block relative px-8 py-3 text-white font-medium overflow-hidden group z-10">
     <span className="absolute inset-0 border border-transparent group-hover:border-white transition-all duration-300"></span>
     <span className="absolute inset-0 bg-black"></span>
-    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></span>
-    <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></span>
-    <span className="absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></span>
-    <span className="absolute inset-y-0 right-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></span>
+    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500"></span>
+    <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500"></span>
+    <span className="absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-500 to-blue-500"></span>
+    <span className="absolute inset-y-0 right-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-500 to-blue-500"></span>
     <span className="relative flex items-center">
       Enquire now
       <svg className="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
