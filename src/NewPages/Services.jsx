@@ -51,9 +51,9 @@ export default function VerdiepingServices() {
       <div className="max-w-4xl w-full relative">
         {/* Background glow effect with animation */}
         <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-full h-full">
-          <div className="absolute w-64 h-64 rounded-full bg-red-500 opacity-30 blur-3xl animate-pulse"></div>
+          {/* <div className="absolute w-64 h-64 rounded-full bg-red-500 opacity-30 blur-3xl animate-pulse"></div>
           <div className="absolute right-0 w-64 h-64 rounded-full bg-purple-500 opacity-30 blur-3xl animate-pulse" 
-               style={{ animationDelay: '1.5s' }}></div>
+               style={{ animationDelay: '1.5s' }}></div> */}
         </div>
         
         {/* Main content */}

@@ -160,8 +160,8 @@ const HomeCarousel = () => {
     <div className="relative">
       {/* Background with gradient */}
       <div className="absolute inset-0 bg-black overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-black opacity-80"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-700 rounded-full filter blur-3xl opacity-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-black to-black opacity-80"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-700 rounded-full filter blur-3xl opacity-20"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-700 rounded-full filter blur-3xl opacity-10"></div>
       </div>
       
