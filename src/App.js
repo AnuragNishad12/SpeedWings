@@ -10,6 +10,7 @@ import Services from './NewPages/Services.jsx';
 import LuxurySlider from './NewPages/LuxurySlider.jsx';
 import LuxuryTransportSelector from './NewPages/TransportationExplorer.jsx';
 import AppDownloadPage from './NewPages/AppDownloadPage.jsx';
+import JetSelector from './NewPages/JetSelector.jsx';
 
 function App() {
     return ( 
@@ -20,6 +21,7 @@ function App() {
        <HomeCarousel/>
        <LuxurySlider/>
        {/* <AppDownloadPage/> */}
+       {/* <JetSelector/> */}
        <CustomerReviews/>
         <LuxuryTransportSelector/>
     
