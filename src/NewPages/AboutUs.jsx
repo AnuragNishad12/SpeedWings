@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from './Footer';
 import Navbar from '../components/Navbar';
-import person from '../assets/person.png'
+
 
 const teamMembers = [
   { 
