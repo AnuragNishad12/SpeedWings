@@ -128,7 +128,7 @@ export default function FlightBookingForm() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg p-4">
+          <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 rounded-lg p-4">
             <div className="grid md:grid-cols-4 gap-4">
               {/* Departure */}
               <div className="relative">
@@ -136,7 +136,7 @@ export default function FlightBookingForm() {
                   <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
                   </svg>
-                  <label className="text-gray-600">Departure</label>
+                  <label className="text-white">Departure</label>
                 </div>
                 <select
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
@@ -159,7 +159,7 @@ export default function FlightBookingForm() {
                   <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
                   </svg>
-                  <label className="text-gray-600">Arrival</label>
+                  <label className="text-white">Arrival</label>
                 </div>
                 <select
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
@@ -182,7 +182,7 @@ export default function FlightBookingForm() {
                   <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                   </svg>
-                  <label className="text-gray-600">Pax</label>
+                  <label className="text-white">Pax</label>
                 </div>
                 <input
                   type="number"
@@ -205,7 +205,7 @@ export default function FlightBookingForm() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <label className="text-gray-600">Departure Date, Time</label>
+                  <label className="text-white">Departure Date, Time</label>
                 </div>
                 <input
                   type="datetime-local"
