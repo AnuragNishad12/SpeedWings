@@ -16,6 +16,7 @@ export default function ImagePage() {
         Private Jet
       </p>
     </div>
+    
     <AircraftShowcase/>
    
     </div>

@@ -3,6 +3,7 @@ import Footer from '../Footer';
 import '../../index.css';
 import ContactForm from '../ContactForm'
 import { getDatabase, ref, onValue } from 'firebase/database';
+import FlightBookingForm from '../FlightBookingForm';
 
 // Image Gallery Component
 const ImageGallery = ({ images }) => {
@@ -484,6 +485,7 @@ const AircraftShowcase = () => {
   
   return (
     <div>
+      <FlightBookingForm/>
       <div className="bg-[#161617] py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-bold text-center text-white mb-12">Premium Aircraft Collection</h1>
@@ -510,8 +512,8 @@ const AircraftShowcase = () => {
           </div>
         </div>
       </div>
-      <h2 className="text-4xl font-bold text-center text-white mb-12">Get in Touch</h2>
-      <ContactForm/>
+      {/* <h2 className="text-4xl font-bold text-center text-white mb-12">Get in Touch</h2>
+      <ContactForm/> */}
       <Footer/>
     </div>
   );
