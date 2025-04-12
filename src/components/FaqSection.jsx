@@ -25,12 +25,12 @@
 //         {faqData.map((item, index) => (
 //           <div key={index} className="border-b pb-3">
 //             <div
-//               className="flex justify-between items-center cursor-pointer text-sm font-medium text-gray-700 py-2"
+//               className="flex justify-between items-center cursor-pointer text-sm font-medium text-white py-2"
 //               onClick={() => toggleFaq(index)}
 //             >
 //               {item.question}
 //               <i
-//                 className={`fas ${item.active ? "fa-minus" : "fa-plus"} text-[#F9672C]`}
+//                 className={fas ${item.active ? "fa-minus" : "fa-plus"} text-[#F9672C]}
 //               ></i>
 //             </div>
 //             {item.active && (
@@ -106,39 +106,40 @@ const FaqSection = () => {
   }
 
   return (
-    <section className="py-12 bg-[#161617]">
-      <div className="max-w-3xl mx-auto px-4">
+    <section className="py-5 bg-[#161617]">
+      <div className="max-w-3xl mx-auto px-1">
         <div className="flex items-center justify-center mb-12">
           <MessageCircle 
             size={28} 
             className="mr-3" 
-            style={{ color: "#00FF00" }} 
+            style={{ color: "blue" }} 
           />
           <h2 className="text-3xl font-bold text-white">Frequently Asked Questions</h2>
         </div>
 
-        <div className="bg-grey rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-black rounded-xl shadow-lg overflow-hidden">
           {faqData.map((item, index) => (
             <div 
               key={index} 
               className={`border-b border-gray-100 ${index === faqData.length - 1 ? 'border-b-0' : ''}`}
+
             >
               <button
                 className="w-full px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-opacity-30"
                 onClick={() => toggleFaq(index)}
                 style={{ 
-                  color: item.active ? "#F9672C" : "#1F2937",
+                  color: item.active ? "#1D4ED8" : "#8b868a",
                   focusRingColor: "#F9672C" 
                 }}
                 aria-expanded={item.active}
               >
-                <span className={`text-left font-medium ${item.active ? 'text-blue-900' : 'text-blue-900'}`}>
+                <span className={`text-left font-medium `}>
                   {item.question}
                 </span>
                 <span 
                   className="ml-4 flex-shrink-0 rounded-full bg-white border border-gray-200 p-1"
                   style={{ 
-                    color: item.active ? "#F9672C" : "#6B7280",
+                    color: item.active ? "#F9672C" : "#6B7280", // Set chevron color to red when active, gray when inactive
                     borderColor: item.active ? "#F9672C" : "#E5E7EB" 
                   }}
                 >
@@ -151,6 +152,7 @@ const FaqSection = () => {
               </button>
               <div 
                 className={`overflow-hidden transition-all duration-300 ${item.active ? 'max-h-96' : 'max-h-0'}`}
+
               >
                 <div className="px-6 pb-5 pt-0 text-white leading-relaxed">
                   <div className="border-l-4 pl-4 mb-3" style={{ borderColor: "#ffff" }}>
@@ -169,7 +171,7 @@ const FaqSection = () => {
           <p className="text-gray-600 mb-4">Still have questions?</p>
           <a href="/#/contact"
             className="px-6 py-3 rounded-lg font-medium text-white shadow-md transition-all hover:shadow-lg"
-            style={{ backgroundColor: "#161617" }}
+            style={{ backgroundColor: "black" }}
           >
             Contact Support
           </a>
