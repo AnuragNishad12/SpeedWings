@@ -109,7 +109,7 @@ const CustomerReviews = () => {
                   </div>
                   <p className="text-gray-400 text-sm mb-4">{review.text}</p>
                   <div className="text-xs text-gray-500 mt-auto w-full flex justify-between border-t pt-3 border-gray-700">
-                    <span className="text-green-400">Verified</span>
+                    {/* <span className="text-green-400">Verified</span> */}
                     <span>{formatDate(review.timestamp)}</span>
                   </div>
                 </div>
