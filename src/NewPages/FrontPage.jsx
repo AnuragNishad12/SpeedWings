@@ -1,27 +1,32 @@
 import React from "react";
-import video from "../assets/video.mp4"
+import video from "../assets/video.mp4";
+import styles from "./FrontPage.module.css";
 
 const HomePage = () => {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-<div className="relative w-full h-full">
-  {/* Video Background */}
-  <video autoPlay loop muted playsInline className="absolute w-full h-full object-cover">
-  <source src={video} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+    <div className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src={video} type="video/mp4" />
+      </video>
 
-  {/* Black Overlay */}
-  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-</div>
-      {/* <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div> */}
+      {/* Elegant overlay */}
+      <div className={styles.videoOverlay}></div>
 
-     
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+      <h1 className={`${styles.maskText} z-10 fade-in`}>XELEVATE</h1>
 
-        <h1 className="text-5xl font-bold">Xelevate</h1>
-        <h2 className="text-5xl font-bold text-[#39FF14] mt-2">Connoisseur of Luxury Travel</h2>
-      </div>
+
+<h1 
+  className="text-white z-10 font-bold text-xl sm:text-2xl md:text-3xl mt-6 text-center tracking-wide leading-snug"
+>
+  Connoisseur of Luxury Travel
+</h1>
     </div>
   );
 };
