@@ -28,7 +28,6 @@ export default function VerdiepingServices() {
     }
   ];
 
-  // Handle scroll to check if description should change color
   useEffect(() => {
     const handleScroll = () => {
       if (textRef.current) {
@@ -39,7 +38,7 @@ export default function VerdiepingServices() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -48,34 +47,25 @@ export default function VerdiepingServices() {
 
   return (
     <div className="bg-black w-full min-h-screen flex items-center justify-center p-6">
-      <div className="max-w-4xl w-full relative">
-        {/* Background glow effect with animation */}
-        <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-full h-full">
-          {/* <div className="absolute w-64 h-64 rounded-full bg-red-500 opacity-30 blur-3xl animate-pulse"></div>
-          <div className="absolute right-0 w-64 h-64 rounded-full bg-purple-500 opacity-30 blur-3xl animate-pulse" 
-               style={{ animationDelay: '1.5s' }}></div> */}
-        </div>
-        
-        {/* Main content */}
-        <div className="relative z-10 bg-opacity-80 bg-black backdrop-blur-sm rounded-3xl p-12 border border-gray-800 shadow-2xl overflow-hidden">
-          {/* Down arrow icon with animation */}
+      <div className="w-full max-w-full px-4 xl:px-0"> {/* Removed max-width constraint */}
+        <div className="relative z-10 bg-opacity-80 bg-black backdrop-blur-sm rounded-3xl p-6 md:p-12 border border-gray-800 shadow-2xl overflow-hidden">
           <div className="flex items-center mb-6">
-          
-            <h1 className="text-white text-6xl font-light animate-fadeIn"> Premium Transportation Solutions</h1>
+            <h1 className="text-white text-4xl md:text-6xl font-light animate-fadeIn">
+              Premium Transportation Solutions
+            </h1>
           </div>
           
-          {/* Description with color change on scroll */}
           <p 
             ref={textRef}
-            className={`transition-colors duration-500 text-xl mb-12 max-w-3xl ${
+            className={`transition-colors duration-500 text-lg md:text-xl mb-8 md:mb-12 max-w-3xl ${
               isScrolled ? 'text-gray-500' : 'text-white'
             }`}
           >
             We take the time to deeply understand your brand, its values, and the unique challenges of your industry, ensuring our solutions align perfectly with your vision.
           </p>
           
-          {/* Service cards with animations */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          {/* Grid layout for responsive full-width cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
             {services.map((service, index) => (
               <div 
                 key={index} 
@@ -113,7 +103,6 @@ export default function VerdiepingServices() {
         </div>
       </div>
       
-      {/* CSS animations */}
       <style jsx>{`
         @keyframes fadeInUp {
           from {

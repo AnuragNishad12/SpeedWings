@@ -3,6 +3,7 @@ import { database } from '../firebaseConfig';
 import { ref, onValue, off, push } from 'firebase/database';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FlightBookingForm from '../NewPages/FlightBookingForm';
 
 import { motion } from 'framer-motion';
 
@@ -158,6 +159,7 @@ const HelicopterBooking = () => {
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
       <Navbar />
+   
       
       {/* Hero Section */}
       <section className="relative h-screen">
@@ -190,7 +192,9 @@ const HelicopterBooking = () => {
           </svg>
         </div>
       </section>
-
+<div className='bg-[#161617]'>
+  <FlightBookingForm/>
+</div>
       {/* Why Choose Us Section */}
       <section className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
@@ -355,7 +359,7 @@ const HelicopterBooking = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-[#161617]">
+      {/* <section className="py-20 bg-[#161617]">
       <div className="container mx-auto px-4 bg-[#161617]">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
@@ -376,7 +380,7 @@ const HelicopterBooking = () => {
                 <p className="text-gray-400 italic mb-6">"{testimonial.message}"</p>
                 <div className="flex items-center">
                   <div className="mr-4">
-                    {/* If imageUrl exists, use it; otherwise, use the placeholder */}
+                  
                     {testimonial.imageUrl ? (
                       <img 
                         src={testimonial.imageUrl} 
@@ -397,7 +401,7 @@ const HelicopterBooking = () => {
           )}
         </div>
       </div>
-    </section>
+    </section> */}
 
       {/* Booking Section */}
       <section id="booking" className="py-20 bg-[#161617]">
@@ -532,7 +536,7 @@ const HelicopterBooking = () => {
         </div>
       </section>
 
-      <FaqSection />
+   
       <Footer />
     </div>
   );
