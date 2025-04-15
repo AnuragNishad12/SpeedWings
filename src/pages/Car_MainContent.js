@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from '../firebaseConfig';
+import FlightBookingForm from '../NewPages/FlightBookingForm'
 
 export default function LuxuryCarSearch() {
   const [carName, setCarName] = useState("");
@@ -198,7 +199,7 @@ export default function LuxuryCarSearch() {
           </div>
         </div>
       </div>
-
+        <FlightBookingForm/>
       {/* Search Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
         <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
