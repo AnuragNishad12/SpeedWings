@@ -8,6 +8,10 @@
   font-size: 16px;
 }
 
+html {
+    scroll-behavior: smooth;
+  }
+  
 
 :root {
     --primary-color: #003366;
