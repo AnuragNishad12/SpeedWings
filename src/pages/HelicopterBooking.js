@@ -196,7 +196,7 @@ const HelicopterBooking = () => {
   <FlightBookingForm/>
 </div>
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-[#161617]">
+      {/* <section className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Why Choose Our Helicopter Service</h2>
@@ -230,7 +230,7 @@ const HelicopterBooking = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Fleet Section */}
       <section id="fleet" className="py-20 bg-[#161617]">
@@ -404,7 +404,7 @@ const HelicopterBooking = () => {
     </section> */}
 
       {/* Booking Section */}
-      <section id="booking" className="py-20 bg-[#161617]">
+      {/* <section id="booking" className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Enquiry About Chopper Booking</h2>
@@ -534,7 +534,7 @@ const HelicopterBooking = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
    
       <Footer />
