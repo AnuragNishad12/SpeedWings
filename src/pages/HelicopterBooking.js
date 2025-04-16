@@ -162,7 +162,7 @@ const HelicopterBooking = () => {
    
       
       {/* Hero Section */}
-      <section className="relative h-screen">
+      <section className="relative h-96  overflow-hidden bg-cover bg-center">
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="absolute inset-0 overflow-hidden">
           <img 
@@ -178,7 +178,7 @@ const HelicopterBooking = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
               Elevate Your Journey with <span className="text-blue-900">Luxury Helicopter</span> Travel
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
