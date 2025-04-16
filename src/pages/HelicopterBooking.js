@@ -166,7 +166,7 @@ const HelicopterBooking = () => {
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="absolute inset-0 overflow-hidden">
           <img 
-            src="https://assets.gqindia.com/photos/5e14487f23730700087ee228/master/pass/Blade%20India.jpg"
+            src="https://images.unsplash.com/photo-1655743282195-52aa15f4072b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Luxury Helicopter"
             className="w-full h-full object-cover"
           />
@@ -178,9 +178,9 @@ const HelicopterBooking = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <h1 className="text-xl md:text-3xl lg:text-4xl font-bold mb-6 text-white leading-tight
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl
 ">
-              Elevate Your Journey with <span className="text-Yellow-900">Luxury Helicopter</span> Travel
+              Luxury Chopper Collection
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
               Experience unparalleled convenience, speed, and luxury with our exclusive helicopter charter services.
