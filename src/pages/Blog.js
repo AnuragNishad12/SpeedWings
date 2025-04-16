@@ -4,7 +4,7 @@ import 'aos/dist/aos.css';
 import "./Blog.css";
 import Footer from '../NewPages/Footer';
 import Navbar from '../components/Navbar';
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, push, set } from "firebase/database";
 import { database } from "../firebaseConfig"; // Make sure this path matches your firebase config file
 
 const BlogPage = () => {
@@ -12,6 +12,12 @@ const BlogPage = () => {
     featured: [],
     recommended: []
   });
+  const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState({
+    message: '',
+    type: '' // 'success' or 'error'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -45,6 +51,65 @@ const BlogPage = () => {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
+
+  // Handle email input change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // Handle subscribe button click
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    
+    // Basic email validation
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      setSubscribeStatus({
+        message: 'Please enter a valid email address',
+        type: 'error'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      // Reference to the 'subscribers' node in your database
+      const subscribersRef = ref(database, 'subscribers');
+      
+      // Generate a unique key for this subscription
+      const newSubscriberRef = push(subscribersRef);
+      
+      // Save the email with timestamp
+      await set(newSubscriberRef, {
+        email: email,
+        timestamp: new Date().toISOString(),
+        source: 'blog_newsletter'
+      });
+      
+      // Show success message
+      setSubscribeStatus({
+        message: 'Successfully subscribed to our newsletter!',
+        type: 'success'
+      });
+      
+      // Clear the input field
+      setEmail('');
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSubscribeStatus({ message: '', type: '' });
+      }, 5000);
+      
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error);
+      setSubscribeStatus({
+        message: 'Failed to subscribe. Please try again later.',
+        type: 'error'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Function to render blog cards
   const renderBlogCards = (blogArray) => {
@@ -100,10 +165,27 @@ const BlogPage = () => {
           <div className="newsletter-content">
             <h2>Stay Updated</h2>
             <p>Subscribe to our newsletter for the latest in luxury aviation.</p>
-            <div className="newsletter-form">
-              <input type="email" placeholder="Your email address" />
-              <button>Subscribe</button>
-            </div>
+            <form onSubmit={handleSubscribe} className="newsletter-form">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                value={email}
+                onChange={handleEmailChange}
+                disabled={isSubmitting}
+                required
+              />
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+            {subscribeStatus.message && (
+              <div className={`subscription-message ${subscribeStatus.type}`}>
+                {subscribeStatus.message}
+              </div>
+            )}
           </div>
         </section>
         

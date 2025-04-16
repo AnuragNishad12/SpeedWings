@@ -170,10 +170,10 @@ const LuxurySlider = () => {
                 ))}
               </div>
               
-              <button className="group flex items-center bg-white hover:bg-amber-500 text-black font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base">
+              {/* <button className="group flex items-center bg-white hover:bg-amber-500 text-black font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-300 text-sm sm:text-base">
                 {item.cta.includes("🔥") ? item.cta.replace("🔥", "") : item.cta}
                 <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+              </button> */}
             </div>
           </div>
         ))}
