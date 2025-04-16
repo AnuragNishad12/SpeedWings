@@ -178,8 +178,9 @@ const HelicopterBooking = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
-              Elevate Your Journey with <span className="text-blue-900">Luxury Helicopter</span> Travel
+            <h1 className="text-xl md:text-3xl lg:text-4xl font-bold mb-6 text-white leading-tight
+">
+              Elevate Your Journey with <span className="text-Yellow-900">Luxury Helicopter</span> Travel
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
               Experience unparalleled convenience, speed, and luxury with our exclusive helicopter charter services.
