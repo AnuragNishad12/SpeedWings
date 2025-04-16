@@ -269,65 +269,65 @@ const HelicopterBooking = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-            {filteredHelicopters.map((helicopter) => (
-              <motion.div 
-                key={helicopter.id}
-                className="bg-black rounded-2xl shadow-xl overflow-hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={helicopter.image} 
-                    alt={helicopter.title} 
-                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    {helicopter.category}
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent py-4 px-6">
-                    <h3 className="text-2xl font-bold text-white">{helicopter.title}</h3>
-                    <p className="text-yellow-400 font-semibold">{helicopter.price}</p>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-400 mb-4">{helicopter.description}</p>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="flex items-center gap-2">
-                      <i className="fas fa-users text-yellow-500"></i>
-                      <span className="text-white font-medium">{helicopter.capacity} Passengers</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <i className="fas fa-tachometer-alt text-yellow-500"></i>
-                      <span className="text-white font-medium">{helicopter.speed}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <i className="fas fa-route text-yellow-500"></i>
-                      <span className="text-white font-medium">{helicopter.range}</span>
-                    </div>
-                  </div>
-                  <div className="border-t border-gray-700 pt-4">
-                    <h4 className="font-semibold mb-2 text-white">Features:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {helicopter.features.map((feature, idx) => (
-                        <span key={idx} className="bg-[#161617] text-white px-3 py-1 rounded-full text-sm">
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <a 
-                    href="#booking" 
-                    className="mt-6 block w-full bg-blue-900 text-white text-center py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                  >
-                    Book This Helicopter
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+  {filteredHelicopters.map((helicopter) => (
+    <motion.div
+      key={helicopter.id}
+      className="bg-black rounded-2xl shadow-xl overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ scale: 1.02 }}
+    >
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={helicopter.image}
+          alt={helicopter.title}
+          className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute top-4 right-4 bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">
+          {helicopter.category}
+        </div>
+      </div>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-xl font-bold text-white">{helicopter.title}</h3>
+          <span className="bg-green-500/20 text-green-400 text-xs font-medium px-3 py-1 rounded-full">
+            Available
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="flex items-center gap-2">
+            <i className="fas fa-clock text-gray-400"></i>
+            <span className="text-white font-medium">1 hour</span>
           </div>
+          <div className="flex items-center gap-2">
+            <i className="fas fa-users text-gray-400"></i>
+            <span className="text-white font-medium">{helicopter.capacity} Passengers</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <i className="fas fa-route text-gray-400"></i>
+            <span className="text-white font-medium">{helicopter.range}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <i className="fas fa-check-circle text-gray-400"></i>
+            <span className="text-white font-medium">Verified</span>
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <p className="text-white font-semibold">
+            Starting from <span className="text-2xl">{helicopter.price}</span>
+          </p>
+          <a
+            href="#details"
+            className="bg-blue-900 text-white text-center px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            View Details
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  ))}
+</div>
         </div>
       </section>
 
