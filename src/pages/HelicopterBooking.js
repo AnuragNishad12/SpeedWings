@@ -4,10 +4,11 @@ import { ref, onValue, off, push } from 'firebase/database';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FlightBookingForm from '../NewPages/FlightBookingForm';
-
 import { motion } from 'framer-motion';
+import { Dialog, Transition } from '@headlessui/react'; // Headless UI for modal
+import { XMarkIcon } from '@heroicons/react/24/outline'; // Icon for closing modal
 
-// Assuming you have these components defined elsewhere
+// Assuming these components are defined elsewhere
 import Navbar from '../components/Navbar';
 import FaqSection from '../components/FaqSection';
 import Footer from '../NewPages/Footer';
@@ -21,91 +22,98 @@ const HelicopterBooking = () => {
     phone: '',
     date: '',
     helicopterType: '',
-    message: ''
+    message: '',
   });
   const [testimonials, setTestimonials] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedHelicopter, setSelectedHelicopter] = useState(null);
 
-  // Stats data (still static as it wasn't requested to be moved to database)
   const stats = [
     {
-      icon: "fas fa-users",
-      title: "5,000+ Clients",
-      description: "Trusted by thousands of discerning travelers worldwide",
-      background: "bg-gradient-to-r from-blue-500 to-indigo-600"
+      icon: 'fas fa-users',
+      title: '5,000+ Clients',
+      description: 'Trusted by thousands of discerning travelers worldwide',
+      background: 'bg-gradient-to-r from-blue-500 to-indigo-600',
     },
     {
-      icon: "fas fa-plane",
-      title: "10,000+ Flights",
-      description: "Safe and luxurious journeys completed",
-      background: "bg-gradient-to-r from-amber-500 to-orange-600"
+      icon: 'fas fa-plane',
+      title: '10,000+ Flights',
+      description: 'Safe and luxurious journeys completed',
+      background: 'bg-gradient-to-r from-amber-500 to-orange-600',
     },
     {
-      icon: "fas fa-map-marked-alt",
-      title: "100+ Destinations",
-      description: "Exclusive landing points across the globe",
-      background: "bg-gradient-to-r from-emerald-500 to-teal-600"
+      icon: 'fas fa-map-marked-alt',
+      title: '100+ Destinations',
+      description: 'Exclusive landing points across the globe',
+      background: 'bg-gradient-to-r from-emerald-500 to-teal-600',
     },
     {
-      icon: "fas fa-shield-alt",
-      title: "100% Safety Record",
-      description: "Your safety is our highest priority",
-      background: "bg-gradient-to-r from-[#F9672C] to-pink-600"
-    }
+      icon: 'fas fa-shield-alt',
+      title: '100% Safety Record',
+      description: 'Your safety is our highest priority',
+      background: 'bg-gradient-to-r from-[#F9672C] to-pink-600',
+    },
   ];
-
 
   useEffect(() => {
     const helicoptersRef = ref(database, 'helicopters');
-    
-    const fetchHelicopters = onValue(helicoptersRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const helicoptersArray = Object.entries(data).map(([id, value]) => ({
-          id,
-          ...value
-        }));
-        setHelicopters(helicoptersArray);
+    const fetchHelicopters = onValue(
+      helicoptersRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const helicoptersArray = Object.entries(data).map(([id, value]) => ({
+            id,
+            ...value,
+          }));
+          setHelicopters(helicoptersArray);
+        }
+      },
+      (error) => {
+        console.error('Error fetching helicopters:', error);
       }
-    }, (error) => {
-      console.error('Error fetching helicopters:', error);
-    });
+    );
 
     window.scrollTo(0, 0);
-
     return () => off(helicoptersRef, 'value', fetchHelicopters);
   }, []);
 
   useEffect(() => {
     const testimonialsRef = ref(database, 'testimonials');
-    
-    const fetchTestimonials = onValue(testimonialsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const testimonialsArray = Object.entries(data).map(([id, value]) => ({
-          id,
-          ...value
-        }));
-        setTestimonials(testimonialsArray);
-      } else {
-        setTestimonials([]);
+    const fetchTestimonials = onValue(
+      testimonialsRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const testimonialsArray = Object.entries(data).map(([id, value]) => ({
+            id,
+            ...value,
+          }));
+          setTestimonials(testimonialsArray);
+        } else {
+          setTestimonials([]);
+        }
+      },
+      (error) => {
+        console.error('Error fetching testimonials:', error);
       }
-    }, (error) => {
-      console.error('Error fetching testimonials:', error);
-    });
+    );
 
     return () => off(testimonialsRef, 'value', fetchTestimonials);
   }, []);
 
-  const filteredHelicopters = activeCategory === 'All' 
-    ? helicopters 
-    : helicopters.filter(heli => heli.category === activeCategory);
+  const filteredHelicopters =
+    activeCategory === 'All'
+      ? helicopters
+      : helicopters.filter((heli) => heli.category === activeCategory);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -114,72 +122,71 @@ const HelicopterBooking = () => {
     setIsSubmitting(true);
 
     try {
-      // Create a reference to the bookings node in your database
       const bookingsRef = ref(database, 'bookings');
-      
-      // Add a timestamp to the booking data
       const bookingData = {
         ...formData,
         timestamp: new Date().toISOString(),
-        status: 'new' // Initial status for new bookings
+        status: 'new',
       };
-
-      // Push the data to Firebase (creates a new entry with unique ID)
       await push(bookingsRef, bookingData);
-
-      // Show success message with toast
-      toast.success("Thank you! We will contact you soon for your inquiry.", {
-        position: "top-center",
+      toast.success('Thank you! We will contact you soon for your inquiry.', {
+        position: 'top-center',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-        draggable: true
+        draggable: true,
       });
-
-      // Reset form
       setFormData({
         name: '',
         email: '',
         phone: '',
         date: '',
         helicopterType: '',
-        message: ''
+        message: '',
       });
-      
     } catch (error) {
-      console.error("Error submitting booking:", error);
-      toast.error("There was an error submitting your booking. Please try again later.");
+      console.error('Error submitting booking:', error);
+      toast.error('There was an error submitting your booking. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Modal functions
+  const openModal = (helicopter) => {
+    setSelectedHelicopter(helicopter);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedHelicopter(null);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
       <Navbar />
-   
-      
+
       {/* Hero Section */}
-      <section className="relative h-96  overflow-hidden bg-cover bg-center">
+      <section className="relative h-96 overflow-hidden bg-cover bg-center">
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="absolute inset-0 overflow-hidden">
-          <img 
+          <img
             src="https://images.unsplash.com/photo-1655743282195-52aa15f4072b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Luxury Helicopter"
             className="w-full h-full object-cover"
           />
         </div>
         <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
-          <motion.div 
+          <motion.div
             className="max-w-4xl px-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl
-">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
               Luxury Chopper Collection
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
@@ -188,50 +195,25 @@ const HelicopterBooking = () => {
           </motion.div>
         </div>
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          <svg
+            className="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
           </svg>
         </div>
       </section>
-<div className='bg-[#161617]'>
-  <FlightBookingForm/>
-</div>
-      {/* Why Choose Us Section */}
-      {/* <section className="py-20 bg-[#161617]">
-        <div className="container mx-auto px-4 bg-[#161617]">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Why Choose Our Helicopter Service</h2>
-            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto">Experience the perfect blend of luxury, speed, and convenience that only helicopter travel can provide.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }}>
-              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
-                <i className="fas fa-clock text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Time Efficiency</h3>
-              <p className="text-gray-400">Skip the traffic and reduce travel time by up to 80%. Get to your destination in minutes instead of hours.</p>
-            </motion.div>
-            
-            <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }}>
-              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
-                <i className="fas fa-gem text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Unmatched Luxury</h3>
-              <p className="text-gray-400">Our helicopters feature premium interiors designed for maximum comfort and style during your journey.</p>
-            </motion.div>
-            
-            <motion.div className="bg-black p-8 rounded-xl shadow-lg" whileHover={{ y: -10 }} transition={{ type: "spring", stiffness: 300 }}>
-              <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center text-white mb-6">
-                <i className="fas fa-shield-alt text-2xl"></i>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">Safety First</h3>
-              <p className="text-gray-400">With experienced pilots and rigorous maintenance protocols, safety is always our highest priority.</p>
-            </motion.div>
-          </div>
-        </div>
-      </section> */}
+      <div className="bg-[#161617]">
+        <FlightBookingForm />
+      </div>
 
       {/* Fleet Section */}
       <section id="fleet" className="py-20 bg-[#161617]">
@@ -239,98 +221,210 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Premium Fleet</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto">Choose from our selection of world-class helicopters designed for luxury travel experience.</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Choose from our selection of world-class helicopters designed for luxury travel experience.
+            </p>
           </div>
-          
+
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <button 
+            <button
               onClick={() => setActiveCategory('All')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'All' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === 'All' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               All
             </button>
-            <button 
+            <button
               onClick={() => setActiveCategory('CHOPPERS ON REQUEST')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS ON REQUEST' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === 'CHOPPERS ON REQUEST'
+                  ? 'bg-blue-900 text-white'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               CHOPPERS ON REQUEST
             </button>
-            <button 
+            <button
               onClick={() => setActiveCategory('CHOPPERS ON STAND-BY')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS ON STAND-BY' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === 'CHOPPERS ON STAND-BY'
+                  ? 'bg-blue-900 text-white'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               CHOPPERS ON STAND-BY
             </button>
-            <button 
+            <button
               onClick={() => setActiveCategory('CHOPPERS BY SEAT')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${activeCategory === 'CHOPPERS BY SEAT' ? 'bg-blue-900 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+              className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === 'CHOPPERS BY SEAT'
+                  ? 'bg-blue-900 text-white'
+                  : 'bg-gray-200 text-black hover:bg-gray-300'
+              }`}
             >
               CHOPPERS BY SEAT
             </button>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-  {filteredHelicopters.map((helicopter) => (
-    <motion.div
-      key={helicopter.id}
-      className="bg-black rounded-2xl shadow-xl overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ scale: 1.02 }}
-    >
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={helicopter.image}
-          alt={helicopter.title}
-          className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute top-4 right-4 bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">
-          {helicopter.category}
-        </div>
-      </div>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-xl font-bold text-white">{helicopter.title}</h3>
-          <span className="bg-green-500/20 text-green-400 text-xs font-medium px-3 py-1 rounded-full">
-            Available
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="flex items-center gap-2">
-            <i className="fas fa-clock text-gray-400"></i>
-            <span className="text-white font-medium">1 hour</span>
+            {filteredHelicopters.map((helicopter) => (
+              <motion.div
+                key={helicopter.id}
+                className="bg-black rounded-2xl shadow-xl overflow-hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={helicopter.imageUrl} // Use imageUrl as per your data structure
+                    alt={helicopter.title}
+                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4 bg-blue-900 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    {helicopter.category}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-xl font-bold text-white">{helicopter.title}</h3>
+                    <span className="bg-green-500/20 text-green-400 text-xs font-medium px-3 py-1 rounded-full">
+                      Available
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-clock text-gray-400"></i>
+                      <span className="text-white font-medium">1 hour</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-users text-gray-400"></i>
+                      <span className="text-white font-medium">{helicopter.capacity} Passengers</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-route text-gray-400"></i>
+                      <span className="text-white font-medium">{helicopter.range}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-check-circle text-gray-400"></i>
+                      <span className="text-white font-medium">Verified</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="text-white font-semibold">
+                      Starting from <span className="text-2xl">₹{helicopter.price}</span>
+                    </p>
+                    <button
+                      onClick={() => openModal(helicopter)}
+                      className="bg-blue-900 text-white text-center px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
-            <i className="fas fa-users text-gray-400"></i>
-            <span className="text-white font-medium">{helicopter.capacity} Passengers</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="fas fa-route text-gray-400"></i>
-            <span className="text-white font-medium">{helicopter.range}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <i className="fas fa-check-circle text-gray-400"></i>
-            <span className="text-white font-medium">Verified</span>
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
-          <p className="text-white font-semibold">
-            Starting from <span className="text-2xl"><bold>&#x20B9;</bold>{helicopter.price}</span>
-          </p>
-          <a
-            href="#details"
-            className="bg-blue-900 text-white text-center px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-          >
-            View Details
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  ))}
-</div>
         </div>
       </section>
+
+      {/* Modal for Helicopter Details */}
+      <Transition show={isModalOpen}>
+        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+          <Transition.Child
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-50" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <div className="flex justify-between items-center mb-4">
+                    <Dialog.Title as="h3" className="text-lg font-bold text-gray-900">
+                      {selectedHelicopter?.title}
+                    </Dialog.Title>
+                    <button
+                      type="button"
+                      className="text-gray-400 hover:text-gray-600"
+                      onClick={closeModal}
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+
+                  {/* Helicopter Image */}
+                  {selectedHelicopter?.imageUrl && (
+                    <div className="mb-6">
+                      <img
+                        src={selectedHelicopter.imageUrl}
+                        alt={selectedHelicopter.title}
+                        className="w-full h-64 object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
+
+                  {/* Performance Details */}
+                  <div className="space-y-4">
+                    <h4 className="text-md font-semibold text-gray-900">Performance Details</h4>
+                    {selectedHelicopter?.performance ? (
+                      <ul className="space-y-2 text-gray-700">
+                        <li>
+                          <span className="font-medium">Cruise Speed:</span>{' '}
+                          {selectedHelicopter.performance.cruiseSpeed}
+                        </li>
+                        <li>
+                          <span className="font-medium">Max Speed:</span>{' '}
+                          {selectedHelicopter.performance.maxSpeed}
+                        </li>
+                        <li>
+                          <span className="font-medium">Range:</span>{' '}
+                          {selectedHelicopter.performance.range}
+                        </li>
+                        <li>
+                          <span className="font-medium">Rate of Climb:</span>{' '}
+                          {selectedHelicopter.performance.rateOfClimb}
+                        </li>
+                        <li>
+                          <span className="font-medium">Service Ceiling:</span>{' '}
+                          {selectedHelicopter.performance.serviceCeiling}
+                        </li>
+                      </ul>
+                    ) : (
+                      <p className="text-gray-500">No performance details available.</p>
+                    )}
+                  </div>
+
+                  <div className="mt-6 flex justify-end">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
 
       {/* Stats Section */}
       <section className="py-20 bg-[#161617] text-white">
@@ -338,11 +432,13 @@ const HelicopterBooking = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Achievements</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto">A decade of excellence in providing luxury helicopter services.</p>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              A decade of excellence in providing luxury helicopter services.
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className={`${stat.background} p-8 rounded-xl shadow-lg text-center transform hover:-translate-y-2 transition-all duration-300`}
                 initial={{ opacity: 0, y: 20 }}
@@ -359,185 +455,6 @@ const HelicopterBooking = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      {/* <section className="py-20 bg-[#161617]">
-      <div className="container mx-auto px-4 bg-[#161617]">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">What Our Clients Say</h2>
-          <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-          <p className="text-gray-300 max-w-2xl mx-auto">Hear from our satisfied clients about their luxury helicopter experience.</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.length === 0 ? (
-            <p className="text-white text-center col-span-3">No testimonials available.</p>
-          ) : (
-            testimonials.map((testimonial) => (
-              <motion.div 
-                key={testimonial.id}
-                className="bg-black p-8 rounded-xl shadow-lg"
-                whileHover={{ y: -5 }}
-              >
-                <p className="text-gray-400 italic mb-6">"{testimonial.message}"</p>
-                <div className="flex items-center">
-                  <div className="mr-4">
-                  
-                    {testimonial.imageUrl ? (
-                      <img 
-                        src={testimonial.imageUrl} 
-                        alt={testimonial.name} 
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
-                    )}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white">{testimonial.name}</h4>
-                    <p className="text-gray-500 text-sm">{testimonial.designation}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))
-          )}
-        </div>
-      </div>
-    </section> */}
-
-      {/* Booking Section */}
-      {/* <section id="booking" className="py-20 bg-[#161617]">
-        <div className="container mx-auto px-4 bg-[#161617]">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Enquiry About Chopper Booking</h2>
-            <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
-            <p className="text-gray-300 max-w-2xl mx-auto">Fill out the form below and our team will contact you to finalize your booking details.</p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-              <div className="md:flex">
-                <div className="md:w-1/2 bg-blue-900 p-12 text-white flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-                  <div className="space-y-6">
-                    <div className="flex items-start">
-                      <i className="fas fa-map-marker-alt mt-1 mr-4"></i>
-                      <p>123 Aviation Street, Skyport City, 10001</p>
-                    </div>
-                    <div className="flex items-start">
-                      <i className="fas fa-phone-alt mt-1 mr-4"></i>
-                      <p>+91-9916989179</p>
-                    </div>
-                    <div className="flex items-start">
-                      <i className="fas fa-envelope mt-1 mr-4"></i>
-                      <p>bookings@luxuryhelicopter.com</p>
-                    </div>
-                    <div className="flex items-start">
-                      <i className="fas fa-clock mt-1 mr-4"></i>
-                      <p>Available 24/7 for your convenience</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-1/2 p-12">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <label className="block text-black mb-2" htmlFor="name">Full Name</label>
-                      <input 
-                        type="text" 
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                        placeholder="John Doe"
-                        required
-                      />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-black mb-2" htmlFor="email">Email Address</label>
-                        <input 
-                          type="email" 
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                          placeholder="john@example.com"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-black mb-2" htmlFor="phone">Phone Number</label>
-                        <input 
-                          type="tel" 
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                          placeholder="+1 (555) 123-4567"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-black mb-2" htmlFor="date">Preferred Date</label>
-                        <input 
-                          type="date" 
-                          id="date"
-                          name="date"
-                          value={formData.date}
-                          onChange={handleInputChange}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                          required
-                        />
-                      </div>
-                      <div>
-  <label className="block text-black mb-2" htmlFor="tripType">Trip Type</label>
-  <select 
-    id="tripType"
-    name="tripType"
-    value={formData.tripType}
-    onChange={handleInputChange}
-    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-    required
-  >
-    <option value="">Select a trip type</option>
-    <option value="One Way">One Way</option>
-    <option value="Round Trip">Round Trip</option>
-    <option value="Multi-Trip">Multi-Trip</option>
-  </select>
-</div>
-
-                    </div>
-                    <div>
-                      <label className="block text-black mb-2" htmlFor="message">Additional Information</label>
-                      <textarea 
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
-                        rows="4"
-                        placeholder="Tell us about your trip requirements..."
-                      ></textarea>
-                    </div>
-                    <button 
-                      type="submit" 
-                      className="w-full bg-blue-900 text-white py-4 rounded-lg font-bold hover:bg-blue-800 transition-colors shadow-md hover:shadow-xl transform hover:-translate-y-1"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Processing...' : 'Request Booking'}
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-   
       <Footer />
     </div>
   );
