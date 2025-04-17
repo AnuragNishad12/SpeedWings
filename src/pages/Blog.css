@@ -284,6 +284,7 @@
 }
 
 /* Dialog Overlay - covers the entire screen */
+/* Improved dialog responsiveness */
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -299,25 +300,22 @@
   backdrop-filter: blur(4px);
 }
 
-/* Dialog Content */
 .dialog-content {
   background-color: #161617;
   color: #fff;
   border-radius: 12px;
   width: 100%;
   max-width: 800px;
-  max-height: 85vh;
+  max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  padding: 0;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
   animation: dialogFadeIn 0.3s ease-out;
 }
 
-/* Dialog Header */
 .dialog-header {
-  padding: 20px 30px;
+  padding: 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
@@ -328,176 +326,98 @@
   z-index: 10;
 }
 
-.dialog-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  color: #fff;
-  font-family: 'Playfair Display', serif;
-  letter-spacing: 0.5px;
-}
-
-/* Close Button */
-.close-dialog-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 32px;
-  cursor: pointer;
-  padding: 0;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  margin-left: 20px;
-}
-
-.close-dialog-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-}
-
-/* Dialog Meta Information */
 .dialog-meta {
-  padding: 15px 30px;
+  padding: 12px 20px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dialog-author {
-  font-weight: 500;
+.dialog-meta-left {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.dialog-category {
-  background-color: #1E3A8A;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: white;
-}
-
-/* Dialog Body */
 .dialog-body {
-  padding: 30px;
+  padding: 24px 20px;
+}
+
+.dialog-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
 }
 
 .dialog-text {
   line-height: 1.8;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0;
-  font-family: 'Playfair Display', serif;
 }
 
-/* Animation for dialog */
-@keyframes dialogFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Custom scrollbar for dialog */
-.dialog-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.dialog-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.dialog-content::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-
-.dialog-content::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .blog-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  }
-  
-  .newsletter-form {
-    flex-direction: column;
-  }
-  
-  .newsletter-form input {
-    border-radius: 30px;
-    margin-bottom: 10px;
-  }
-  
-  .newsletter-form button {
-    border-radius: 30px;
-    padding: 15px;
-  }
-  
+/* Mobile responsiveness */
+@media (max-width: 600px) {
   .dialog-content {
-    width: 95%;
-    max-height: 80vh;
+    max-height: 85vh;
+    margin: 0;
+    width: 90%;
   }
   
   .dialog-header {
-    padding: 15px 20px;
-  }
-  
-  .dialog-meta {
-    padding: 10px 20px;
-    gap: 10px;
-  }
-  
-  .dialog-body {
-    padding: 20px;
+    padding: 12px 16px;
   }
   
   .dialog-title {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .blog-hero {
-    height: 400px;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.5rem;
-  }
-  
-  .blog-grid {
-    grid-template-columns: 1fr;
+    font-size: 18px;
   }
   
   .dialog-meta {
+    padding: 10px 16px;
     flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
+  }
+  
+  .dialog-meta-left {
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .dialog-category {
+    align-self: flex-start;
+  }
+  
+  .dialog-body {
+    padding: 16px;
   }
   
   .dialog-text {
     font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .close-dialog-btn {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 375px) {
+  .dialog-content {
+    width: 95%;
+  }
+  
+  .dialog-meta-left {
+    flex-direction: column;
+    gap: 5px;
   }
 }
