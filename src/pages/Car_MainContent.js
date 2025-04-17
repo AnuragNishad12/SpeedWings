@@ -300,14 +300,14 @@ export default function LuxuryCarSearch() {
           <h3 className="text-lg font-medium text-white">
             {isLoading ? "Loading..." : `${filteredCars.length} cars found`}
           </h3>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <span className="text-sm text-gray-500 mr-2">Sort by:</span>
             <select className="border rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F9672C]">
               <option>Price: High to Low</option>
               <option>Price: Low to High</option>
               <option>Newest First</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         {/* Car Grid */}
