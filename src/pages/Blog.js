@@ -12,6 +12,7 @@ const BlogPage = () => {
     featured: [],
     recommended: []
   });
+  const [activeDialog, setActiveDialog] = useState(null);
   const [email, setEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState({
     message: '',
@@ -48,8 +49,20 @@ const BlogPage = () => {
       }
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
+    // Add event listener to close dialog with ESC key
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape') {
+        setActiveDialog(null);
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscKey);
+
+    // Cleanup subscription and event listener on unmount
+    return () => {
+      unsubscribe();
+      document.removeEventListener('keydown', handleEscKey);
+    };
   }, []);
 
   // Handle email input change
@@ -111,6 +124,20 @@ const BlogPage = () => {
     }
   };
 
+  // Function to open dialog with blog content
+  const openDialog = (blog) => {
+    setActiveDialog(blog);
+    // Prevent body scrolling when dialog is open
+    document.body.style.overflow = 'hidden';
+  };
+
+  // Function to close dialog
+  const closeDialog = () => {
+    setActiveDialog(null);
+    // Re-enable body scrolling
+    document.body.style.overflow = 'auto';
+  };
+
   // Function to render blog cards
   const renderBlogCards = (blogArray) => {
     return blogArray.map(blog => (
@@ -125,8 +152,12 @@ const BlogPage = () => {
             <span className="blog-author">by {blog.author}</span>
             <span className="blog-date">{new Date(blog.date).toLocaleDateString()}</span>
           </div>
-          <p className="blog-excerpt">{blog.excerpt}</p>
-          <button className="read-more-btn">Read more</button>
+          <p className="blog-excerpt">
+            {blog.excerpt.split(" ").slice(0, 30).join(" ")}...
+          </p>
+          <button className="read-more-btn" onClick={() => openDialog(blog)}>
+            Read more
+          </button>
         </div>
       </article>
     ));
@@ -142,10 +173,6 @@ const BlogPage = () => {
           <div className="hero-content">
             <h1 className="hero-title">Luxury Jets Blog</h1>
             <p className="hero-quote">"The sky is not the limit; it's just the beginning of your journey."</p>
-            {/* <div className="hero-search">
-              <input type="text" placeholder="Search articles..." />
-              <button><i className="fas fa-search"></i></button>
-            </div> */}
           </div>
         </section>
 
@@ -200,6 +227,33 @@ const BlogPage = () => {
           </div>
         </section>
       </div>
+
+      {/* Read More Dialog */}
+      {activeDialog && (
+        <div className="dialog-overlay" onClick={closeDialog}>
+          <div 
+            className="dialog-content" 
+            onClick={(e) => e.stopPropagation()}
+            data-aos="zoom-in"
+            data-aos-duration="300"
+          >
+            <div className="dialog-header">
+              <h2 className="dialog-title">{activeDialog.title}</h2>
+              <button className="close-dialog-btn" onClick={closeDialog}>
+                <span>×</span>
+              </button>
+            </div>
+            <div className="dialog-meta">
+              <span className="dialog-author">by {activeDialog.author}</span>
+              <span className="dialog-date">{new Date(activeDialog.date).toLocaleDateString()}</span>
+              <span className="dialog-category">{activeDialog.category}</span>
+            </div>
+            <div className="dialog-body">
+              <p className="dialog-text">{activeDialog.excerpt}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
