@@ -316,7 +316,7 @@ const HelicopterBooking = () => {
         </div>
         <div className="flex justify-between items-center">
           <p className="text-white font-semibold">
-            Starting from <span className="text-2xl">{helicopter.price}</span>
+            Starting from <span className="text-2xl"><bold>&#x20B9;</bold>{helicopter.price}</span>
           </p>
           <a
             href="#details"
