@@ -1,4 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import car from '../assets/car.png'
+import yatch from '../assets/yatch.png'
+import chopper from '../assets/chopper.png'
+import plane from '../assets/plane.png'
 
 export default function VerdiepingServices() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -7,22 +11,22 @@ export default function VerdiepingServices() {
   
   const services = [
     {
-      icon: "✈️",
+      icon: plane,
       title: "Private Jet Charter",
       description: "Experience unparalleled luxury with our bespoke private jet charters, featuring exceptional comfort, priority service, and customizable itineraries."
     },
     {
-      icon: "🚗",
+      icon: car,
       title: "Luxury Car Rentals",
       description: "Select from our curated fleet of premium vehicles, ensuring sophistication and elegance for every journey."
     },
     {
-      icon: "🚢",
+      icon: yatch,
       title: "Yacht Charter",
       description: "Embark on exclusive maritime adventures with our fully crewed luxury yachts and personalized concierge service."
     },
     {
-      icon: "🚁",
+      icon: chopper,
       title: "Helicopter Services",
       description: "Optimize your travel efficiency with premium aerial transfers and panoramic city experiences."
     }
@@ -83,7 +87,7 @@ export default function VerdiepingServices() {
                 }}
               >
                 <div className="bg-gray-900 w-12 h-12 rounded-full flex items-center justify-center mb-4 transform transition-transform duration-500 hover:rotate-12">
-                  <span className="text-xl">{service.icon}</span>
+                <img src={service.icon} alt="icon" className="w-6 h-6 object-contain" />
                 </div>
                 
                 <h3 className="text-blue-500 text-xl font-medium mb-3 transition-all duration-300">

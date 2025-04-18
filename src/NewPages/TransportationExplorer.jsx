@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronDown, Clock, MapPin, Shield } from "lucide-react";
+import car from '../assets/car.png'
+import yatch from '../assets/yatch.png'
+import chopper from '../assets/chopper.png'
+import plane from '../assets/plane.png'
 
 const options = [
   {
@@ -12,7 +16,7 @@ const options = [
     features: ["Personalized flight plans", "Gourmet catering", "Global access to 5,000+ airports"],
     price: "From $15,000 per flight",
     path: "/p",
-    icon: "✈️"
+    icon: plane
   },
   {
     name: "Helicopter",
@@ -23,7 +27,7 @@ const options = [
     features: ["Door-to-door service", "No traffic delays", "Breathtaking city views"],
     price: "From $3,500 per hour",
     path: "/helicopter",
-    icon: "🚁"
+    icon: chopper
   },
   {
     name: "Car",
@@ -34,7 +38,7 @@ const options = [
     features: ["Premium fleet selection", "Professional chauffeurs", "24/7 concierge service"],
     price: "From $1,200 per day",
     path: "/c",
-    icon: "🏎️"
+    icon: car
   },
   {
     name: "Yacht",
@@ -45,7 +49,7 @@ const options = [
     features: ["Professional crew", "Customized itineraries", "Gourmet dining experiences"],
     price: "From $8,500 per day",
     path: "/yacht",
-    icon: "🛥️"
+    icon: yatch
   }
 ];
 
@@ -164,7 +168,8 @@ export default function LuxuryTransportSelector() {
                 
                 <div className="p-4 relative z-10 flex items-center justify-between">
                   <div className="flex items-center">
-                    <span className="text-xl mr-3">{option.icon}</span>
+                  <img src={option.icon} alt="icon" className="w-6 h-6 object-contain text-xl mr-3" />
+                    {/* <span className="text-xl mr-3">{option.icon}</span> */}
                     <span className="font-medium">{option.name}</span>
                   </div>
                   
