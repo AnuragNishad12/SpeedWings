@@ -65,7 +65,7 @@ const navigate = useNavigate();
           <li><a href="/#" className="active">Home</a></li>
           <li><a href="/#/about">About</a></li>
           <li>
-          <a href="#deal-section" onClick={handleDealClick}>Deal of The Day</a>
+          <a href="/#/dealoftheday">Deal of The Day</a>
           </li>
           {/* Explore Dropdown */}
           <li
