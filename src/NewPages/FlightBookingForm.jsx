@@ -129,104 +129,94 @@ export default function FlightBookingForm() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="bg-white bg-opacity-10 rounded-lg p-4">
-            <div className="grid md:grid-cols-4 gap-4">
-              {/* Departure */}
-              <div className="relative">
-                <div className="flex items-center mb-1">
-                  <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
-                  </svg>
-                  <label className="text-white">Departure</label>
-                </div>
-                <select
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  value={departure}
-                  onChange={(e) => setDeparture(e.target.value)}
-                  required
-                >
-                  <option value="">Select Departure</option>
-                  <option value="New York (JFK)">New York (JFK)</option>
-                  <option value="Los Angeles (LAX)">Los Angeles (LAX)</option>
-                  <option value="Chicago (ORD)">Chicago (ORD)</option>
-                  <option value="London (LHR)">London (LHR)</option>
-                  <option value="Dubai (DXB)">Dubai (DXB)</option>
-                </select>
-              </div>
+  <div className="grid md:grid-cols-4 gap-4">
+    {/* Departure - Changed to text input */}
+    <div className="relative">
+      <div className="flex items-center mb-1">
+        <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
+        </svg>
+        <label className="text-white">Departure</label>
+      </div>
+      <input
+        type="text"
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
+        placeholder="Enter departure location"
+        value={departure}
+        onChange={(e) => setDeparture(e.target.value)}
+        required
+      />
+    </div>
 
-              {/* Arrival */}
-              <div className="relative">
-                <div className="flex items-center mb-1">
-                  <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
-                  </svg>
-                  <label className="text-white">Arrival</label>
-                </div>
-                <select
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  value={arrival}
-                  onChange={(e) => setArrival(e.target.value)}
-                  required
-                >
-                  <option value="">Select Arrival</option>
-                  <option value="New York (JFK)">New York (JFK)</option>
-                  <option value="Los Angeles (LAX)">Los Angeles (LAX)</option>
-                  <option value="Chicago (ORD)">Chicago (ORD)</option>
-                  <option value="London (LHR)">London (LHR)</option>
-                  <option value="Dubai (DXB)">Dubai (DXB)</option>
-                </select>
-              </div>
+    {/* Arrival - Changed to text input */}
+    <div className="relative">
+      <div className="flex items-center mb-1">
+        <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-14a1 1 0 011 1v4a1 1 0 01-1 1H6a1 1 0 110-2h3V5a1 1 0 011-1z" />
+        </svg>
+        <label className="text-white">Arrival</label>
+      </div>
+      <input
+        type="text"
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
+        placeholder="Enter arrival location"
+        value={arrival}
+        onChange={(e) => setArrival(e.target.value)}
+        required
+      />
+    </div>
 
-              {/* Pax */}
-              <div className="relative">
-                <div className="flex items-center mb-1">
-                  <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                  </svg>
-                  <label className="text-white">Pax</label>
-                </div>
-                <input
-                  type="number"
-                  min="1"
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  placeholder="Number of passengers"
-                  value={pax}
-                  onChange={(e) => setPax(e.target.value)}
-                  required
-                />
-              </div>
+    {/* Pax - Unchanged */}
+    <div className="relative">
+      <div className="flex items-center mb-1">
+        <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+        </svg>
+        <label className="text-white">Pax</label>
+      </div>
+      <input
+        type="number"
+        min="1"
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
+        placeholder="Number of passengers"
+        value={pax}
+        onChange={(e) => setPax(e.target.value)}
+        required
+      />
+    </div>
 
-              {/* Departure Date, Time */}
-              <div className="relative">
-                <div className="flex items-center mb-1">
-                  <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      fillRule="evenodd"
-                      d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <label className="text-white">Departure Date, Time</label>
-                </div>
-                <input
-                  type="datetime-local"
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  value={departureDateTime}
-                  onChange={(e) => setDepartureDateTime(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+    {/* Departure Date, Time - Unchanged */}
+    <div className="relative">
+      <div className="flex items-center mb-1">
+        <svg className="w-5 h-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            fillRule="evenodd"
+            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <label className="text-white">Departure Date, Time</label>
+      </div>
+      <input
+        type="datetime-local"
+        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
+        value={departureDateTime}
+        onChange={(e) => setDepartureDateTime(e.target.value)}
+        required
+      />
+    </div>
+  </div>
 
-            {/* Enquire Now button */}
-            <div className="mt-6 flex justify-end">
-              <button
-                type="submit"
-                className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-medium flex items-center"
-              >
-                Enquire Now
-              </button>
-            </div>
-          </form>
+  {/* Enquire Now button - Unchanged */}
+  <div className="mt-6 flex justify-end">
+    <button
+      type="submit"
+      className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-medium flex items-center"
+    >
+      Enquire Now
+    </button>
+  </div>
+</form>
         </div>
       </div>
     </div>
