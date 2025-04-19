@@ -144,7 +144,7 @@ const HomeCarousel = () => {
 
   return (
     <div>
-        <Navbar/>
+       {!isDialogOpen && <Navbar />}
     <div className="relative mt-16">
       <div className="absolute inset-0 bg-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-black to-black opacity-80"></div>
