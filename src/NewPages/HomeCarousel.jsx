@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
-import { database } from '../../src/firebaseConfig';
-import { ref, get } from 'firebase/database';
+import { database } from '../../src/firebaseConfig'; // Ensure this path is correct
+import { ref, get, push } from 'firebase/database'; // Import push for writing data
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 const RentalCard = ({ aircraft, from, capacity, date, time, quote, imageUrl }) => {
   return (
@@ -37,6 +38,40 @@ const HomeCarousel = () => {
   const [rentalData, setRentalData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog
+  const [submitMessage, setSubmitMessage] = useState(''); // State for success/error message
+
+  const handleDialogToggle = () => {
+    setIsDialogOpen(!isDialogOpen);
+    setSubmitMessage(''); // Reset message when dialog is opened/closed
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const enquiry = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      transport: formData.get('transport'),
+      travelDate: formData.get('travelDate'),
+      message: formData.get('message') || '',
+      timestamp: new Date().toISOString(),
+    };
+
+    try {
+      const enquiriesRef = ref(database, 'enquiries'); // Reference to 'enquiries' node in Firebase
+      await push(enquiriesRef, enquiry); // Push the enquiry data to Firebase
+      setSubmitMessage('Enquiry submitted successfully!');
+      setTimeout(() => {
+        setIsDialogOpen(false);
+        setSubmitMessage('');
+      }, 1500); // Close dialog after 1.5 seconds
+    } catch (err) {
+      console.error('Error submitting enquiry:', err);
+      setSubmitMessage('Failed to submit enquiry. Please try again.');
+    }
+  };
 
   useEffect(() => {
     const setupLineAnimation = () => {
@@ -152,6 +187,7 @@ const HomeCarousel = () => {
           </Slider>
         </div>
 
+        {/* Enquire Button Section */}
         <div id="enquire-button-container" className="mt-16 text-center relative">
           <div
             id="left-line"
@@ -161,8 +197,8 @@ const HomeCarousel = () => {
             id="right-line"
             className="absolute right-0 top-1/2 w-0 h-px bg-gradient-to-l from-transparent via-purple-500 to-pink-500 transform -translate-y-1/2 transition-all duration-1000 hidden md:block"
           ></div>
-          <a
-            href="#/Contact"
+          <button
+            onClick={handleDialogToggle}
             className="inline-block relative px-8 py-3 text-white font-medium overflow-hidden group z-10"
           >
             <span className="absolute inset-0 border border-transparent group-hover:border-white transition-all duration-300"></span>
@@ -188,9 +224,170 @@ const HomeCarousel = () => {
                 />
               </svg>
             </span>
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* Dialog Box */}
+      <AnimatePresence>
+        {isDialogOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-gray-800 rounded-xl p-6 sm:p-8 w-full max-w-lg relative"
+            >
+              {/* Close Button */}
+              <button
+                onClick={handleDialogToggle}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Enquiry Form */}
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+                Enquiry Form
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    placeholder="Your Name"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    required
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    placeholder="+1 234 567 8900"
+                  />
+                </div>
+
+                {/* Transport Type */}
+                <div>
+                  <label htmlFor="transport" className="block text-sm font-medium text-gray-300">
+                    Preferred Transport
+                  </label>
+                  <select
+                    id="transport"
+                    name="transport"
+                    required
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  >
+                    <option value="" disabled selected>
+                      Select an option
+                    </option>
+                    <option value="yacht">Yacht</option>
+                    <option value="car">Car</option>
+                    <option value="chopper">Helicopter</option>
+                    <option value="jet">Private Jet</option>
+                  </select>
+                </div>
+
+                {/* Travel Dates */}
+                <div>
+                  <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300">
+                    Travel Date
+                  </label>
+                  <input
+                    type="date"
+                    id="travelDate"
+                    name="travelDate"
+                    required
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  />
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300">
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="3"
+                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    placeholder="Any additional details..."
+                  ></textarea>
+                </div>
+
+                {/* Submit Message */}
+                {submitMessage && (
+                  <div
+                    className={`text-sm text-center p-2 rounded-lg ${
+                      submitMessage.includes('successfully')
+                        ? 'bg-green-500/20 text-green-300'
+                        : 'bg-red-500/20 text-red-300'
+                    }`}
+                  >
+                    {submitMessage}
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+                >
+                  Submit Enquiry
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
