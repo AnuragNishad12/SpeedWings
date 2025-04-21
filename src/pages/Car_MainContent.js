@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from '../firebaseConfig';
-import FlightBookingForm from '../NewPages/FlightBookingForm'
+import FlightBookingForm from '../NewPages/FlightBookingForm';
+import EnquiryForm from '../components/EnquiryForm'; // Import the EnquiryForm component
 
 export default function LuxuryCarSearch() {
   const [carName, setCarName] = useState("");
@@ -12,6 +13,8 @@ export default function LuxuryCarSearch() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedCar, setSelectedCar] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [enquiryCar, setEnquiryCar] = useState(null);
 
   // Fetch data from Firebase
   useEffect(() => {
@@ -80,6 +83,18 @@ export default function LuxuryCarSearch() {
   const closeDetailsDialog = () => {
     setShowDialog(false);
     setSelectedCar(null);
+  };
+
+  // Handler for opening the enquiry form
+  const openEnquiryForm = (car) => {
+    setEnquiryCar(car);
+    setShowEnquiryForm(true);
+  };
+
+  // Handler for closing the enquiry form
+  const closeEnquiryForm = () => {
+    setShowEnquiryForm(false);
+    setEnquiryCar(null);
   };
 
   // The detailed dialog component - Fixed to follow React Hooks rules
@@ -171,7 +186,13 @@ export default function LuxuryCarSearch() {
                 <p className="text-gray-600">{selectedCar.description}</p>
                 
                 <div className="mt-8">
-                  <button className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 px-4 rounded-lg font-medium transition-colors">
+                  <button 
+                    onClick={() => {
+                      closeDetailsDialog();
+                      openEnquiryForm(selectedCar);
+                    }}
+                    className="w-full bg-gradient-to-r from-[#F9672C] to-purple-600 hover:from-[#F9672C] hover:to-purple-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+                  >
                     Enquiry Now
                   </button>
                 </div>
@@ -393,12 +414,20 @@ export default function LuxuryCarSearch() {
                       <p className="text-gray-500 text-sm">Starting from</p>
                       <p className="text-2xl font-bold text-white">{car.price}</p>
                     </div>
-                    <button 
-                      onClick={() => openDetailsDialog(car)}
-                      className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
-                    >
-                      View Details
-                    </button>
+                    <div className="flex space-x-2">
+                      <button 
+                        onClick={() => openDetailsDialog(car)}
+                        className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+                      >
+                        View Details
+                      </button>
+                      <button 
+                        onClick={() => openEnquiryForm(car)}
+                        className="bg-gradient-to-r from-[#F9672C] to-purple-600 hover:from-[#F9672C] hover:to-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+                      >
+                        Make Enquiry
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -432,6 +461,15 @@ export default function LuxuryCarSearch() {
       
       {/* Car Details Dialog */}
       {showDialog && <CarDetailsDialog />}
+      
+      {/* Enquiry Form */}
+      {showEnquiryForm && (
+        <EnquiryForm 
+          helicopter={enquiryCar} // The form expects 'helicopter' prop but we're passing a car
+          isOpen={showEnquiryForm}
+          closeForm={closeEnquiryForm}
+        />
+      )}
     </div>
   );
 }

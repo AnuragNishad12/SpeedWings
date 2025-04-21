@@ -458,120 +458,102 @@ const AircraftCard = ({ aircraft }) => {
               </p>
               
               <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    required
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    placeholder="Your Name"
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="your.email@example.com"
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-300 mb-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    required
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                    placeholder="+1 234 567 8900"
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                
-                {/* <div>
-                  <label htmlFor="preferredTransport" className="block text-sm font-medium text-gray-300 mb-1">
-                    Preferred Transport
-                  </label>
-                  <select
-                    id="preferredTransport"
-                    name="preferredTransport"
-                    required
-                    value={formData.preferredTransport}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="" disabled>Select an option</option>
-                    <option value="Private Jet">Private Jet</option>
-                    <option value="Charter Flight">Charter Flight</option>
-                    <option value="Business Class">Business Class</option>
-                    <option value="First Class">First Class</option>
-                  </select>
-                </div> */}
-                
-                <div>
-                  <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300 mb-1">
-                    Travel Date
-                  </label>
-                  <input
-                    type="date"
-                    id="travelDate"
-                    name="travelDate"
-                    required
-                    value={formData.travelDate}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Any additional details..."
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
-                </div>
-                
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300 flex items-center justify-center"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Processing...
-                    </>
-                  ) : "Submit Enquiry"}
-                </button>
-              </form>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1">
+        Full Name
+      </label>
+      <input
+        type="text"
+        id="fullName"
+        name="fullName"
+        required
+        value={formData.fullName}
+        onChange={handleInputChange}
+        placeholder="Your Name"
+        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+        Email Address
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        value={formData.email}
+        onChange={handleInputChange}
+        placeholder="your.email@example.com"
+        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-300 mb-1">
+        Phone Number
+      </label>
+      <input
+        type="tel"
+        id="phoneNumber"
+        name="phoneNumber"
+        required
+        value={formData.phoneNumber}
+        onChange={handleInputChange}
+        placeholder="+1 234 567 8900"
+        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div>
+      <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300 mb-1">
+        Travel Date
+      </label>
+      <input
+        type="date"
+        id="travelDate"
+        name="travelDate"
+        required
+        value={formData.travelDate}
+        onChange={handleInputChange}
+        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div className="sm:col-span-2">
+      <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+        Message (Optional)
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="3"
+        value={formData.message}
+        onChange={handleInputChange}
+        placeholder="Any additional details..."
+        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      ></textarea>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    disabled={isSubmitting}
+    className="w-full py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300 flex items-center justify-center"
+  >
+    {isSubmitting ? (
+      <>
+        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Processing...
+      </>
+    ) : "Submit Enquiry"}
+  </button>
+</form>
             </>
           )}
         </div>
