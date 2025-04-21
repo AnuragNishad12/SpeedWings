@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Footer from '../Footer';
 import '../../index.css';
 import ContactForm from '../ContactForm'
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue,push } from 'firebase/database';
 import FlightBookingForm from '../FlightBookingForm';
 
 // Image Gallery Component
@@ -40,63 +40,132 @@ const ImageGallery = ({ images }) => {
 
 // Individual Aircraft Card Component
 const AircraftCard = ({ aircraft }) => {
+
   const [showDetails, setShowDetails] = useState(false);
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    preferredTransport: '',
+    travelDate: '',
+    message: '',
+    // Aircraft specific data
+    aircraftName: aircraft.name,
+    aircraftRoute: aircraft.destination,
+    aircraftPrice: aircraft.price
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const db = getDatabase();
+      const enquiriesRef = ref(db, 'aircraftEnquiries');
+      await push(enquiriesRef, {
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+      
+      setSubmitSuccess(true);
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false);
+        setShowEnquiryForm(false);
+        setFormData({
+          ...formData,
+          fullName: '',
+          email: '',
+          phoneNumber: '',
+          preferredTransport: '',
+          travelDate: '',
+          message: ''
+        });
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   return (
     <div className="max-w-5xl mx-auto bg-blue-900 rounded-md shadow-md overflow-hidden mb-6">
-      <div className="md:flex bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
-        <div className="md:w-1/2 p-6">
-          <ImageGallery images={aircraft.images} />
-        </div>
-        
-        <div className="md:w-1/2 p-8 flex flex-col justify-between">
-          <div>
-            <div className="mb-2">
-              <h2 className="text-3xl font-bold text-white mb-2 font-serif">
-                {aircraft.name}
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
-            </div>
-
-            <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
-            <p className="text-xs text-gray-600 leading-relaxed mb-5">
-              {aircraft.shortDescription}
-            </p>
+    <div className="md:flex bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+      <div className="md:w-1/2 p-6">
+        <ImageGallery images={aircraft.images} />
+      </div>
+      
+      <div className="md:w-1/2 p-8 flex flex-col justify-between">
+        <div>
+          <div className="mb-2">
+            <h2 className="text-3xl font-bold text-white mb-2 font-serif">
+              {aircraft.name}
+            </h2>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
           </div>
 
-          <div>
+          <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
+          <p className="text-xs text-gray-600 leading-relaxed mb-5">
+            {aircraft.shortDescription}
+          </p>
+        </div>
+
+        <div>
+          <div className="flex gap-2 mb-6">
             <button 
               onClick={() => setShowDetails(!showDetails)}
-              className="mb-6 w-full py-3 bg-blue-900 text-white rounded-lg font-medium hover:from-[#F9672C] hover:to-[#F9672C] transition-all duration-300"
+              className="w-1/2 py-3 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800 transition-all duration-300"
             >
-              {showDetails ? "Hide Specifications" : "View Full Specifications"}
+              {showDetails ? "Hide Specifications" : "View Specifications"}
             </button>
+            
+            <button 
+              onClick={() => setShowEnquiryForm(true)}
+              className="w-1/2 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300"
+            >
+              Make Enquiry
+            </button>
+          </div>
 
-            <div className="space-y-4 border-t border-gray-100 pt-6">
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <span className="text-white font-medium">
-                  Route: <span className="text-white font-semibold">{aircraft.destination}</span>
-                </span>
-              </div>
+          <div className="space-y-4 border-t border-gray-100 pt-6">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <span className="text-white font-medium">
+                Route: <span className="text-white font-semibold">{aircraft.destination}</span>
+              </span>
+            </div>
 
-              <div className="flex items-center">
-                <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span className="text-white font-medium">
-                  Starting from <span className="text-2xl text-[#00FF00] font-bold">{aircraft.price}</span>
-                </span>
-              </div>
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span className="text-white font-medium">
+                Starting from <span className="text-2xl text-[#00FF00] font-bold">{aircraft.price}</span>
+              </span>
             </div>
           </div>
         </div>
       </div>
-          
-      {showDetails && (
+    </div>
+        
+    {showDetails && (
         <div 
           className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
           onClick={() => setShowDetails(false)}
@@ -334,7 +403,181 @@ const AircraftCard = ({ aircraft }) => {
           </div>
         </div>
       )}
-    </div>
+    
+    {/* Enquiry Form Modal */}
+    {showEnquiryForm && (
+      <div 
+        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+        onClick={() => !isSubmitting && !submitSuccess && setShowEnquiryForm(false)}
+      >
+        <div 
+          className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden relative animate-slideUp"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => !isSubmitting && !submitSuccess && setShowEnquiryForm(false)}
+            className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors z-10"
+            disabled={isSubmitting}
+          >
+            <svg
+              className="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          {submitSuccess ? (
+            <div className="p-8 text-center">
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Enquiry Submitted!</h3>
+              <p className="text-gray-300">Thank you for your interest. We'll get back to you shortly.</p>
+            </div>
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold text-white px-6 pt-6 pb-2">
+                Enquiry Form
+              </h2>
+              <div className="px-6 pb-2">
+                <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
+              </div>
+              <p className="px-6 text-gray-400 text-sm mb-4">
+                Enquire about {aircraft.name} | {aircraft.destination} | Starting from {aircraft.price}
+              </p>
+              
+              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <div>
+                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    required
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    placeholder="Your Name"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="your.email@example.com"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-300 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    required
+                    value={formData.phoneNumber}
+                    onChange={handleInputChange}
+                    placeholder="+1 234 567 8900"
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                {/* <div>
+                  <label htmlFor="preferredTransport" className="block text-sm font-medium text-gray-300 mb-1">
+                    Preferred Transport
+                  </label>
+                  <select
+                    id="preferredTransport"
+                    name="preferredTransport"
+                    required
+                    value={formData.preferredTransport}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="" disabled>Select an option</option>
+                    <option value="Private Jet">Private Jet</option>
+                    <option value="Charter Flight">Charter Flight</option>
+                    <option value="Business Class">Business Class</option>
+                    <option value="First Class">First Class</option>
+                  </select>
+                </div> */}
+                
+                <div>
+                  <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300 mb-1">
+                    Travel Date
+                  </label>
+                  <input
+                    type="date"
+                    id="travelDate"
+                    name="travelDate"
+                    required
+                    value={formData.travelDate}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="3"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Any additional details..."
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  ></textarea>
+                </div>
+                
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300 flex items-center justify-center"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : "Submit Enquiry"}
+                </button>
+              </form>
+            </>
+          )}
+        </div>
+      </div>
+    )}
+  </div>
   );
 };
 

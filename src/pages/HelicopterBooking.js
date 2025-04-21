@@ -5,8 +5,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FlightBookingForm from '../NewPages/FlightBookingForm';
 import { motion } from 'framer-motion';
-import { Dialog, Transition } from '@headlessui/react'; // Headless UI for modal
-import { XMarkIcon } from '@heroicons/react/24/outline'; // Icon for closing modal
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+
+// Import EnquiryForm component
+import EnquiryForm from '../components/EnquiryForm'; // Update the path as needed
 
 // Assuming these components are defined elsewhere
 import Navbar from '../components/Navbar';
@@ -26,8 +29,9 @@ const HelicopterBooking = () => {
   });
   const [testimonials, setTestimonials] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // State for modal
+  // State for modal and enquiry form
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
   const [selectedHelicopter, setSelectedHelicopter] = useState(null);
 
   const stats = [
@@ -164,6 +168,17 @@ const HelicopterBooking = () => {
     setSelectedHelicopter(null);
   };
 
+  // Enquiry form functions
+  const openEnquiryForm = (helicopter) => {
+    setSelectedHelicopter(helicopter);
+    setIsEnquiryFormOpen(true);
+  };
+
+  const closeEnquiryForm = () => {
+    setIsEnquiryFormOpen(false);
+    // Keep the selected helicopter in case they want to reopen the form
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <ToastContainer />
@@ -279,7 +294,7 @@ const HelicopterBooking = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={helicopter.imageUrl} // Use imageUrl as per your data structure
+                    src={helicopter.imageUrl}
                     alt={helicopter.title}
                     className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                   />
@@ -316,12 +331,20 @@ const HelicopterBooking = () => {
                     <p className="text-white font-semibold">
                       Starting from <span className="text-2xl">₹{helicopter.price}</span>
                     </p>
-                    <button
-                      onClick={() => openModal(helicopter)}
-                      className="bg-blue-900 text-white text-center px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                    >
-                      View Details
-                    </button>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => openModal(helicopter)}
+                        className="bg-blue-900 text-white text-center px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                      >
+                        Details
+                      </button>
+                      <button
+                        onClick={() => openEnquiryForm(helicopter)}
+                        className="bg-gradient-to-r from-[#F9672C] to-purple-600 text-white text-center px-4 py-2 rounded-lg font-medium hover:from-[#F9672C] hover:to-purple-700 transition-colors"
+                      >
+                        Enquire
+                      </button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -329,6 +352,15 @@ const HelicopterBooking = () => {
           </div>
         </div>
       </section>
+
+      {/* Enquiry Form */}
+      {selectedHelicopter && (
+        <EnquiryForm
+          helicopter={selectedHelicopter}
+          isOpen={isEnquiryFormOpen}
+          closeForm={closeEnquiryForm}
+        />
+      )}
 
       {/* Modal for Helicopter Details */}
       <Transition show={isModalOpen}>
@@ -410,7 +442,17 @@ const HelicopterBooking = () => {
                     )}
                   </div>
 
-                  <div className="mt-6 flex justify-end">
+                  <div className="mt-6 flex justify-between">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md bg-gradient-to-r from-[#F9672C] to-purple-600 px-4 py-2 text-sm font-medium text-white hover:from-[#F9672C] hover:to-purple-700"
+                      onClick={() => {
+                        closeModal();
+                        openEnquiryForm(selectedHelicopter);
+                      }}
+                    >
+                      Enquire Now
+                    </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md bg-blue-900 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"

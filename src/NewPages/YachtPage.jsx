@@ -13,6 +13,7 @@ import Footer from './Footer';
 import Navbar from "../components/Navbar";
 import FlightBookingForm from './FlightBookingForm';
 import YachtHeader from './YatchHeader';
+import EnquiryForm from '../components/EnquiryForm'; // Import EnquiryForm
 
 export default function YachtRental() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -23,6 +24,8 @@ export default function YachtRental() {
   const [yachts, setYachts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false); // State for EnquiryForm
+  const [enquiryYacht, setEnquiryYacht] = useState(null); // State to store yacht for enquiry
 
   useEffect(() => {
     // Reference to the 'yachts' node in your Firebase Realtime Database
@@ -58,6 +61,16 @@ export default function YachtRental() {
     setSelectedYacht(yacht);
     setCurrentImageIndex(0);
     setIsDialogOpen(true);
+  };
+
+  const openEnquiryForm = (yacht) => {
+    setEnquiryYacht(yacht);
+    setIsEnquiryFormOpen(true);
+  };
+
+  const closeEnquiryForm = () => {
+    setIsEnquiryFormOpen(false);
+    setEnquiryYacht(null);
   };
 
   const nextImage = () => {
@@ -171,12 +184,20 @@ export default function YachtRental() {
                                 <span className="text-white text-sm sm:text-base">Starting from {yacht.price}/week</span>
                               </div>
                             </div>
-                            <button
-                              onClick={() => openDetailsDialog(yacht)}
-                              className="w-full bg-blue-600 text-white py-2 sm:py-3 rounded-md font-medium hover:bg-blue-700 transition-colors"
-                            >
-                              View Full Specifications
-                            </button>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                              <button
+                                onClick={() => openDetailsDialog(yacht)}
+                                className="w-full sm:w-auto bg-blue-600 text-white py-2 sm:py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition-colors"
+                              >
+                                View Full Specifications
+                              </button>
+                              <button
+                                onClick={() => openEnquiryForm(yacht)}
+                                className="w-full sm:w-auto py-2 sm:py-3 px-4 bg-gradient-to-r from-[#F9672C] to-purple-600 text-white font-medium rounded-md hover:from-[#F9672C] hover:to-purple-700 transition-colors"
+                              >
+                                Make Enquiry
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -296,6 +317,19 @@ export default function YachtRental() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Enquiry Form Dialog */}
+        {isEnquiryFormOpen && enquiryYacht && (
+          <EnquiryForm
+            helicopter={{
+              title: enquiryYacht.name, // Map yacht name to title
+              price: enquiryYacht.price, // Map yacht price
+              category: enquiryYacht.route // Map yacht route to category
+            }}
+            isOpen={isEnquiryFormOpen}
+            closeForm={closeEnquiryForm}
+          />
         )}
       </div>
 
