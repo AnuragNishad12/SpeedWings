@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { database } from '../../src/firebaseConfig'; // Ensure this path is correct
-import { ref, get, push } from 'firebase/database'; // Import push for writing data
+import { database } from '../../src/firebaseConfig'; 
+import { ref, get, push } from 'firebase/database'; 
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
@@ -37,12 +37,11 @@ const HomeCarousel = () => {
   const [rentalData, setRentalData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // State for dialog
-  const [submitMessage, setSubmitMessage] = useState(''); // State for success/error message
-
+  const [isDialogOpen, setIsDialogOpen] = useState(false); 
+  const [submitMessage, setSubmitMessage] = useState(''); 
   const handleDialogToggle = () => {
     setIsDialogOpen(!isDialogOpen);
-    setSubmitMessage(''); // Reset message when dialog is opened/closed
+    setSubmitMessage(''); 
   };
 
   const handleSubmit = async (e) => {
@@ -254,7 +253,8 @@ const HomeCarousel = () => {
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
                 Enquiry Form
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="max-w-md mx-auto mt-24 p-6 bg-gray-800 rounded-xl shadow-lg">
+              <form onSubmit={handleSubmit} className=" mt-16">
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300">
@@ -370,6 +370,7 @@ const HomeCarousel = () => {
                   Submit Enquiry
                 </button>
               </form>
+              </div>
             </motion.div>
           </motion.div>
         )}
