@@ -269,121 +269,125 @@ const HomeCarousel = () => {
                 Enquiry Form
               </h2>
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="Your Name"
-                  />
-                </div>
+  {/* Name and Email in one row */}
+  <div className="flex gap-4">
+    <div className="w-1/2">
+      <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+        Full Name
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        placeholder="Your Name"
+      />
+    </div>
 
-                {/* Email */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
+    <div className="w-1/2">
+      <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+        Email Address
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        placeholder="your.email@example.com"
+      />
+    </div>
+  </div>
 
-                {/* Phone */}
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="+1 234 567 8900"
-                  />
-                </div>
+  {/* Phone and Transport Type in one row */}
+  <div className="flex gap-4">
+    <div className="w-1/2">
+      <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
+        Phone Number
+      </label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        required
+        className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        placeholder="+1 234 567 8900"
+      />
+    </div>
 
-                {/* Transport Type */}
-                <div>
-                  <label htmlFor="transport" className="block text-sm font-medium text-gray-300">
-                    Preferred Transport
-                  </label>
-                  <select
-                    id="transport"
-                    name="transport"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  >
-                    <option value="" disabled selected>
-                      Select an option
-                    </option>
-                    <option value="yacht">Yacht</option>
-                    <option value="car">Car</option>
-                    <option value="chopper">Helicopter</option>
-                    <option value="jet">Private Jet</option>
-                  </select>
-                </div>
+    <div className="w-1/2">
+      <label htmlFor="transport" className="block text-sm font-medium text-gray-300">
+        Preferred Transport
+      </label>
+      <select
+        id="transport"
+        name="transport"
+        required
+        className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      >
+        <option value="" disabled selected>
+          Select an option
+        </option>
+        <option value="yacht">Yacht</option>
+        <option value="car">Car</option>
+        <option value="chopper">Helicopter</option>
+        <option value="jet">Private Jet</option>
+      </select>
+    </div>
+  </div>
 
-                {/* Travel Dates */}
-                <div>
-                  <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300">
-                    Travel Date
-                  </label>
-                  <input
-                    type="date"
-                    id="travelDate"
-                    name="travelDate"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
-                </div>
+  {/* Travel Date in one row (could add another field here if needed) */}
+  <div className="flex gap-4">
+    <div className="w-full">
+      <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300">
+        Travel Date
+      </label>
+      <input
+        type="date"
+        id="travelDate"
+        name="travelDate"
+        required
+        className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+    </div>
+  </div>
 
-                {/* Message */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300">
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="Any additional details..."
-                  ></textarea>
-                </div>
+  {/* Message */}
+  <div>
+    <label htmlFor="message" className="block text-sm font-medium text-gray-300">
+      Message (Optional)
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows="3"
+      className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      placeholder="Any additional details..."
+    ></textarea>
+  </div>
 
-                {/* Submit Message */}
-                {submitMessage && (
-                  <div
-                    className={`text-sm text-center p-2 rounded-lg ${
-                      submitMessage.includes('successfully')
-                        ? 'bg-green-500/20 text-green-300'
-                        : 'bg-red-500/20 text-red-300'
-                    }`}
-                  >
-                    {submitMessage}
-                  </div>
-                )}
+  {/* Submit Message */}
+  {submitMessage && (
+    <div
+      className={`text-sm text-center p-2 rounded-lg ${
+        submitMessage.includes('successfully')
+          ? 'bg-green-500/20 text-green-300'
+          : 'bg-red-500/20 text-red-300'
+      }`}
+    >
+      {submitMessage}
+    </div>
+  )}
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
-                >
-                  Submit Enquiry
-                </button>
-              </form>
+  {/* Submit Button */}
+  <button
+    type="submit"
+    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+  >
+    Submit Enquiry
+  </button>
+</form>
             </motion.div>
           </motion.div>
         )}
