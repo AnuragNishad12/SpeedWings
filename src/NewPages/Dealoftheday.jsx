@@ -254,122 +254,90 @@ const HomeCarousel = () => {
                 Enquiry Form
               </h2>
               <div className="max-w-md mx-auto mt-24 p-6 bg-gray-800 rounded-xl shadow-lg">
-              <form onSubmit={handleSubmit} className=" mt-16">
-                {/* Name */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="Your Name"
-                  />
-                </div>
+              <form onSubmit={handleSubmit}>
+      {/* Full Name & Email */}
+      <div className="flex gap-4 mb-4">
+        <div className="w-1/2">
+          <label className="block text-sm font-medium text-white mb-1">Full Name</label>
+          <input
+            type="text"
+            name="name"
+            required
+            placeholder="Your Name"
+            className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+        <div className="w-1/2">
+          <label className="block text-sm font-medium text-white mb-1">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="your.email@example.com"
+            className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+      </div>
 
-                {/* Email */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
+      {/* Phone & Transport */}
+      <div className="flex gap-4 mb-4">
+        <div className="w-1/2">
+          <label className="block text-sm font-medium text-white mb-1">Phone Number</label>
+          <input
+            type="tel"
+            name="phone"
+            required
+            placeholder="+1 234 567 8900"
+            className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+        <div className="w-1/2">
+          <label className="block text-sm font-medium text-white mb-1">Preferred Transport</label>
+          <select
+            name="transport"
+            required
+            className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="" disabled selected>Select an option</option>
+            <option value="yacht">Yacht</option>
+            <option value="car">Car</option>
+            <option value="chopper">Helicopter</option>
+            <option value="jet">Private Jet</option>
+          </select>
+        </div>
+      </div>
 
-                {/* Phone */}
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="+1 234 567 8900"
-                  />
-                </div>
+      {/* Travel Date */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-white mb-1">Travel Date</label>
+        <input
+          type="date"
+          name="travelDate"
+          required
+          className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
 
-                {/* Transport Type */}
-                <div>
-                  <label htmlFor="transport" className="block text-sm font-medium text-gray-300">
-                    Preferred Transport
-                  </label>
-                  <select
-                    id="transport"
-                    name="transport"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  >
-                    <option value="" disabled selected>
-                      Select an option
-                    </option>
-                    <option value="yacht">Yacht</option>
-                    <option value="car">Car</option>
-                    <option value="chopper">Helicopter</option>
-                    <option value="jet">Private Jet</option>
-                  </select>
-                </div>
+      {/* Message */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-white mb-1">Message (Optional)</label>
+        <textarea
+          name="message"
+          rows="3"
+          placeholder="Any additional details..."
+          className="w-full px-3 py-2 rounded-md bg-[#1f1f21] text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        ></textarea>
+      </div>
 
-                {/* Travel Dates */}
-                <div>
-                  <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300">
-                    Travel Date
-                  </label>
-                  <input
-                    type="date"
-                    id="travelDate"
-                    name="travelDate"
-                    required
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
-                </div>
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-md hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+      >
+        Submit Enquiry
+      </button>
+    </form>
 
-                {/* Message */}
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300">
-                    Message (Optional)
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    className="mt-1 w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                    placeholder="Any additional details..."
-                  ></textarea>
-                </div>
-
-                {/* Submit Message */}
-                {submitMessage && (
-                  <div
-                    className={`text-sm text-center p-2 rounded-lg ${
-                      submitMessage.includes('successfully')
-                        ? 'bg-green-500/20 text-green-300'
-                        : 'bg-red-500/20 text-red-300'
-                    }`}
-                  >
-                    {submitMessage}
-                  </div>
-                )}
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
-                >
-                  Submit Enquiry
-                </button>
-              </form>
               </div>
             </motion.div>
           </motion.div>
