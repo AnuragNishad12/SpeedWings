@@ -89,7 +89,7 @@ const AircraftCard = ({ aircraft }) => {
           fullName: '',
           email: '',
           phoneNumber: '',
-          preferredTransport: '',
+          preferredTransport: 'Jet',
           travelDate: '',
           message: ''
         });
