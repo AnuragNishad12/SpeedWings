@@ -1,7 +1,8 @@
+// src/pages/HelicopterBooking.js
 import { useState, useEffect } from 'react';
 import { database } from '../firebaseConfig';
-import { ref, onValue, off, push } from 'firebase/database';
-import { ToastContainer, toast } from 'react-toastify';
+import { ref, onValue, off } from 'firebase/database';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FlightBookingForm from '../NewPages/FlightBookingForm';
 import { motion } from 'framer-motion';
@@ -9,9 +10,9 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 // Import EnquiryForm component
-import EnquiryForm from '../components/EnquiryForm'; // Update the path as needed
+import EnquiryForm from '../components/EnquiryForm'; // Ensure correct path
 
-// Assuming these components are defined elsewhere
+// Other components
 import Navbar from '../components/Navbar';
 import FaqSection from '../components/FaqSection';
 import Footer from '../NewPages/Footer';
@@ -19,17 +20,7 @@ import Footer from '../NewPages/Footer';
 const HelicopterBooking = () => {
   const [helicopters, setHelicopters] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    date: '',
-    helicopterType: '',
-    message: '',
-  });
   const [testimonials, setTestimonials] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  // State for modal and enquiry form
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
   const [selectedHelicopter, setSelectedHelicopter] = useState(null);
@@ -113,50 +104,6 @@ const HelicopterBooking = () => {
       ? helicopters
       : helicopters.filter((heli) => heli.category === activeCategory);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const bookingsRef = ref(database, 'bookings');
-      const bookingData = {
-        ...formData,
-        timestamp: new Date().toISOString(),
-        status: 'new',
-      };
-      await push(bookingsRef, bookingData);
-      toast.success('Thank you! We will contact you soon for your inquiry.', {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        date: '',
-        helicopterType: '',
-        message: '',
-      });
-    } catch (error) {
-      console.error('Error submitting booking:', error);
-      toast.error('There was an error submitting your booking. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   // Modal functions
   const openModal = (helicopter) => {
     setSelectedHelicopter(helicopter);
@@ -176,7 +123,7 @@ const HelicopterBooking = () => {
 
   const closeEnquiryForm = () => {
     setIsEnquiryFormOpen(false);
-    // Keep the selected helicopter in case they want to reopen the form
+    setSelectedHelicopter(null); // Clear selected helicopter
   };
 
   return (

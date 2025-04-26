@@ -1,26 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ref, push } from 'firebase/database';
-import { database } from '../firebaseConfig';
-import { toast } from 'react-toastify';
+import { database } from '../firebaseConfig'; // Adjust path as needed
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 const EnquiryForm = ({ helicopter, isOpen, closeForm }) => {
   const [formData, setFormData] = useState({
+    serviceName: '',
+    startingPrice: '',
     fullName: '',
     email: '',
-    phone: '',
-    travelDate: '',
+    number: '',
+    date: '',
     message: '',
-    helicopterType: helicopter?.title || '',
-    startingPrice: helicopter?.price || '',
-    enquiryDate: new Date().toISOString(),
-    status: 'new',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Pre-populate serviceName and startingPrice when helicopter changes
+  useEffect(() => {
+    if (helicopter) {
+      setFormData((prevState) => ({
+        ...prevState,
+        serviceName: helicopter.title || '',
+        startingPrice: helicopter.price ? String(helicopter.price) : '',
+      }));
+    }
+  }, [helicopter]);
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -30,42 +38,51 @@ const EnquiryForm = ({ helicopter, isOpen, closeForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     try {
-      const enquiriesRef = ref(database, 'aircraftEnquiries');
-      await push(enquiriesRef, formData);
-
-      toast.success('Thank you for your enquiry! We will contact you soon.', {
-        position: 'top-center',
-        autoClose: 5000,
+      // Store data in Firebase
+      const contactRef = ref(database, 'EnquiryDetailsForTravels');
+      await push(contactRef, {
+        ...formData,
+        timestamp: new Date().toISOString(),
       });
 
-      // Reset form
+      // Show success toast
+      toast.success('We will contact you as soon as possible!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      // Reset form (except pre-populated fields)
       setFormData({
+        serviceName: helicopter?.title || '',
+        startingPrice: helicopter?.price ? String(helicopter.price) : '',
         fullName: '',
         email: '',
-        phone: '',
-        travelDate: '',
+        number: '',
+        date: '',
         message: '',
-        helicopterType: helicopter?.title || '',
-        startingPrice: helicopter?.price || '',
-        enquiryDate: new Date().toISOString(),
-        status: 'new',
       });
 
-        closeForm();
-      } catch (error) {
-        console.error('Error submitting enquiry:', error);
-        toast.error('There was an error submitting your enquiry. Please try again.');
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
+      // Close the modal
+      closeForm();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error('Error submitting form. Please try again.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    }
+  };
 
   return (
-    <Transition show={isOpen} as="div">
+    <Transition show={isOpen} as="div" className="fixed inset-0 z-50 overflow-hidden">
       <Dialog as="div" className="relative z-50" onClose={closeForm}>
+        {/* Background overlay */}
         <Transition.Child
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -74,43 +91,96 @@ const EnquiryForm = ({ helicopter, isOpen, closeForm }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
+          <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+        {/* Modal container - positioned to avoid navbar */}
+        <div className="fixed inset-0 flex items-center justify-center px-4 sm:px-6 md:px-8 py-16">
+          <div className="w-full h-full flex items-center justify-center">
             <Transition.Child
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
+              enterFrom="opacity-0 scale-95 translate-y-4"
+              enterTo="opacity-100 scale-100 translate-y-0"
               leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              leaveFrom="opacity-100 scale-100 translate-y-0"
+              leaveTo="opacity-0 scale-95 translate-y-4"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-[#161617] text-left align-middle shadow-xl transition-all">
-                <div className="flex justify-between items-center p-4 border-b border-gray-700">
-                  <Dialog.Title className="text-lg font-medium text-white">
-                    Enquiry Form
+              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-xl bg-white shadow-2xl transition-all">
+                {/* Header section */}
+                <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4 flex justify-between items-center">
+                  <Dialog.Title as="h3" className="text-xl font-bold text-white">
+                    Enquiry for {helicopter?.title || 'Helicopter Service'}
                   </Dialog.Title>
                   <button
                     type="button"
-                    className="text-gray-400 hover:text-white"
+                    className="text-white hover:text-gray-200 focus:outline-none"
                     onClick={closeForm}
+                    aria-label="Close"
                   >
                     <XMarkIcon className="h-6 w-6" />
                   </button>
                 </div>
 
-                <div className="p-6">
-                  <p className="text-sm text-gray-300 mb-4">
-                    Enquire about {helicopter?.title} | {helicopter?.category} <br />
-                    Starting from ₹{helicopter?.price}
+                <ToastContainer />
+                
+                {/* Form container with scrollable content */}
+                <div className="max-h-[calc(100vh-12rem)] overflow-y-auto px-6 py-4">
+                  <p className="text-gray-600 mb-4">
+                    Please fill out the form below and we'll get back to you with more details.
                   </p>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Two column layout for desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {/* Service Name */}
                       <div>
-                        <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-1">
+                        <label
+                          htmlFor="serviceName"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Service Name
+                        </label>
+                        <input
+                          type="text"
+                          id="serviceName"
+                          name="serviceName"
+                          value={formData.serviceName}
+                          onChange={handleChange}
+                          required
+                          readOnly
+                          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed"
+                        />
+                      </div>
+
+                      {/* Starting Price */}
+                      <div>
+                        <label
+                          htmlFor="startingPrice"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Starting Price (₹)
+                        </label>
+                        <input
+                          type="text"
+                          id="startingPrice"
+                          name="startingPrice"
+                          value={formData.startingPrice}
+                          onChange={handleChange}
+                          required
+                          readOnly
+                          className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 cursor-not-allowed"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Two column layout for desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {/* Full Name */}
+                      <div>
+                        <label
+                          htmlFor="fullName"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                           Full Name
                         </label>
                         <input
@@ -118,109 +188,108 @@ const EnquiryForm = ({ helicopter, isOpen, closeForm }) => {
                           id="fullName"
                           name="fullName"
                           value={formData.fullName}
-                          onChange={handleInputChange}
-                          placeholder="Your Name"
+                          onChange={handleChange}
                           required
-                          className="w-full px-3 py-2 bg-[#1e1e20] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="John Doe"
                         />
                       </div>
 
+                      {/* Email */}
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-                          Email Address
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Email
                         </label>
                         <input
                           type="email"
                           id="email"
                           name="email"
                           value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="your.email@example.com"
+                          onChange={handleChange}
                           required
-                          className="w-full px-3 py-2 bg-[#1e1e20] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="your.email@example.com"
                         />
                       </div>
+                    </div>
 
+                    {/* Two column layout for desktop */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {/* Phone Number */}
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+                        <label
+                          htmlFor="number"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                           Phone Number
                         </label>
                         <input
                           type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="+1234 567 prime8900"
+                          id="number"
+                          name="number"
+                          value={formData.number}
+                          onChange={handleChange}
                           required
-                          className="w-full px-3 py-2 bg-[#1e1e20] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="+91 9999999999"
                         />
                       </div>
 
+                      {/* Preferred Date */}
                       <div>
-                        <label htmlFor="travelDate" className="block text-sm font-medium text-gray-300 mb-1">
-                          Travel Date
+                        <label
+                          htmlFor="date"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Preferred Date
                         </label>
                         <input
                           type="date"
-                          id="travelDate"
-                          name="travelDate"
-                          value={formData.travelDate}
-                          onChange={handleInputChange}
+                          id="date"
+                          name="date"
+                          value={formData.date}
+                          onChange={handleChange}
                           required
-                          className="w-full px-3 py-2 bg-[#1e1e20] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          min={new Date().toISOString().split('T')[0]}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
-                      </div>
-
-                      <div className="sm:col-span-2">
-                        <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">
-                          Message (Optional)
-                        </label>
-                        <textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          placeholder="Any additional details..."
-                          rows="4"
-                          className="w-full px-3 py-2 bg-[#1e1e20] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        ></textarea>
                       </div>
                     </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3 px-4 bg-gradient-to-r from-[#F9672C] to-purple-600 text-white font-medium rounded-md hover:from-[#F9672C] hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-70"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <svg
-                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                          Submitting...
-                        </>
-                      ) : (
-                        'Submit Enquiry'
-                      )}
-                    </button>
+                    {/* Message - full width */}
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y h-24"
+                        placeholder="Please let us know any specific requirements or questions you may have..."
+                      />
+                    </div>
+
+                    {/* Submit button */}
+                    <div className="pt-3">
+                      <button
+                        type="submit"
+                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 font-medium shadow-md"
+                      >
+                        Submit Enquiry
+                      </button>
+                      <p className="text-xs text-gray-500 mt-2 text-center">
+                        By submitting this form, you agree to our privacy policy and terms of service.
+                      </p>
+                    </div>
                   </form>
                 </div>
               </Dialog.Panel>
