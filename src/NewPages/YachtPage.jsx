@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import {
-  DollarSign,
+  IndianRupee,
   MapPin,
   Settings,
   X,
@@ -180,8 +180,8 @@ export default function YachtRental() {
                                 <span className="text-white text-sm sm:text-base">Route: {yacht.route}</span>
                               </div>
                               <div className="flex items-center text-gray-700">
-                                <DollarSign className="text-white w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                                <span className="text-white text-sm sm:text-base">Starting from {yacht.price}/week</span>
+                               <IndianRupee className="text-white w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                                <span className="text-white text-sm sm:text-base">Starting from {yacht.price}/2 hours</span>
                               </div>
                             </div>
                             <div className="flex flex-col sm:flex-row gap-3">
