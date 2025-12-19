@@ -55,7 +55,7 @@ function AboutUs() {
 
             <div className="h-1 w-16 bg-[#F9672C] mb-8"></div>
             <p className="text-[#8b868a] text-lg leading-relaxed mb-8">
-              At SkyWings Aviation, we are committed to redefining air travel with cutting-edge technology and exceptional service. With a fleet of modern, fuel-efficient aircraft, we connect passengers to over 100 destinations worldwide, ensuring safety, comfort, and sustainability at every altitude.
+              At Xelevate Aviation, we are committed to redefining air travel with cutting-edge technology and exceptional service. With a fleet of modern, fuel-efficient aircraft, we connect passengers to over 100 destinations worldwide, ensuring safety, comfort, and sustainability at every altitude.
             </p>
             <p className="text-[#8b868a] text-lg leading-relaxed mb-8">
               Our team of aviation experts brings decades of combined experience to deliver a seamless, luxurious flight experience that exceeds expectations and sets new industry standards.
