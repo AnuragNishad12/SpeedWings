@@ -63,9 +63,17 @@ export default function Footer() {
   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <RxCross2 className="text-xl" />
   </div>
+  <a
+  href="https://www.instagram.com/xelevatexperiences/?igsh=MXVscnRoczdlbXJneQ%3D%3D&utm_source=qr#"
+  target="_blank"
+  rel="noopener noreferrer"
+>
   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaInstagram className="text-xl" />
   </div>
+</a>
+
+  
   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-900 text-white">
     <FaFacebookF className="text-xl" />
   </div>
