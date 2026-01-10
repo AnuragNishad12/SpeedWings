@@ -25,7 +25,7 @@ const HomePage = () => {
 <h1 
   className="text-white z-10 font-bold text-xl sm:text-2xl md:text-3xl mt-6 text-center tracking-wide leading-snug"
 >
-  Connoisseur of Luxury Travel
+  Connoisseur of Luxury
 </h1>
     </div>
   );

@@ -20,26 +20,28 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-[#808080]">Our Services</h3>
           <ul className="mt-3 space-y-2 text-xs text-[#808080]">
-            <li>Our Products</li>
-            <li>Membership</li>
-            <li>Our Fleet</li>
-            <li>JetSteals</li>
-            <li>Airports</li>
-            <li>About Us</li>
-            <li>eBook</li>
+            <li>Private Jets</li>
+            <li>Helicopters</li>
+            <li>Yachts</li>
+            <li>Luxury Cars</li>
+            <li>Events</li>
+            <li>Tirth Yatra</li>
+            <li>Exclusive Deals</li>
+            <li>Members Club</li>
           </ul>
         </div>
         <div>
           <h3 className="font-semibold text-[#808080]">Quick Links</h3>
           <ul className="mt-3 space-y-2 text-xs text-[#808080]">
-            <li>Blogs</li>
-            <li>Career</li>
+            <li>FAQs</li>
+            <li>Careers</li>
+            <li>Connect With Us</li>
+            <li>News & Media</li>
+            <li>Membership</li>
             <li>Contact Us</li>
+            <li>Giving Back to Society</li>
             <li>Privacy Policy</li>
             <li>Terms & Conditions</li>
-            <li>News & Media</li>
-            <li>FAQs</li>
-            <li>Product Brochure</li>
           </ul>
         </div>
         <div>

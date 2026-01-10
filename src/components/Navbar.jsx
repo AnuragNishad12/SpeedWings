@@ -64,8 +64,30 @@ const navigate = useNavigate();
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li><a href="/#" className="active">Home</a></li>
           <li><a href="/#/about">About</a></li>
-          <li>
+          {/* <li>
           <a href="/#/dealoftheday">Deal of The Day</a>
+          </li> */}
+          
+           <li
+            className={`dropdown ${exploreOpen ? "open" : ""}`}
+            onMouseEnter={() => window.innerWidth > 768 && setExploreOpen(true)}
+            onMouseLeave={() => window.innerWidth > 768 && setExploreOpen(false)}
+            onClick={toggleExploreMenu} >
+            <a href="/#/dealoftheday">Deal of The Day</a>
+            <ul className={`submenu ${exploreOpen ? "show" : ""}`}>
+              <li><a href="/#">Jets</a></li>
+              <li><a href="/#">Jets by Seat</a></li>
+              <li><a href="/#">Choopers</a></li>
+              <li><a href="/#">Choopers by Seat</a></li>
+            </ul>
+          </li>
+
+
+          <li>
+          <a href="/">Members Club</a>
+          </li>
+          <li>
+          <a href="/">News & Media</a>
           </li>
           {/* Explore Dropdown */}
           <li
@@ -80,10 +102,12 @@ const navigate = useNavigate();
               <li><a href="/#/helicopter">Chopper</a></li>
               <li><a href="/#/yacht">Yacht</a></li>
               <li><a href="/#/c">Car</a></li>
+              <li><a href="/#">Events</a></li>
+              <li><a href="/#">Tirth Yatra</a></li>
             </ul>
           </li>
-          <li><a href="/#/blog">Blog</a></li>
-          <li><a href="/#/contact">Contact</a></li>
+          {/* <li><a href="/#/blog">Blog</a></li> */}
+          <li><a href="/#/contact">Contact | No. 9999999999</a></li>
           <li>
             <a 
               className="bg-blue-900 text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 transition"
