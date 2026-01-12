@@ -107,7 +107,7 @@ const navigate = useNavigate();
             </ul>
           </li>
           {/* <li><a href="/#/blog">Blog</a></li> */}
-          <li><a href="/#/contact">Contact | No. 9999999999</a></li>
+          <li><a href="/#/contact">Contact | No. 9999999991</a></li>
           <li>
             <a 
               className="bg-blue-900 text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 transition"

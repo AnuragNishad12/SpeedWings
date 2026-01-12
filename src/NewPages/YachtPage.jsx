@@ -1,339 +1,379 @@
+// src/NewPages/Yachts/YachtRental.jsx
+
 import { useState, useEffect } from 'react';
-import {
-  IndianRupee,
-  MapPin,
-  Settings,
-  X,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
 import { ref, onValue } from 'firebase/database';
-import { database } from '../firebaseConfig'; 
-import Footer from './Footer';
-import Navbar from "../components/Navbar";
-import FlightBookingForm from './FlightBookingForm';
-import YachtHeader from './YatchHeader';
-import EnquiryForm from '../components/EnquiryForm'; // Import EnquiryForm
+import { database } from '../firebaseConfig';
 
-export default function YachtRental() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('details');
-  const [selectedYacht, setSelectedYacht] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [yachts, setYachts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false); // State for EnquiryForm
-  const [enquiryYacht, setEnquiryYacht] = useState(null); // State to store yacht for enquiry
+import Footer from '../NewPages/Footer';
+import Navbar from '../components/Navbar';
+import FlightBookingForm from '../NewPages/FlightBookingForm';
+import YachtHeader from './YatchHeader';     // Consider renaming file to YachtHeader.jsx
+import EnquiryForm from '../components/EnquiryForm';
 
-  useEffect(() => {
-    // Reference to the 'yachts' node in your Firebase Realtime Database
-    const yachtsRef = ref(database, 'yachts');
-    
-    // Set up a listener for changes to the data
-    const unsubscribe = onValue(yachtsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        // Convert the object of objects to an array with IDs included
-        const yachtArray = Object.entries(data).map(([id, yacht]) => ({
-          id,
-          ...yacht,
-          // Make sure images is an array, not an object
-          images: yacht.images ? Object.values(yacht.images) : []
-        }));
-        setYachts(yachtArray);
-      } else {
-        setYachts([]);
-      }
-      setLoading(false);
-    });
-    
-    // Clean up the listener when component unmounts
-    return () => unsubscribe();
-  }, []);
+// ── Image Gallery Component ──
+const ImageGallery = ({ images }) => {
+  const [activeImage, setActiveImage] = useState(0);
 
-  const filteredYachts = yachts.filter(yacht => 
-    selectedFilter === 'all' || yacht.name === selectedFilter
+  return (
+    <div className="w-full">
+      <div className="w-full h-48 md:h-64 mb-3 overflow-hidden rounded-lg">
+        <img
+          src={images[activeImage]}
+          alt="Yacht view"
+          className="w-full h-full object-cover rounded-lg"
+        />
+      </div>
+
+      <div className="flex space-x-2 overflow-x-auto pb-1">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`h-16 w-16 md:h-20 md:w-20 cursor-pointer border-2 flex-shrink-0 rounded ${
+              activeImage === index ? 'border-blue-900' : 'border-gray-700'
+            }`}
+            onClick={() => setActiveImage(index)}
+          >
+            <img
+              src={image}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
+};
 
-  const openDetailsDialog = (yacht) => {
-    setSelectedYacht(yacht);
-    setCurrentImageIndex(0);
-    setIsDialogOpen(true);
-  };
+// ── Yacht Card Component ──
+const YachtCard = ({ yacht }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
 
-  const openEnquiryForm = (yacht) => {
-    setEnquiryYacht(yacht);
-    setIsEnquiryFormOpen(true);
-  };
-
-  const closeEnquiryForm = () => {
-    setIsEnquiryFormOpen(false);
-    setEnquiryYacht(null);
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === selectedYacht.images.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? selectedYacht.images.length - 1 : prev - 1
-    );
-  };
-
-  const selectThumbnail = (index) => {
-    setCurrentImageIndex(index);
-  };
-
-  const toggleMobileFilter = () => {
-    setIsMobileFilterOpen(!isMobileFilterOpen);
+  const yachtDataForEnquiry = {
+    title: yacht.name,
+    price: yacht.price,
+    category: yacht.route || 'Yacht Rental',
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {!isDialogOpen && <YachtHeader />}
-      {!isDialogOpen && <Navbar />}
-      
-      <div className="mt-8 md:mt-16">
-        {!isDialogOpen && <FlightBookingForm />}
-      </div>
+    <div className="max-w-5xl mx-auto bg-blue-900 rounded-md shadow-md overflow-hidden mb-8">
+      <div className="md:flex bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+        {/* Gallery */}
+        <div className="md:w-1/2 p-6">
+          <ImageGallery images={yacht.images || []} />
+        </div>
 
-      <div className="bg-[#161617] flex-grow p-4 sm:p-6 mt-8 md:mt-16">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-white mb-6 md:mb-12">Luxury Yacht</h1>
-        <p className="text-base md:text-lg text-center text-gray-300 mb-6 md:mb-8 px-4">
-          Discover the elegance and comfort of our premium yacht collection, crafted for unforgettable experiences on the sea.
-        </p>
+        {/* Info */}
+        <div className="md:w-1/2 p-8 flex flex-col justify-between">
+          <div>
+            <div className="mb-4">
+              <h2 className="text-3xl font-bold text-white mb-2 font-serif">{yacht.name}</h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
+            </div>
 
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="text-white text-xl">Loading yachts...</div>
+            <h3 className="text-lg font-semibold text-white mb-3">Overview</h3>
+            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+              {yacht.shortDescription || 'Experience luxury and comfort on the water with this premium yacht.'}
+            </p>
           </div>
-        ) : (
-          <div className="max-w-7xl mx-auto">
-            {/* Mobile Filter Toggle Button */}
-            <div className="md:hidden mb-4">
-              <button 
-                onClick={toggleMobileFilter}
-                className="w-full bg-black text-white p-3 rounded-lg border border-gray-800 flex justify-between items-center"
+
+          <div>
+            <div className="flex gap-3 mb-6">
+              <button
+                onClick={() => setShowDetails(!showDetails)}
+                className="w-1/2 py-3 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800 transition-all duration-300"
               >
-                <span>Filter Yachts</span>
-                <span>{isMobileFilterOpen ? '−' : '+'}</span>
+                {showDetails ? 'Hide Specifications' : 'View Specifications'}
+              </button>
+
+              <button
+                onClick={() => setShowEnquiryForm(true)}
+                className="w-1/2 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300"
+              >
+                Enquire Now
               </button>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-              {/* Filter Sidebar - Mobile Dropdown */}
-              <div className={`${isMobileFilterOpen ? 'block' : 'hidden'} md:block md:w-64 flex-shrink-0 mb-6 md:mb-0`}>
-                <div className="bg-black p-4 rounded-lg border border-gray-800">
-                  <h3 className="text-white text-lg font-semibold mb-4">Filter By Yacht</h3>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => {
-                        setSelectedFilter('all');
-                        setIsMobileFilterOpen(false);
-                      }}
-                      className={`w-full text-left px-4 py-2 rounded-md transition-colors ${
-                        selectedFilter === 'all' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-300 hover:bg-gray-800'
-                      }`}
-                    >
-                      All Yachts
-                    </button>
-                    {yachts.map(yacht => (
-                      <button
-                        key={yacht.id}
-                        onClick={() => {
-                          setSelectedFilter(yacht.name);
-                          setIsMobileFilterOpen(false);
-                        }}
-                        className={`w-full text-left px-4 py-2 rounded-md transition-colors ${
-                          selectedFilter === yacht.name 
-                            ? 'bg-blue-600 text-white' 
-                            : 'text-gray-300 hover:bg-gray-800'
-                        }`}
-                      >
-                        {yacht.name}
-                      </button>
-                    ))}
+            <div className="space-y-5 border-t border-gray-800 pt-6">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span className="text-white font-medium">
+                  Route: <span className="font-semibold">{yacht.route || '—'}</span>
+                </span>
+              </div>
+
+              <div className="flex items-center">
+                <svg className="w-6 h-6 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span className="text-white font-medium">
+                  Starting from <span className="text-2xl text-[#00FF00] font-bold">{yacht.price}</span>/2hrs
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Specifications Modal */}
+      {showDetails && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setShowDetails(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-black p-6 relative">
+              <h2 className="text-2xl font-bold text-white">Yacht Specifications</h2>
+              <p className="text-blue-100 mt-1 text-sm">Complete details & features</p>
+
+              <button
+                onClick={() => setShowDetails(false)}
+                className="absolute top-5 right-5 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+              >
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="overflow-y-auto max-h-[calc(90vh-80px)] p-6 bg-[#161617]">
+              <div className="mb-10">
+                <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
+                  <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Yacht Overview
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div className="bg-gray-800 p-5 rounded-lg shadow-sm">
+                    <div className="text-sm font-medium text-gray-400">Guest Capacity</div>
+                    <div className="text-3xl font-bold text-white mt-1">{yacht.specifications?.guests || '—'}</div>
+                  </div>
+                  <div className="bg-gray-800 p-5 rounded-lg shadow-sm">
+                    <div className="text-sm font-medium text-gray-400">Cabins</div>
+                    <div className="text-3xl font-bold text-white mt-1">{yacht.specifications?.cabins || '—'}</div>
+                  </div>
+                  <div className="bg-gray-800 p-5 rounded-lg shadow-sm">
+                    <div className="text-sm font-medium text-gray-400">Route</div>
+                    <div className="text-xl font-bold text-white mt-1">{yacht.route || '—'}</div>
                   </div>
                 </div>
               </div>
 
-              {/* Yacht Cards */}
-              <div className="flex-grow">
-                <div className="grid grid-cols-1 gap-6">
-                  {filteredYachts.length > 0 ? (
-                    filteredYachts.map((yacht) => (
-                      <div key={yacht.id} className="flex justify-center">
-                        <div className="bg-black rounded-lg overflow-hidden shadow-lg flex flex-col w-full max-w-2xl p-4 sm:p-6">
-                          <img src={yacht.image} alt={yacht.name} className="w-full h-48 sm:h-64 object-cover rounded-lg" />
-                          <div className="p-4 sm:p-6">
-                            <h2 className="text-white text-xl sm:text-2xl font-bold">{yacht.name}</h2>
-                            <div className="my-3 sm:my-4">
-                              <div className="flex items-center text-gray-700 mb-2">
-                                <MapPin className="text-white w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                                <span className="text-white text-sm sm:text-base">Route: {yacht.route}</span>
-                              </div>
-                              <div className="flex items-center text-gray-700">
-                               <IndianRupee className="text-white w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                                <span className="text-white text-sm sm:text-base">Starting from {yacht.price}/2 hours</span>
-                              </div>
-                            </div>
-                            <div className="flex flex-col sm:flex-row gap-3">
-                              <button
-                                onClick={() => openDetailsDialog(yacht)}
-                                className="w-full sm:w-auto bg-blue-600 text-white py-2 sm:py-3 px-4 rounded-md font-medium hover:bg-blue-700 transition-colors"
-                              >
-                                View Full Specifications
-                              </button>
-                              <button
-                                onClick={() => openEnquiryForm(yacht)}
-                                className="w-full sm:w-auto py-2 sm:py-3 px-4 bg-gradient-to-r from-[#F9672C] to-purple-600 text-white font-medium rounded-md hover:from-[#F9672C] hover:to-purple-700 transition-colors"
-                              >
-                                Make Enquiry
-                              </button>
-                            </div>
+              {yacht.specifications && Object.keys(yacht.specifications).length > 3 && (
+                <div>
+                  <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
+                    <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Technical Specifications
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {Object.entries(yacht.specifications)
+                      .filter(([key]) => !['guests', 'cabins'].includes(key))
+                      .map(([key, value]) => (
+                        <div key={key} className="bg-gray-800 p-5 rounded-lg">
+                          <div className="text-sm font-medium text-gray-400 capitalize">
+                            {key.replace(/([A-Z])/g, ' $1')}
                           </div>
+                          <div className="text-xl font-bold text-white mt-2">{value}</div>
                         </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center text-white text-lg">
-                      No yachts found matching your criteria.
-                    </div>
-                  )}
+                      ))}
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
+
+            <div className="border-t border-gray-800 p-5 flex justify-end bg-[#161617]">
+              <button
+                onClick={() => setShowDetails(false)}
+                className="px-8 py-3 bg-gradient-to-r from-[#F9672C] to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+              >
+                Close
+              </button>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Details Dialog */}
-        {isDialogOpen && selectedYacht && (
-          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-2 sm:p-4 z-50">
-            <div className="bg-black text-white rounded-lg w-full max-w-4xl max-h-screen overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-              <style jsx>{`
-                div::-webkit-scrollbar {
-                  display: none;
-                }
-              `}</style>
+      <EnquiryForm
+        helicopter={yachtDataForEnquiry}
+        isOpen={showEnquiryForm}
+        closeForm={() => setShowEnquiryForm(false)}
+      />
+    </div>
+  );
+};
 
-              <div className="flex justify-between items-center p-3 sm:p-4 border-b border-gray-700">
-                <h2 className="text-xl sm:text-2xl font-bold">{selectedYacht.name} Details</h2>
-                <button onClick={() => setIsDialogOpen(false)} className="text-gray-400 hover:text-white">
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
-                </button>
-              </div>
+// ── Location Filter with Popular + Coming Soon ──
+const LocationFilter = ({ onFilterChange, availableRoutes }) => {
+  const [selected, setSelected] = useState('all');
 
-              {/* Image Gallery */}
-              <div className="relative">
-                <div className="relative h-52 sm:h-64 md:h-96">
-                  {selectedYacht.images && selectedYacht.images[currentImageIndex] && (
-                    <img
-                      src={selectedYacht.images[currentImageIndex]}
-                      alt={`${selectedYacht.name} Image ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-1 sm:p-2 rounded-r-md text-white"
-                  >
-                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-1 sm:p-2 rounded-l-md text-white"
-                  >
-                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </button>
-                </div>
+  const popularRoutes = ['Mumbai', 'Goa', 'Dubai', 'Sri Lanka'];
 
-                <div className="flex overflow-x-auto p-2 bg-gray-900">
-                  {selectedYacht.images && selectedYacht.images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => selectThumbnail(idx)}
-                      className={`flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 m-1 cursor-pointer ${currentImageIndex === idx ? 'ring-2 ring-blue-500' : ''}`}
-                    >
-                      <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+  return (
+    <div className="bg-black p-5 rounded-lg border border-blue-900 sticky top-4">
+      <h2 className="text-lg font-semibold mb-4 text-white">Filter By Location</h2>
 
-              {/* Tabs */}
-              <div className="p-3 sm:p-4">
-                <div className="flex space-x-2 sm:space-x-4 mb-4 sm:mb-6 overflow-x-auto">
-                  <button
-                    className={`py-1 sm:py-2 px-2 sm:px-4 rounded-md text-sm sm:text-base whitespace-nowrap ${activeTab === 'details' ? 'bg-blue-600 text-white' : 'text-blue-400'}`}
-                    onClick={() => setActiveTab('details')}
-                  >
-                    ✓ Details
-                  </button>
-                  <button
-                    className={`py-1 sm:py-2 px-2 sm:px-4 rounded-md text-sm sm:text-base whitespace-nowrap ${activeTab === 'tech' ? 'bg-blue-600 text-white' : 'text-blue-400'}`}
-                    onClick={() => setActiveTab('tech')}
-                  >
-                    <span className="flex items-center">
-                      <Settings className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
-                      Tech Specs
-                    </span>
-                  </button>
-                </div>
+      <div className="space-y-2">
+        <button
+          onClick={() => {
+            setSelected('all');
+            onFilterChange('all');
+          }}
+          className={`w-full text-left px-4 py-2.5 rounded-md transition-colors ${
+            selected === 'all' ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
+          }`}
+        >
+          All Routes
+        </button>
 
-                {activeTab === 'details' && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-                    <div className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-                      <h3 className="text-gray-400 text-sm mb-1 sm:mb-2">Guest Capacity</h3>
-                      <p className="text-xl sm:text-2xl font-bold">{selectedYacht.specifications?.guests || 'N/A'}</p>
-                    </div>
-                    <div className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-                      <h3 className="text-gray-400 text-sm mb-1 sm:mb-2">Cabins</h3>
-                      <p className="text-xl sm:text-2xl font-bold">{selectedYacht.specifications?.cabins || 'N/A'}</p>
-                    </div>
-                    <div className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-                      <h3 className="text-gray-400 text-sm mb-1 sm:mb-2">Route</h3>
-                      <p className="text-xl sm:text-2xl font-bold">{selectedYacht.route || 'N/A'}</p>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'tech' && selectedYacht.specifications && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    {Object.entries(selectedYacht.specifications).map(([key, value]) => (
-                      <div key={key} className="bg-gray-800 p-3 sm:p-4 rounded-lg">
-                        <h3 className="text-gray-400 capitalize text-sm mb-1">{key.replace(/([A-Z])/g, ' $1')}</h3>
-                        <p className="text-white text-base sm:text-lg">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Enquiry Form Dialog */}
-        {isEnquiryFormOpen && enquiryYacht && (
-          <EnquiryForm
-            helicopter={{
-              title: enquiryYacht.name, // Map yacht name to title
-              price: enquiryYacht.price, // Map yacht price
-              category: enquiryYacht.route // Map yacht route to category
+        {popularRoutes.map((route) => (
+          <button
+            key={route}
+            onClick={() => {
+              setSelected(route);
+              onFilterChange(route);
             }}
-            isOpen={isEnquiryFormOpen}
-            closeForm={closeEnquiryForm}
-          />
-        )}
+            className={`w-full text-left px-4 py-2.5 rounded-md transition-colors flex justify-between items-center ${
+              selected === route ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
+            }`}
+          >
+            <span>{route}</span>
+            {!availableRoutes.includes(route) && (
+              <span className="text-xs text-gray-500 font-normal">Coming Soon</span>
+            )}
+          </button>
+        ))}
+
+        {availableRoutes
+          .filter((r) => !popularRoutes.includes(r))
+          .map((route) => (
+            <button
+              key={route}
+              onClick={() => {
+                setSelected(route);
+                onFilterChange(route);
+              }}
+              className={`w-full text-left px-4 py-2.5 rounded-md transition-colors ${
+                selected === route ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
+              }`}
+            >
+              {route}
+            </button>
+          ))}
+      </div>
+    </div>
+  );
+};
+
+// ── Main Component ──
+export default function YachtRental() {
+  const [yachts, setYachts] = useState([]);
+  const [filteredYachts, setFilteredYachts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [availableRoutes, setAvailableRoutes] = useState([]);
+
+  useEffect(() => {
+    const yachtsRef = ref(database, 'yachts');
+
+    const unsubscribe = onValue(yachtsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const yachtArray = Object.entries(data).map(([id, yacht]) => ({
+          id,
+          ...yacht,
+          images: yacht.images ? Object.values(yacht.images) : [],
+        }));
+
+        setYachts(yachtArray);
+        setFilteredYachts(yachtArray);
+
+        // Collect unique routes (case sensitive version)
+        const routes = [...new Set(
+          yachtArray
+            .map(y => y.route?.trim())
+            .filter(Boolean)
+        )].sort();
+
+        setAvailableRoutes(routes);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleFilterChange = (value) => {
+    if (value === 'all') {
+      setFilteredYachts(yachts);
+    } else {
+      // Case-insensitive matching is optional but recommended
+      const filtered = yachts.filter(y =>
+        y.route?.trim().toLowerCase() === value.toLowerCase()
+      );
+      setFilteredYachts(filtered);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-[#161617] min-h-screen flex items-center justify-center">
+        <div className="text-white text-2xl">Loading luxury yachts...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen bg-[#161617]">
+      <YachtHeader />
+      <Navbar />
+
+      <div className="mt-8 md:mt-16 px-4">
+        <FlightBookingForm />
+      </div>
+
+      <div className="py-12 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">
+            Luxury Yacht Collection
+          </h1>
+          <p className="text-center text-gray-400 mb-12 max-w-3xl mx-auto">
+            Discover the finest yachts for unforgettable experiences on the water
+          </p>
+
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="lg:w-1/4">
+              <LocationFilter 
+                onFilterChange={handleFilterChange} 
+                availableRoutes={availableRoutes} 
+              />
+            </div>
+
+            <div className="lg:w-3/4">
+              {filteredYachts.length > 0 ? (
+                filteredYachts.map((yacht) => (
+                  <YachtCard key={yacht.id} yacht={yacht} />
+                ))
+              ) : (
+                <div className="bg-gray-900 p-12 rounded-xl text-center text-gray-300 text-xl">
+                  No yachts available for this route yet — check back soon!
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
       <Footer />
     </div>
-  );  
+  );
 }
