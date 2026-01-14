@@ -3,6 +3,7 @@ import Footer from '../Footer';
 import '../../index.css';
 import ContactForm from '../ContactForm';
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { motion } from 'framer-motion'
 import EnquiryForm from '../../components/EnquiryForm'; // Import the EnquiryForm component
 
 // Image Gallery Component
@@ -489,8 +490,8 @@ const AircraftShowcase = () => {
     <div>
       <div className="bg-[#161617] py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-center text-white mb-12">Premium Aircraft Collection</h1>
-          
+          <h1 className="text-4xl font-bold text-center text-white mb-12">Our fleet of Private Jets</h1>
+         
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mb-6 md:mb-0">
               <AircraftFilter 

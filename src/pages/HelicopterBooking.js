@@ -141,22 +141,8 @@ const HelicopterBooking = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
-          <motion.div
-            className="max-w-4xl px-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-              Luxury Chopper Collection
-            </h1>
-            <p className="text-lg md:text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
-              Experience unparalleled convenience, speed, and luxury with our exclusive helicopter charter services.
-            </p>
-          </motion.div>
-        </div>
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+       
+        {/* <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
           <svg
             className="w-8 h-8 text-white"
             fill="none"
@@ -171,7 +157,7 @@ const HelicopterBooking = () => {
               d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
           </svg>
-        </div>
+        </div> */}
       </section>
       <div className="bg-[#161617]">
         <FlightBookingForm />
@@ -180,13 +166,16 @@ const HelicopterBooking = () => {
       {/* Fleet Section */}
       <section id="fleet" className="py-20 bg-[#161617]">
         <div className="container mx-auto px-4 bg-[#161617]">
+          
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our Premium Fleet</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Our fleet of choppers</h2>
             <div className="w-24 h-1 bg-[#F9672C] mx-auto mb-6"></div>
             <p className="text-gray-300 max-w-2xl mx-auto">
               Choose from our selection of world-class helicopters designed for luxury travel experience.
             </p>
-          </div>
+          </div> 
+
+          
 
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button

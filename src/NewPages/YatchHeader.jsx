@@ -8,14 +8,7 @@ function YachtHeader() {
     }}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="absolute inset-0 flex items-center">
-        <div className="px-4 mx-auto max-w-7xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-          Luxury Yacht Collection
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl">
-          Discover and experience the finest yachts in our premium collection
-          </p>
-        </div>
+        
       </div>
     </div>
   );

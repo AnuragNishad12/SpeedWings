@@ -99,9 +99,9 @@ const navigate = useNavigate();
             <a href="#">Explore</a>
             <ul className={`submenu ${exploreOpen ? "show" : ""}`}>
               <li><a href="/#/p">Jets</a></li>
-              <li><a href="/#/helicopter">Chopper</a></li>
-              <li><a href="/#/yacht">Yacht</a></li>
-              <li><a href="/#/c">Car</a></li>
+              <li><a href="/#/helicopter">Choppers</a></li>
+              <li><a href="/#/yacht">Yachts</a></li>
+              <li><a href="/#/c">Cars</a></li>
               <li><a href="/#">Events</a></li>
               <li><a href="/#">Tirth Yatra</a></li>
             </ul>

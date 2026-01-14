@@ -1,5 +1,6 @@
 import Navbar from "../../components/Navbar";
 import AircraftShowcase from "./ImageGallery";
+import { motion } from 'framer-motion';
 
 export default function ImagePage() {
     return (
@@ -12,9 +13,7 @@ export default function ImagePage() {
         alt="Unsplash Image"
         className="w-full h-full object-cover"
       />
-      <p className="absolute bottom-6 left-6 text-white text-9xl font-sans font-extrabold italic drop-shadow-lg">
-        Private Jet
-      </p>
+     
     </div>
     
     <AircraftShowcase/>

@@ -344,11 +344,19 @@ export default function YachtRental() {
       <div className="py-12 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">
-            Luxury Yacht Collection
+            Our fleet of yachts
           </h1>
           <p className="text-center text-gray-400 mb-12 max-w-3xl mx-auto">
             Discover the finest yachts for unforgettable experiences on the water
           </p>
+          {/* <div className="px-4 mx-auto max-w-7xl text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+          Our fleet of yachts
+          </h1>
+          <p className="mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl">
+          Discover and experience the finest yachts in our premium collection
+          </p>
+        </div> */}
 
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="lg:w-1/4">

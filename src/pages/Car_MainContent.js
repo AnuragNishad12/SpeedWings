@@ -212,20 +212,23 @@ export default function LuxuryCarSearch() {
     }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex items-center">
-          <div className="px-4 mx-auto max-w-7xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-              Luxury Car Collection
-            </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl">
-              Discover and experience the finest automobiles in our premium collection
-            </p>
-          </div>
+        
         </div>
       </div>
         <FlightBookingForm/>
       {/* Search Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
+        <div className="px-4 mx-auto max-w-7xl text-center">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+              Our collection of cars
+            </h1>
+           <p className="mt-3 mb-8 max-w-3xl mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl">
+  Discover and experience the finest automobiles in our premium collection
+</p>
+
+          </div>
         <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
+            
           <h2 className="text-2xl font-bold mb-6 text-blue-800">Find Your Perfect Car</h2>
           
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
