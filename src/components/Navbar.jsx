@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ContactForm from "../pages/InquiryForm";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../pages/navbar.css";
+import logo from "../assets/logo.png"
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -60,37 +61,26 @@ const navigate = useNavigate();
         <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
           ☰
         </div>
-        <div className="logo"><a href="/">xelevate</a></div>
+      <div className="flex items-center gap-[15px]">
+        <a href="/#" ><img
+    src={logo}
+    alt="logo"
+    className="h-6 w-auto"
+  /></a>
+  <span className="text-sm font-semibold text-white"
+    style={{ fontFamily: "'Roboto', cursive" }}
+  >
+    <a href="/#">Xelevate</a>
+  </span>
+</div>
+
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li><a href="/#" className="active">Home</a></li>
           <li><a href="/#/about">About</a></li>
           {/* <li>
           <a href="/#/dealoftheday">Deal of The Day</a>
           </li> */}
-          
            <li
-            className={`dropdown ${exploreOpen ? "open" : ""}`}
-            onMouseEnter={() => window.innerWidth > 768 && setExploreOpen(true)}
-            onMouseLeave={() => window.innerWidth > 768 && setExploreOpen(false)}
-            onClick={toggleExploreMenu} >
-            <a href="/#/dealoftheday">Deal of The Day</a>
-            <ul className={`submenu ${exploreOpen ? "show" : ""}`}>
-              <li><a href="/#">Jets</a></li>
-              <li><a href="/#">Jets by Seat</a></li>
-              <li><a href="/#">Choopers</a></li>
-              <li><a href="/#">Choopers by Seat</a></li>
-            </ul>
-          </li>
-
-
-          <li>
-          <a href="/">Members Club</a>
-          </li>
-          <li>
-          <a href="/">News & Media</a>
-          </li>
-          {/* Explore Dropdown */}
-          <li
             className={`dropdown ${exploreOpen ? "open" : ""}`}
             onMouseEnter={() => window.innerWidth > 768 && setExploreOpen(true)}
             onMouseLeave={() => window.innerWidth > 768 && setExploreOpen(false)}
@@ -106,6 +96,30 @@ const navigate = useNavigate();
               <li><a href="/#">Tirth Yatra</a></li>
             </ul>
           </li>
+          
+           <li
+            className={`dropdown ${exploreOpen ? "open" : ""}`}
+            onMouseEnter={() => window.innerWidth > 768 && setExploreOpen(true)}
+            onMouseLeave={() => window.innerWidth > 768 && setExploreOpen(false)}
+            onClick={toggleExploreMenu} >
+            <a href="/#/dealoftheday">Deal of The Day</a>
+            <ul className={`submenu ${exploreOpen ? "show" : ""}`}>
+              <li><a href="/#">Jets</a></li>
+              <li><a href="/#">Jets by Seats</a></li>
+              <li><a href="/#">Choopers</a></li>
+              <li><a href="/#">Choopers by Seats</a></li>
+            </ul>
+          </li>
+
+
+          <li>
+          <a href="/">Members Club</a>
+          </li>
+          <li>
+          <a href="/">News & Media</a>
+          </li>
+          {/* Explore Dropdown */}
+         
           {/* <li><a href="/#/blog">Blog</a></li> */}
           <li><a href="/#/contact">Contact | No. 9999999991</a></li>
           <li>

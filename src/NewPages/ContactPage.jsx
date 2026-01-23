@@ -44,14 +44,14 @@ const ContactPage = () => {
                 href="mailto:support@example.com" 
                 className="mt-4 inline-block text-blue-600 hover:text-blue-700"
               >
-                support@example.com
+                support@xelevate.com
               </a>
             </div>
 
             <div className="bg-black p-6 rounded-lg shadow-lg">
               <PhoneIcon className="h-8 w-8 text-blue-600" />
               <h3 className="mt-4 text-xl font-bold text-blue-900">Phone</h3>
-              <p className="mt-2 text-gray-600">Mon-Fri from 9am to 5pm</p>
+              {/* <p className="mt-2 text-gray-600">Mon-Fri from 9am to 5pm</p> */}
               <a 
                 href="tel: +919916989179" 
                 className="mt-4 inline-block text-blue-600 hover:text-green-700"

@@ -158,7 +158,69 @@ const HomeCarousel = () => {
             <div className="inline-block w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mt-2" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+  {/* Jets Box */}
+  <div className="group relative bg-black bg-opacity-40 backdrop-blur-md rounded-xl p-6 border border-gray-800 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20 cursor-pointer transform hover:-translate-y-2">
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="relative z-10">
+      <div className="flex justify-center mb-4">
+        <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {/* Updated: Modern jet / airplane icon (side view, sleek) */}
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/airplane-take-off.png" alt="Jets" className="w-8 h-8"/>
+        </div>
+      </div>
+      <h3 className="text-white text-xl font-semibold text-center mb-2">Jets</h3>
+      <p className="text-gray-400 text-sm text-center">Explore luxury private jets</p>
+    </div>
+  </div>
+
+  {/* Jets by Seats Box */}
+  <div className="group relative bg-black bg-opacity-40 backdrop-blur-md rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/20 cursor-pointer transform hover:-translate-y-2">
+    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="relative z-10">
+      <div className="flex justify-center mb-4">
+        <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {/* Same jet icon but with seat dots hint (like your original attempt) */}
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/airplane-take-off.png" alt="Jets" className="w-8 h-8"/>
+        </div>
+      </div>
+      <h3 className="text-white text-xl font-semibold text-center mb-2">Jets by Seats</h3>
+      <p className="text-gray-400 text-sm text-center">Find jets by capacity</p>
+    </div>
+  </div>
+
+  {/* Choppers Box */}
+  <div className="group relative bg-black bg-opacity-40 backdrop-blur-md rounded-xl p-6 border border-gray-800 hover:border-orange-500 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/20 cursor-pointer transform hover:-translate-y-2">
+    <div className="absolute inset-0 bg-gradient-to-br from-orange-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="relative z-10">
+      <div className="flex justify-center mb-4">
+        <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {/* Updated: Clean helicopter line icon (top/side view with rotor) */}
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/helicopter.png" alt="Jets" className="w-8 h-8"/>
+        </div>
+      </div>
+      <h3 className="text-white text-xl font-semibold text-center mb-2">Choppers</h3>
+      <p className="text-gray-400 text-sm text-center">Helicopter services</p>
+    </div>
+  </div>
+
+  {/* Choppers by Seats Box */}
+  <div className="group relative bg-black bg-opacity-40 backdrop-blur-md rounded-xl p-6 border border-gray-800 hover:border-pink-500 transition-all duration-300 hover:shadow-xl hover:shadow-pink-500/20 cursor-pointer transform hover:-translate-y-2">
+    <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="relative z-10">
+      <div className="flex justify-center mb-4">
+        <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          {/* Helicopter + seat indicators */}
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/helicopter.png" alt="Jets" className="w-8 h-8"/>
+        </div>
+      </div>
+      <h3 className="text-white text-xl font-semibold text-center mb-2">Choppers by Seats</h3>
+      <p className="text-gray-400 text-sm text-center">Search by passenger count</p>
+    </div>
+  </div>
+</div>
+
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rentalData.map((rental, index) => (
               <RentalCard
                 key={rental.id || index}
@@ -173,7 +235,7 @@ const HomeCarousel = () => {
             ))}
           </div>
 
-          {/* Enquire Button Section */}
+          
           <div id="enquire-button-container" className="mt-16 text-center relative">
             <div
               id="left-line"
@@ -211,7 +273,7 @@ const HomeCarousel = () => {
                 </svg>
               </span>
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Dialog Box */}

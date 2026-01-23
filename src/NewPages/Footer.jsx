@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="bg-black text-white py-10 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
-        <img src={logo} alt="Xelevate Logo" className="h-20 w-auto" />
+        <img src={logo} alt="Xelevate Logo" className="h-50 w-auto" />
 
           <p className="text-xs mt-3 text-[#808080]">
             Xelevate, a trusted choice for those valuing time, service, and reliability. Explore unique features to customize your private flying experience your way.
@@ -20,13 +20,13 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold text-[#808080]">Our Services</h3>
           <ul className="mt-3 space-y-2 text-xs text-[#808080]">
-            <li>Private Jets</li>
-            <li>Helicopters</li>
-            <li>Yachts</li>
-            <li>Luxury Cars</li>
+            <li><a href="/#/p">Private Jets</a></li>
+            <li><a href="/#/helicopter">Helicopters</a></li>
+            <li><a href="/#/yacht">Yachts</a></li>
+            <li><a href="/#/c">Luxury Cars</a></li>
             <li>Events</li>
             <li>Tirth Yatra</li>
-            <li>Exclusive Deals</li>
+            <li>Xelevate Deals</li>    
             <li>Members Club</li>
           </ul>
         </div>

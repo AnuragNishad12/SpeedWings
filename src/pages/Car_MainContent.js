@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from '../firebaseConfig';
-import FlightBookingForm from '../NewPages/FlightBookingForm';
-import EnquiryForm from '../components/EnquiryForm'; // Import the EnquiryForm component
+import EnquiryForm from '../components/EnquiryForm'; // Adjust path if needed
 
 export default function LuxuryCarSearch() {
-  const [carName, setCarName] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedCar, setSelectedCar] = useState(null);
-  const [showDialog, setShowDialog] = useState(false);
-  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-  const [enquiryCar, setEnquiryCar] = useState(null);
 
-  // Fetch data from Firebase
+  const [selectedCategories, setSelectedCategories] = useState([]); // multi-select
+  const [carName, setCarName] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
+  const [showEnquiryForm, setShowEnquiryForm] = useState(false);
+
+  // Fetch cars
   useEffect(() => {
     const carsRef = ref(database, 'cars');
-    
-    onValue(carsRef, (snapshot) => {
+    const unsubscribe = onValue(carsRef, (snapshot) => {
       if (snapshot.exists()) {
         const carsData = [];
-        snapshot.forEach((childSnapshot) => {
-          const car = childSnapshot.val();
-          carsData.push({
-            id: childSnapshot.key,
-            ...car
-          });
+        snapshot.forEach((child) => {
+          carsData.push({ id: child.key, ...child.val() });
         });
         setCars(carsData);
         setFilteredCars(carsData);
@@ -37,165 +32,144 @@ export default function LuxuryCarSearch() {
         setFilteredCars([]);
       }
       setIsLoading(false);
-    }, (error) => {
-      console.error("Error fetching data:", error);
+    }, (err) => {
+      console.error(err);
       setIsLoading(false);
     });
+
+    return () => unsubscribe();
   }, []);
 
-  const handleFilter = () => {
+  // Filter logic (runs on change)
+  useEffect(() => {
     setIsLoading(true);
-    
-    setTimeout(() => {
-      const filtered = cars.filter(
-        (car) =>
-          (carName ? car.title.toLowerCase().includes(carName.toLowerCase()) : true) &&
-          (maxPrice ? parsePrice(car.price) <= parseInt(maxPrice, 10) : true)
-      );
-      setFilteredCars(filtered);
+    const timer = setTimeout(() => {
+      let result = [...cars];
+
+      // Model search
+      if (carName.trim()) {
+        const term = carName.toLowerCase();
+        result = result.filter(c => (c.title || '').toLowerCase().includes(term));
+      }
+
+      // Price
+      if (maxPrice && !isNaN(Number(maxPrice))) {
+        const max = Number(maxPrice);
+        result = result.filter(c => {
+          const p = Number((c.price || '0').replace(/[^0-9]/g, ''));
+          return p <= max;
+        });
+      }
+
+      // Categories (multi-select)
+      if (selectedCategories.length > 0) {
+        result = result.filter(c => selectedCategories.includes(c.category));
+      }
+
+      setFilteredCars(result);
       setIsLoading(false);
     }, 500);
+
+    return () => clearTimeout(timer);
+  }, [carName, maxPrice, selectedCategories, cars]);
+
+  const toggleCategory = (cat) => {
+    setSelectedCategories(prev =>
+      prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
+    );
   };
 
-  const parsePrice = (priceString) => {
-    if (!priceString) return 0;
-    return parseInt(priceString.replace(/[^0-9]/g, ""), 10);
-  };
+  const openDetails = (car) => { setSelectedCar(car); setShowDetails(true); };
+  const openEnquiry = (car) => { setSelectedCar(car); setShowEnquiryForm(true); };
 
-  const handleCategoryFilter = (category) => {
-    setActiveFilter(category);
-    
-    if (category === "all") {
-      setFilteredCars(cars);
-    } else {
-      const filtered = cars.filter(car => 
-        car.category === category
-      );
-      setFilteredCars(filtered);
-    }
-  };
-
-  const openDetailsDialog = (car) => {
-    setSelectedCar(car);
-    setShowDialog(true);
-  };
-
-  const closeDetailsDialog = () => {
-    setShowDialog(false);
-    setSelectedCar(null);
-  };
-
-  // Handler for opening the enquiry form
-  const openEnquiryForm = (car) => {
-    setEnquiryCar(car);
-    setShowEnquiryForm(true);
-  };
-
-  // Handler for closing the enquiry form
-  const closeEnquiryForm = () => {
-    setShowEnquiryForm(false);
-    setEnquiryCar(null);
-  };
-
-  // The detailed dialog component - Fixed to follow React Hooks rules
-  const CarDetailsDialog = () => {
-    // Defining the state outside of any condition
-    const [activeImage, setActiveImage] = useState('');
-    
-    // If there's a coverImg property, we assume the car might have additional images
-    // In a real implementation, you would fetch these from Firebase
-    const additionalImages = selectedCar ? [
-      selectedCar.coverImg,
-      // For demo purposes - in a real app, these would come from Firebase
-      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Fside_view.jpg?alt=media",
-      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Finterior.jpg?alt=media",
-      "https://firebasestorage.googleapis.com/v0/b/gokqmp.appspot.com/o/car_images%2Fback_view.jpg?alt=media"
-    ] : [];
-    
-    // Update activeImage when selectedCar changes
-    useEffect(() => {
-      if (selectedCar && selectedCar.coverImg) {
-        setActiveImage(selectedCar.coverImg);
-      }
-    }, [selectedCar]);
-
-   
-    if (!selectedCar || !showDialog) return null;
+  // Car Card (horizontal layout)
+  const CarCard = ({ car }) => {
+    const images = [
+      car.coverImg || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800",
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800",
+    ];
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center mt-10 z-50 p-4">
-        <div className="bg-white rounded-xl max-w-4xl w-full max-h-full overflow-auto">
-          <div className="flex justify-between items-center p-6 border-b">
-            <h2 className="text-2xl font-bold text-gray-900">{selectedCar.title}</h2>
-            <button onClick={closeDetailsDialog} className="text-gray-500 hover:text-gray-700">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+      <div className="bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 mb-8">
+        <div className="md:flex">
+          <div className="md:w-1/2 p-5 md:p-6">
+            <img
+              src={images[0]}
+              alt={car.title}
+              className="w-full h-64 md:h-80 object-cover rounded-xl"
+            />
+          </div>
+          <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between text-white">
+            <div>
+              <h2 className="text-3xl font-bold mb-3">{car.title || "Premium Vehicle"}</h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 mb-4"></div>
+              <p className="text-gray-400 mb-6 line-clamp-3">
+                {car.description || "Exceptional luxury and performance in one masterpiece."}
+              </p>
+            </div>
+            <div>
+              <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                <div className="flex items-center"><span className="text-[#F9672C] mr-2">⏱</span> {car.totalTime || "?"} h</div>
+                <div className="flex items-center"><span className="text-[#F9672C] mr-2">👤</span> {car.pax || "?"} pax</div>
+                <div className="flex items-center"><span className="text-[#F9672C] mr-2">🛣</span> {car.kilometers || "—"} km</div>
+                <div className="flex items-center"><span className="text-[#F9672C] mr-2">₹</span> {car.price || "—"}</div>
+              </div>
+              <div className="flex gap-4">
+                <button onClick={() => openDetails(car)} className="flex-1 py-3 bg-blue-950 hover:bg-blue-900 rounded-lg">View Details</button>
+                <button onClick={() => openEnquiry(car)} className="flex-1 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 hover:brightness-110 rounded-lg">Enquire Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Details Modal (same as before – useState at top)
+  const CarDetailsModal = () => {
+    const [activeImg, setActiveImg] = useState(0);
+    if (!selectedCar || !showDetails) return null;
+
+    const images = [
+      selectedCar.coverImg || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600",
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=1600",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1600",
+    ];
+
+    return (
+      <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4" onClick={() => setShowDetails(false)}>
+        <div className="bg-[#161617] rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden" onClick={e => e.stopPropagation()}>
+          <div className="bg-black p-6 border-b border-gray-800 relative">
+            <h2 className="text-3xl font-bold text-white">{selectedCar.title}</h2>
+            <button onClick={() => setShowDetails(false)} className="absolute top-5 right-6 text-gray-400 hover:text-white">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
-          
-          <div className="p-6">
-       
-            <div className="relative h-80 mb-4">
-              <img src={activeImage} alt={selectedCar.title} className="w-full h-full object-cover rounded-lg" />
+          <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-140px)]">
+            <div className="mb-8">
+              <img src={images[activeImg]} alt="view" className="w-full h-64 md:h-96 object-cover rounded-xl mb-4" />
+              <div className="flex gap-3 overflow-x-auto">
+                {images.map((img, i) => (
+                  <div key={i} className={`cursor-pointer w-24 h-16 rounded-lg overflow-hidden border-2 ${activeImg === i ? 'border-[#F9672C]' : 'border-gray-700'}`} onClick={() => setActiveImg(i)}>
+                    <img src={img} alt={`thumb ${i}`} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
             </div>
-            
-      
-            <div className="grid grid-cols-4 gap-2 mb-6">
-              {additionalImages.map((img, index) => (
-                <div 
-                  key={index}
-                  onClick={() => setActiveImage(img)}
-                  className={`cursor-pointer h-20 overflow-hidden rounded-lg border-2 ${activeImage === img ? 'border-blue-600' : 'border-transparent'}`}
-                >
-                  <img src={img} alt={`${selectedCar.title} view ${index + 1}`} className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-            
-            {/* Car details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Vehicle Details</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between border-b border-gray-200 py-2">
-                    <span className="text-gray-600">Model</span>
-                    <span className="font-medium">{selectedCar.title}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-200 py-2">
-                    <span className="text-gray-600">Price</span>
-                    <span className="font-medium">{selectedCar.price}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-200 py-2">
-                    <span className="text-gray-600">Kilometers</span>
-                    <span className="font-medium">{selectedCar.kilometers} km</span>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-200 py-2">
-                    <span className="text-gray-600">Passengers</span>
-                    <span className="font-medium">{selectedCar.pax}</span>
-                  </div>
-                  <div className="flex justify-between border-b border-gray-200 py-2">
-                    <span className="text-gray-600">Duration</span>
-                    <span className="font-medium">{selectedCar.totalTime} hours</span>
-                  </div>
+                <h3 className="text-xl text-[#F9672C] font-semibold mb-4">Key Specs</h3>
+                <div className="space-y-3 text-gray-300">
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Price</span><span className="text-white">{selectedCar.price}</span></div>
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Km</span><span className="text-white">{selectedCar.kilometers} km</span></div>
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Passengers</span><span className="text-white">{selectedCar.pax}</span></div>
                 </div>
               </div>
-              
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
-                <p className="text-gray-600">{selectedCar.description}</p>
-                
-                <div className="mt-8">
-                  <button 
-                    onClick={() => {
-                      closeDetailsDialog();
-                      openEnquiryForm(selectedCar);
-                    }}
-                    className="w-full bg-gradient-to-r from-[#F9672C] to-purple-600 hover:from-[#F9672C] hover:to-purple-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
-                  >
-                    Enquiry Now
-                  </button>
-                </div>
+                <h3 className="text-xl text-[#F9672C] font-semibold mb-4">About</h3>
+                <p className="text-gray-300 mb-6">{selectedCar.description || "Luxury redefined."}</p>
+                <button onClick={() => { setShowDetails(false); openEnquiry(selectedCar); }} className="w-full py-4 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg font-bold">Enquire Now</button>
               </div>
             </div>
           </div>
@@ -205,274 +179,113 @@ export default function LuxuryCarSearch() {
   };
 
   return (
-    <div className="bg-[#161617] min-h-screen">
-      {/* Hero Section */}
-      <div className="relative h-96  overflow-hidden bg-cover bg-center" style={{
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1485291571150-772bcfc10da5?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
-    }}>
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex items-center">
-        
+    <div className="bg-[#0f0f11] min-h-screen text-white">
+      {/* Hero - image full width, text BELOW */}
+      <div className="relative">
+        <img
+          src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920"
+          alt="Premium cars background"
+          className="w-full h-80 md:h-96 lg:h-[500px] object-cover"
+        />
+        <div className="py-10 px-6 text-center bg-gradient-to-b from-transparent to-[#0f0f11]">
+          <h1 className="text-4xl font-bold text-center text-white mb-12">
+           Our Premium Car's Collections
+          </h1>
+          {/* <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
+            Discover curated luxury vehicles of exceptional performance and elegance
+          </p> */}
         </div>
       </div>
-        <FlightBookingForm/>
-      {/* Search Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-[#161617]">
-        <div className="px-4 mx-auto max-w-7xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-              Our collection of cars
-            </h1>
-           <p className="mt-3 mb-8 max-w-3xl mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl">
-  Discover and experience the finest automobiles in our premium collection
-</p>
 
-          </div>
-        <div className="bg-black rounded-xl shadow-lg p-6 mb-8">
-            
-          <h2 className="text-2xl font-bold mb-6 text-blue-800">Find Your Perfect Car</h2>
-          
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div>
-              <label htmlFor="carName" className="block text-sm font-medium text-white mb-2">
-                Car Model
-              </label>
-              <input
-                type="text"
-                id="carName"
-                placeholder="Enter car name"
-                value={carName}
-                onChange={(e) => setCarName(e.target.value)}
-                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9672C] focus:border-blue-500 transition-all"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="maxPrice" className="block text-sm font-medium text-white mb-2">
-                Budget
-              </label>
-              <input
-                type="number"
-                id="maxPrice"
-                placeholder="Max Price (INR)"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className="px-4 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F9672C] focus:border-blue-500 transition-all"
-              />
-            </div>
-            
-            <div className="flex items-end">
-              <button
-                onClick={handleFilter}
-                className="w-full px-6 py-3 bg-blue-900 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-[#F9672C] focus:ring-offset-2 transition-all"
-              >
-                {isLoading ? (
-                  <span>Searching...</span>
-                ) : (
-                  <span>Search Cars</span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* Main content - sidebar left + cards right */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left Sidebar - Filters (compact, like jet page) */}
+          <div className="lg:w-1/4 lg:sticky lg:top-4 lg:self-start">
+            <div className="bg-black/80 border border-gray-800 rounded-2xl p-6 shadow-xl">
+              <h2 className="text-xl font-bold mb-6 text-white">Filter By</h2>
 
-        {/* Filter Tabs */}
-        <div className="flex overflow-x-auto mb-6 pb-2">
-          <button
-            onClick={() => handleCategoryFilter("all")}
-            className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
-              activeFilter === "all"
-                ? "bg-blue-900 text-white"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
-          >
-            All Cars
-          </button>
-          <button
-            onClick={() => handleCategoryFilter("luxury")}
-            className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
-              activeFilter === "luxury"
-                ? "bg-blue-900 text-white"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
-          >
-            Luxury
-          </button>
-          <button
-            onClick={() => handleCategoryFilter("sports")}
-            className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
-              activeFilter === "sports"
-                ? "bg-blue-900 text-white"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
-          >
-            Sports
-          </button>
-          <button
-            onClick={() => handleCategoryFilter("convertible")}
-            className={`px-6 py-2 mr-2 font-medium rounded-full whitespace-nowrap transition-all ${
-              activeFilter === "convertible"
-                ? "bg-blue-900 text-white"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
-          >
-            Convertible
-          </button>
-        </div>
-
-        {/* Results Count */}
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-lg font-medium text-white">
-            {isLoading ? "Loading..." : `${filteredCars.length} cars found`}
-          </h3>
-          {/* <div className="flex items-center">
-            <span className="text-sm text-gray-500 mr-2">Sort by:</span>
-            <select className="border rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#F9672C]">
-              <option>Price: High to Low</option>
-              <option>Price: Low to High</option>
-              <option>Newest First</option>
-            </select>
-          </div> */}
-        </div>
-
-        {/* Car Grid */}
-        {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-900"></div>
-          </div>
-        ) : filteredCars.length === 0 ? (
-          <div className="bg-white rounded-lg p-8 text-center">
-            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">No cars found</h3>
-            <p className="mt-1 text-gray-500">Try adjusting your search criteria</p>
-            <div className="mt-6">
-              <button
-                onClick={() => {
-                  setCarName("");
-                  setMaxPrice("");
-                  setFilteredCars(cars);
-                }}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#F9672C] hover:bg-[#F9672C] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Reset filters
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCars.map((car) => (
-            <div
-              key={car.id}
-              className="bg-black rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative">
-                <img 
-                  src={car.coverImg || car.img} 
-                  alt={car.title} 
-                  className="w-full h-60 object-cover" 
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Car Model</label>
+                <input
+                  type="text"
+                  value={carName}
+                  onChange={e => setCarName(e.target.value)}
+                  placeholder="e.g. Audi, Ferrari..."
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-[#F9672C] outline-none"
                 />
-                <div className="absolute top-4 right-4 bg-blue-900 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  Premium
-                </div>
               </div>
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-blue-500">{car.title}</h3>
-                  <span className="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                    Available
-                  </span>
-                </div>
-                <p className="text-gray-400 text-sm mb-4">{car.description}</p>
-                
-                {/* Car specs - made to match the image better */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="flex items-center text-sm text-gray-400">
-                    <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>{car.totalTime} hour</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-400">
-                    <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                    <span>{car.pax} Passengers</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-400">
-                    <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span>{car.kilometers} km</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-400">
-                    <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Verified</span>
-                  </div>
-                </div>
-                
-                {/* Price and buttons - updated to match the image */}
-                <div className="flex flex-col space-y-4">
-                  <div>
-                    <p className="text-gray-400 text-sm">Starting from</p>
-                    <p className="text-2xl font-bold text-white">{car.price}</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button 
-                      onClick={() => openDetailsDialog(car)}
-                      className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 text-center"
-                    >
-                      View Details
-                    </button>
-                    <button 
-                      onClick={() => openEnquiryForm(car)}
-                      className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 text-center"
-                    >
-                      Make Enquiry
-                    </button>
-                  </div>
+
+              <div className="mb-8">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Max Price (₹)</label>
+                <input
+                  type="number"
+                  value={maxPrice}
+                  onChange={e => setMaxPrice(e.target.value)}
+                  placeholder="e.g. 50000000"
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-[#F9672C] outline-none"
+                />
+              </div>
+
+              <div>
+                <h3 className="text-sm font-semibold uppercase mb-4 text-gray-200">Vehicle Type</h3>
+                <div className="space-y-3">
+                  {["luxury", "sports", "convertible"].map(cat => (
+                    <label key={cat} className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedCategories.includes(cat)}
+                        onChange={() => toggleCategory(cat)}
+                        className="w-4 h-4 text-[#F9672C] bg-gray-700 border-gray-600 rounded focus:ring-[#F9672C]"
+                      />
+                      <span className="ml-3 text-gray-300 capitalize">{cat}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-        )}
-        
-        {/* Pagination */}
-        {filteredCars.length > 0 && (
-          <div className="flex justify-center mt-12">
-            <nav className="inline-flex rounded-md shadow">
-              <a href="#" className="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                Previous
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-blue-50 text-sm font-medium text-[#F9672C]">
-                1
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                2
-              </a>
-              <a href="#" className="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                3
-              </a>
-              <a href="#" className="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                Next
-              </a>
-            </nav>
           </div>
-        )}
+
+          {/* Right - Results */}
+          <div className="lg:w-3/4">
+            {isLoading ? (
+              <div className="flex justify-center items-center py-32">
+                <div className="animate-spin h-12 w-12 border-4 border-[#F9672C] rounded-full border-t-transparent"></div>
+              </div>
+            ) : filteredCars.length === 0 ? (
+              <div className="text-center py-20 bg-black/40 rounded-2xl border border-gray-800">
+                <h3 className="text-2xl mb-4">No cars found</h3>
+                <p className="text-gray-400 mb-6">Adjust your filters</p>
+                <button
+                  onClick={() => {
+                    setCarName("");
+                    setMaxPrice("");
+                    setSelectedCategories([]);
+                  }}
+                  className="px-8 py-3 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-lg mb-6 text-gray-300">
+                  {filteredCars.length} {filteredCars.length === 1 ? 'car' : 'cars'} found
+                </p>
+                {filteredCars.map(car => <CarCard key={car.id} car={car} />)}
+              </>
+            )}
+          </div>
+        </div>
       </div>
-      
-      {/* Car Details Dialog */}
-      {showDialog && <CarDetailsDialog />}
-      
-      {/* Enquiry Form */}
-      {showEnquiryForm && (
-        <EnquiryForm 
-          helicopter={enquiryCar} // The form expects 'helicopter' prop but we're passing a car
+
+      <CarDetailsModal />
+
+      {showEnquiryForm && selectedCar && (
+        <EnquiryForm
+          helicopter={selectedCar}
           isOpen={showEnquiryForm}
-          closeForm={closeEnquiryForm}
+          closeForm={() => setShowEnquiryForm(false)}
         />
       )}
     </div>
