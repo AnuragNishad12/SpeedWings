@@ -6,9 +6,9 @@ import { database } from '../firebaseConfig';
 
 import Footer from '../NewPages/Footer';
 import Navbar from '../components/Navbar';
-import FlightBookingForm from '../NewPages/FlightBookingForm';
+// import FlightBookingForm from '../NewPages/FlightBookingForm';
 import YachtHeader from './YatchHeader';     // Consider renaming file to YachtHeader.jsx
-import EnquiryForm from '../components/EnquiryForm';
+// import EnquiryForm from '../components/EnquiryForm';
 
 // ── Image Gallery Component ──
 const ImageGallery = ({ images }) => {

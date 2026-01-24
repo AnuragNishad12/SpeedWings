@@ -4,7 +4,6 @@ import { database } from '../firebaseConfig';
 import { ref, onValue, off } from 'firebase/database';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { motion } from 'framer-motion';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -24,12 +23,12 @@ const HelicopterBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEnquiryFormOpen, setIsEnquiryFormOpen] = useState(false);
 
-  const stats = [
-    { icon: 'fas fa-users', title: '5,000+ Clients', description: 'Trusted by thousands worldwide', background: 'bg-gradient-to-r from-blue-600 to-indigo-700' },
-    { icon: 'fas fa-plane', title: '10,000+ Flights', description: 'Safe luxury journeys completed', background: 'bg-gradient-to-r from-amber-600 to-orange-700' },
-    { icon: 'fas fa-map-marked-alt', title: '100+ Destinations', description: 'Exclusive global landing points', background: 'bg-gradient-to-r from-emerald-600 to-teal-700' },
-    { icon: 'fas fa-shield-alt', title: '100% Safety Record', description: 'Your safety — our priority', background: 'bg-gradient-to-r from-[#F9672C] to-purple-700' },
-  ];
+  // const stats = [
+  //   { icon: 'fas fa-users', title: '5,000+ Clients', description: 'Trusted by thousands worldwide', background: 'bg-gradient-to-r from-blue-600 to-indigo-700' },
+  //   { icon: 'fas fa-plane', title: '10,000+ Flights', description: 'Safe luxury journeys completed', background: 'bg-gradient-to-r from-amber-600 to-orange-700' },
+  //   { icon: 'fas fa-map-marked-alt', title: '100+ Destinations', description: 'Exclusive global landing points', background: 'bg-gradient-to-r from-emerald-600 to-teal-700' },
+  //   { icon: 'fas fa-shield-alt', title: '100% Safety Record', description: 'Your safety — our priority', background: 'bg-gradient-to-r from-[#F9672C] to-purple-700' },
+  // ];
 
   // Fetch helicopters
   useEffect(() => {

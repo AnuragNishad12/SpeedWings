@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, ChevronDown, Clock, MapPin, Shield } from "lucide-react";
+import { ChevronRight} from "lucide-react";
 import car from '../assets/car.png';
 import yacht from '../assets/yatch.png';
 import chopper from '../assets/chopper.png';

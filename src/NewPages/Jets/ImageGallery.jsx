@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Footer from '../Footer';
 import '../../index.css';
-import ContactForm from '../ContactForm';
 import { getDatabase, ref, onValue } from 'firebase/database';
-import { motion } from 'framer-motion'
 import EnquiryForm from '../../components/EnquiryForm'; // Import the EnquiryForm component
 
 // Image Gallery Component

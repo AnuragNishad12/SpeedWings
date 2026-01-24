@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ContactForm from "../pages/InquiryForm";
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 import "../pages/navbar.css";
 import logo from "../assets/logo.png"
 
@@ -29,24 +29,24 @@ const Navbar = () => {
   // };
 
 // Function to handle deal link click
-const navigate = useNavigate();
-  const location = useLocation();
+// const navigate = useNavigate();
+  // const location = useLocation();
 
-  const handleDealClick = (e) => {
-    e.preventDefault();
+  // const handleDealClick = (e) => {
+  //   e.preventDefault();
 
-    const isHomePage = location.pathname === "/" || location.pathname === "";
+  //   const isHomePage = location.pathname === "/" || location.pathname === "";
 
-    if (isHomePage) {
-      const element = document.getElementById("deal-section");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      // Navigate to home with hash (without full reload)
-      navigate("/#deal-section");
-    }
-  };
+  //   if (isHomePage) {
+  //     const element = document.getElementById("deal-section");
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   } else {
+  //     // Navigate to home with hash (without full reload)
+  //     navigate("/#deal-section");
+  //   }
+  // };
 
 
 

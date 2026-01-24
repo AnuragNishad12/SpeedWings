@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ChevronUp, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
 const data = [
   {

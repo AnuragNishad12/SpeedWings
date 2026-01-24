@@ -5,33 +5,33 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
 
-const RentalCard = ({ aircraft, from, capacity, date, time, quote, imageUrl }) => {
-  return (
-    <div className="relative bg-black bg-opacity-60 backdrop-blur-sm rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs border border-gray-800 transform transition-all duration-300 hover:scale-105">
-      <div className="relative">
-        <img src={imageUrl} alt={aircraft} className="w-full h-52 object-cover" />
-        <button className="absolute top-3 right-3 bg-white p-1.5 rounded-full shadow-md">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F9672C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-        </button>
-      </div>
-      <div className="p-3">
-        <h2 className="text-white font-bold">{aircraft}</h2>
-        <p className="text-gray-400 text-xs">{from}</p>
-        <p className="text-gray-400 text-xs mt-1">Capacity: {capacity} | {date} | {time}</p>
-        <div className="mt-3 pt-2 border-t border-gray-700">
-          <p className="text-right">
-            <span className="text-gray-400 text-xs">Starting from </span>
-            <span className="font-bold text-base bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500 bg-clip-text text-transparent">
-              ₹ {quote}
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const RentalCard = ({ aircraft, from, capacity, date, time, quote, imageUrl }) => {
+//   return (
+//     <div className="relative bg-black bg-opacity-60 backdrop-blur-sm rounded-lg shadow-md overflow-hidden mx-2 my-4 max-w-xs border border-gray-800 transform transition-all duration-300 hover:scale-105">
+//       <div className="relative">
+//         <img src={imageUrl} alt={aircraft} className="w-full h-52 object-cover" />
+//         <button className="absolute top-3 right-3 bg-white p-1.5 rounded-full shadow-md">
+//           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F9672C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+//           </svg>
+//         </button>
+//       </div>
+//       <div className="p-3">
+//         <h2 className="text-white font-bold">{aircraft}</h2>
+//         <p className="text-gray-400 text-xs">{from}</p>
+//         <p className="text-gray-400 text-xs mt-1">Capacity: {capacity} | {date} | {time}</p>
+//         <div className="mt-3 pt-2 border-t border-gray-700">
+//           <p className="text-right">
+//             <span className="text-gray-400 text-xs">Starting from </span>
+//             <span className="font-bold text-base bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500 bg-clip-text text-transparent">
+//               ₹ {quote}
+//             </span>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const HomeCarousel = () => {
   const [rentalData, setRentalData] = useState([]);

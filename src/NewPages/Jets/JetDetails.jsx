@@ -1,6 +1,5 @@
 import Navbar from "../../components/Navbar";
 import AircraftShowcase from "./ImageGallery";
-import { motion } from 'framer-motion';
 
 export default function ImagePage() {
     return (
