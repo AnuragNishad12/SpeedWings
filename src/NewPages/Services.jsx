@@ -80,10 +80,10 @@ export default function VerdiepingServices() {
               <div 
                 key={index} 
                 className={`relative bg-black border rounded-2xl transition-all duration-500 cursor-pointer transform hover:scale-102 group ${
-                  activeIndex === index 
-                    ? 'border-blue-500/50 bg-gradient-to-b from-black to-blue-950/30 shadow-lg shadow-blue-900/10' 
-                    : 'border-gray-800 hover:border-gray-700'
-                }`}
+  activeIndex === index 
+    ? 'border-blue-500/50 bg-gradient-to-b from-black to-blue-950/30 shadow-lg shadow-blue-900/10'
+    : 'border-gray-800 hover:border-gray-700'
+}`}
                 onClick={() => setActiveIndex(index)}
                 style={{ 
                   animationDelay: `${index * 150}ms`,
