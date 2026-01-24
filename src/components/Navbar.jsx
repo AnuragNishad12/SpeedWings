@@ -65,7 +65,7 @@ const Navbar = () => {
         <a href="/#" ><img
     src={logo}
     alt="logo"
-    className="h-6 w-auto"
+    className="h-10 w-auto"
   /></a>
   <span className="text-sm font-semibold text-white"
     style={{ fontFamily: "'Roboto', cursive" }}
