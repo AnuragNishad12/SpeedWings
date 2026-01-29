@@ -188,7 +188,7 @@ export default function LuxuryCarSearch() {
           className="w-full h-80 md:h-96 lg:h-[500px] object-cover"
         />
         <div className="py-10 px-6 text-center bg-gradient-to-b from-transparent to-[#0f0f11]">
-          <h1 className="text-4xl font-bold text-center text-white mb-12">
+          <h1 className="font-sans font-extrabold text-4xl font-bold text-center text-white mb-12">
            Our Premium Car's Collections
           </h1>
           {/* <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">

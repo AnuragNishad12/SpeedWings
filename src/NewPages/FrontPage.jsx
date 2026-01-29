@@ -19,11 +19,11 @@ const HomePage = () => {
       {/* Elegant overlay */}
       <div className={styles.videoOverlay}></div>
 
-      <h1 className={`${styles.maskText} z-10 fade-in`}>XELEVATE</h1>
+      <h1 className={`${styles.maskText}  z-10 fade-in font-sans`}>XELEVATE</h1>
 
 
 <h1 
-  className="text-white z-10 font-bold text-xl sm:text-2xl md:text-3xl mt-6 text-center tracking-wide leading-snug"
+  className="font-sans font-extrabold text-white z-10 font-bold text-xl sm:text-2xl md:text-3xl mt-6 text-center tracking-wide leading-snug"
 >
   Connoisseur of Luxury
 </h1>

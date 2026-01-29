@@ -114,7 +114,7 @@ const FaqSection = () => {
             className="mr-3" 
             style={{ color: "blue" }} 
           />
-          <h2 className="text-3xl font-bold text-white">Frequently Asked Questions</h2>
+          <h2 className="font-sans font-extrabold text-3xl text-white">Frequently Asked Questions</h2>
         </div>
 
         <div className="bg-black rounded-xl shadow-lg overflow-hidden">
@@ -133,7 +133,7 @@ const FaqSection = () => {
                 }}
                 aria-expanded={item.active}
               >
-                <span className={`text-left font-medium `}>
+                <span className={`font-sans font-extrabold text-left  `}>
                   {item.question}
                 </span>
                 <span 
@@ -155,7 +155,7 @@ const FaqSection = () => {
 
               >
                 <div className="px-6 pb-5 pt-0 text-white leading-relaxed">
-                  <div className="border-l-4 pl-4 mb-3" style={{ borderColor: "#ffff" }}>
+                  <div className=" font-sans font-bold border-l-4 pl-4 mb-3" style={{ borderColor: "#ffff" }}>
                     {item.answer}
                   </div>
                   {item.additionalInfo && (
@@ -168,9 +168,9 @@ const FaqSection = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-gray-600 mb-4">Still have questions?</p>
+          <p className="font-sans font-bold text-gray-600 mb-4">Still have questions?</p>
           <a href="/#/contact"
-            className="px-6 py-3 rounded-lg font-medium text-white shadow-md transition-all hover:shadow-lg"
+            className="font-sans font-extrabold px-6 py-3 rounded-lg  text-white shadow-md transition-all hover:shadow-lg"
             style={{ backgroundColor: "black" }}
           >
             Contact Support

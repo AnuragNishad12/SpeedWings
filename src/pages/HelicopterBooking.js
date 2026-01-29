@@ -80,14 +80,12 @@ const HelicopterBooking = () => {
   const openModal = (heli) => { setSelectedHelicopter(heli); setIsModalOpen(true); };
   const openEnquiry = (heli) => { setSelectedHelicopter(heli); setIsEnquiryFormOpen(true); };
 
-  // ────────────────────────────────────────────────
-  //   Horizontal Helicopter Card
-  // ────────────────────────────────────────────────
+
   const HelicopterCard = ({ helicopter }) => {
     return (
       <div className="bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl mb-8">
         <div className="md:flex">
-          <div className="md:w-1/2 p-6">
+          <div className="font-sans font-extrabold md:w-1/2 p-6">
             <img
               src={helicopter.imageUrl || "https://images.unsplash.com/photo-1655743282195-52aa15f4072b?w=800"}
               alt={helicopter.title}
@@ -96,9 +94,9 @@ const HelicopterBooking = () => {
           </div>
           <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between text-white">
             <div>
-              <h2 className="text-3xl font-bold mb-2">{helicopter.title || "Premium Helicopter"}</h2>
+              <h2 className="font-sans font-extrabold text-3xl font-bold mb-2">{helicopter.title || "Premium Helicopter"}</h2>
               <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 mb-4"></div>
-              <p className="text-gray-400 mb-6 line-clamp-3">
+              <p className="font-sans font-bold text-gray-400 mb-6 line-clamp-3">
                 {helicopter.description || "Experience unmatched luxury and efficiency in the skies."}
               </p>
             </div>
@@ -110,8 +108,8 @@ const HelicopterBooking = () => {
                 <div className="flex items-center"><span className="text-[#F9672C] mr-2">₹</span> {helicopter.price}</div>
               </div>
               <div className="flex gap-4">
-                <button onClick={() => openModal(helicopter)} className="flex-1 py-3 bg-blue-950 hover:bg-blue-900 rounded-lg font-medium">View Details</button>
-                <button onClick={() => openEnquiry(helicopter)} className="flex-1 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 hover:brightness-110 rounded-lg font-medium">Enquire Now</button>
+                <button onClick={() => openModal(helicopter)} className="flex-1 py-3 bg-blue-950 hover:bg-blue-900 rounded-lg font-sans font-bold">View Details</button>
+                <button onClick={() => openEnquiry(helicopter)} className="flex-1 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 hover:brightness-110 rounded-lg font-sans font-bold">Enquire Now</button>
               </div>
             </div>
           </div>
@@ -163,23 +161,23 @@ const HelicopterBooking = () => {
 
                     <div className="grid md:grid-cols-2 gap-8">
                       <div>
-                        <h3 className="text-xl text-[#F9672C] font-semibold mb-4">Performance</h3>
+                        <h3 className="font-sans font-extrabold text-xl text-white  mb-4">Performance</h3>
                         {selectedHelicopter.performance ? (
                           <ul className="space-y-3 text-gray-300">
-                            <li><span className="font-medium">Cruise Speed:</span> {selectedHelicopter.performance.cruiseSpeed}</li>
-                            <li><span className="font-medium">Max Speed:</span> {selectedHelicopter.performance.maxSpeed}</li>
-                            <li><span className="font-medium">Range:</span> {selectedHelicopter.performance.range}</li>
-                            <li><span className="font-medium">Rate of Climb:</span> {selectedHelicopter.performance.rateOfClimb}</li>
-                            <li><span className="font-medium">Service Ceiling:</span> {selectedHelicopter.performance.serviceCeiling}</li>
+                            <li><span className="font-sans font-bold">Cruise Speed:</span> {selectedHelicopter.performance.cruiseSpeed}</li>
+                            <li><span className="font-sans font-bold">Max Speed:</span> {selectedHelicopter.performance.maxSpeed}</li>
+                            <li><span className="font-sans font-bold">Range:</span> {selectedHelicopter.performance.range}</li>
+                            <li><span className="font-sans font-bold">Rate of Climb:</span> {selectedHelicopter.performance.rateOfClimb}</li>
+                            <li><span className="font-sans font-bold">Service Ceiling:</span> {selectedHelicopter.performance.serviceCeiling}</li>
                           </ul>
                         ) : <p className="text-gray-500">No performance data available.</p>}
                       </div>
                       <div>
-                        <h3 className="text-xl text-[#F9672C] font-semibold mb-4">Overview</h3>
-                        <p className="text-gray-300 mb-6">{selectedHelicopter.description || "Luxury helicopter service for unmatched aerial experiences."}</p>
+                        <h3 className="font-sans font-extrabold text-xl text-white font-semibold mb-4">Overview</h3>
+                        <p className="font-sans font-bold text-gray-300 mb-6">{selectedHelicopter.description || "Luxury helicopter service for unmatched aerial experiences."}</p>
                         <button
                           onClick={() => { setIsModalOpen(false); openEnquiry(selectedHelicopter); }}
-                          className="w-full py-4 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg font-bold hover:brightness-110"
+                          className="font-sans font-bold w-full py-4 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg text-white hover:brightness-110"
                         >
                           Enquire Now
                         </button>
@@ -203,12 +201,12 @@ const HelicopterBooking = () => {
       {/* Hero - image + text below */}
       <div className="relative">
         <img
-          src="https://images.unsplash.com/photo-1655743282195-52aa15f4072b?w=1920"
+          src="https://images.unsplash.com/photo-1739544746723-595a12a8f12e?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Luxury Helicopter Fleet"
           className="w-full h-80 md:h-[500px] object-cover"
         />
         <div className="py-12 px-6 text-center bg-gradient-to-b from-transparent to-[#0f0f11]">
-          <h1 className="text-4xl font-bold text-center text-white mb-12">
+          <h1 className="text-4xl font-sans font-extrabold text-center text-white mb-12">
             Our Fleet of Helicopters
           </h1>
           {/* <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">

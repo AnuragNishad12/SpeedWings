@@ -65,7 +65,7 @@ export default function TransportOptions() {
         transition={{ duration: 0.5 }}
         className="w-full lg:w-1/5 bg-gray-800 p-6 space-y-6"
       >
-        <h1 className="text-2xl font-bold tracking-wider">LUXURY TRANSPORT</h1>
+        <h1 className="font-sans font-extrabold text-2xl font-bold tracking-wider">LUXURY TRANSPORT</h1>
         {options.map((option) => (
           <button
             key={option.name}
@@ -77,7 +77,7 @@ export default function TransportOptions() {
             }`}
           >
             <img src={option.icon} alt="icon" className="h-6 w-6 object-contain" />
-            <p className="font-semibold text-lg">{option.name}</p>
+            <p className="font-sans font-extrabold ">{option.name}</p>
           </button>
         ))}
       </motion.div>
@@ -121,14 +121,14 @@ export default function TransportOptions() {
 
             {/* Text Section */}
             <div className="w-full lg:w-1/2 bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl shadow-lg space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold uppercase tracking-wide">
+              <h2 className=" font-sans font-extrabold text-3xl lg:text-4xl font-bold uppercase tracking-wide">
                 {selected.name}
               </h2>
               <p className="text-gray-200 text-base lg:text-lg">
                 {selected.description}
               </p>
               <div className="space-y-2">
-                <p className="text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                <p className="font-sans font-bold text-sm  text-gray-300 uppercase tracking-wider">
                   Key Features
                 </p>
                 {selected.features.map((f, idx) => (
@@ -144,7 +144,7 @@ export default function TransportOptions() {
                 </p>
                 <a
                         href={`#${selected.path}`}
-                        className="inline-flex items-center justify-center px-6 py-3 bg-[#F9672C] hover:bg-opacity-90 text-white rounded-xl font-medium transition-all transform hover:scale-[1.03] active:scale-[0.97]"
+                        className="font-sans font-extrabold inline-flex items-center justify-center px-6 py-3 bg-[#F9672C] hover:bg-opacity-90 text-white rounded-xl  transition-all transform hover:scale-[1.03] active:scale-[0.97]"
                       >
                         Reserve Now
                         <ChevronRight size={18} className="ml-2" />

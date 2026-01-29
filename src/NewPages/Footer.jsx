@@ -9,43 +9,43 @@ export default function Footer() {
         <div>
         <img src={logo} alt="Xelevate Logo" className="h-50 w-auto" />
 
-          <p className="text-xs mt-3 text-[#808080]">
+          <p className="font-sans font-bold text-xs mt-3 text-[#808080]">
             Xelevate, a trusted choice for those valuing time, service, and reliability. Explore unique features to customize your private flying experience your way.
           </p>
           <div className="flex items-center gap-2 mt-4 text-gold">
             <FaPhoneAlt />
-            <span className="text-gold text-[#808080]">IN  +91-9916989179</span>
+            <span className="font-sans font-bold text-gold text-[#808080]">IN  +91 99307 93335</span>
           </div>
         </div>
         <div>
-          <h3 className="font-semibold text-[#808080]">Our Services</h3>
+          <h3 className="font-sans font-extrabold text-[#808080]">Our Services</h3>
           <ul className="mt-3 space-y-2 text-xs text-[#808080]">
-            <li><a href="/#/p">Private Jets</a></li>
-            <li><a href="/#/helicopter">Helicopters</a></li>
-            <li><a href="/#/yacht">Yachts</a></li>
-            <li><a href="/#/c">Luxury Cars</a></li>
-            <li>Events</li>
-            <li>Tirth Yatra</li>
-            <li>Xelevate Deals</li>    
-            <li>Members Club</li>
+            <li className="font-sans font-bold text-[#808080]"><a href="/#/p">Private Jets</a></li>
+            <li className="font-sans font-bold text-[#808080]"><a href="/#/helicopter">Helicopters</a></li>
+            <li className="font-sans font-bold text-[#808080]"><a href="/#/yacht">Yachts</a></li>
+            <li className="font-sans font-bold text-[#808080]"><a href="/#/c">Luxury Cars</a></li>
+            <li className="font-sans font-bold text-[#808080]">Events</li>
+            <li className="font-sans font-bold text-[#808080]">Tirth Yatra</li>
+            <li className="font-sans font-bold text-[#808080]">Xelevate Deals</li>    
+            <li className="font-sans font-bold text-[#808080]">Members Club</li>
           </ul>
         </div>
         <div>
-          <h3 className="font-semibold text-[#808080]">Quick Links</h3>
+          <h3 className="font-sans font-extrabold text-[#808080]">Quick Links</h3>
           <ul className="mt-3 space-y-2 text-xs text-[#808080]">
-            <li>FAQs</li>
-            <li>Careers</li>
-            <li>Connect With Us</li>
-            <li>News & Media</li>
-            <li>Membership</li>
-            <li>Contact Us</li>
-            <li>Giving Back to Society</li>
-            <li>Privacy Policy</li>
-            <li>Terms & Conditions</li>
+            <li className="font-sans font-bold text-[#808080]">FAQs</li>
+            <li className="font-sans font-bold text-[#808080]">Careers</li>
+            <li className="font-sans font-bold text-[#808080]">Connect With Us</li>
+            <li className="font-sans font-bold text-[#808080]">News & Media</li>
+            <li className="font-sans font-bold text-[#808080]">Membership</li>
+            <li className="font-sans font-bold text-[#808080]">Contact Us</li>
+            <li className="font-sans font-bold text-[#808080]">Giving Back to Society</li>
+            <li className="font-sans font-bold text-[#808080]">Privacy Policy</li>
+            <li className="font-sans font-bold text-[#808080]">Terms & Conditions</li>
           </ul>
         </div>
         <div>
-          <h3 className="font-semibold text-[#808080]">Get the latest Updates</h3>
+          <h3 className="font-sans font-extrabold text-[#808080]">Get the latest Updates</h3>
           <div className="mt-3 flex text-[#808080]">
           <input 
   type="email" 
@@ -87,7 +87,7 @@ export default function Footer() {
   </div>
 </div>
 
-          <p className="mt-4 text-xs text-[#808080]">Delhi | Mumbai | Bengaluru | Dubai | New York</p>
+          <p className="font-sans font-bold mt-4 text-xs text-[#808080]">Delhi | Mumbai | Bengaluru | Dubai | New York</p>
         </div>
       </div>
       <div className="mt-10 border-t border-gray-600 pt-4 text-center text-xs text-[#808080]">

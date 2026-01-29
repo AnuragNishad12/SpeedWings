@@ -60,19 +60,20 @@ export default function VerdiepingServices() {
           {/* Header section with improved typography */}
           <div className="flex items-center mb-10 relative">
             <div className="w-1 h-12 bg-gradient-to-b from-blue-500 to-purple-500 mr-6 rounded-full"></div>
-            <h1 className="text-white text-4xl md:text-6xl font-light tracking-tight animate-fadeIn">
+            <h1 className="font-sans font-bold text-white text-4xl md:text-6xl  tracking-tight animate-fadeIn">
               Premium <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Transportation</span> Solutions
             </h1>
           </div>
           
           <p 
-            ref={textRef}
-            className={`transition-all duration-500 text-lg md:text-xl mb-12 md:mb-16 max-w-3xl leading-relaxed ${
-              isScrolled ? 'text-gray-500' : 'text-gray-300'
-            }`}
-          >
-            We take the time to deeply understand your brand, its values, and the unique challenges of your industry, ensuring our solutions align perfectly with your vision.
-          </p>
+  ref={textRef}
+  className={`transition-all duration-500 text-lg md:text-xl font-extrabold mb-12 md:mb-16 max-w-3xl leading-relaxed ${
+    isScrolled ? 'text-gray-500' : 'text-gray-300'
+  }`}
+>
+  We take the time to deeply understand your brand, its values, and the unique challenges of your industry, ensuring our solutions align perfectly with your vision.
+</p>
+
           
           {/* Enhanced cards grid with improved icon presentation */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -93,16 +94,16 @@ export default function VerdiepingServices() {
                 }}
               >
                 {/* Enhanced icon presentation */}
-                <div className="absolute -top-5 left-6">
+                <div className="font-sans font-bold absolute -top-5 left-6">
                   <div className={`bg-gradient-to-br ${
                     activeIndex === index 
-                      ? 'from-blue-600 to-indigo-800' 
-                      : 'from-gray-800 to-gray-900 group-hover:from-blue-900 group-hover:to-indigo-900'
+                      ? 'font-sans font-bold from-blue-600 to-indigo-800' 
+                      : 'font-sans font-bold from-gray-800 to-gray-900 group-hover:from-blue-900 group-hover:to-indigo-900'
                     } w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-500 transform group-hover:rotate-3`}>
                     <img 
                       src={service.icon} 
                       alt={service.title} 
-                      className={`w-8 h-8 object-contain transition-all duration-500 ${
+                      className={`font-sans font-bold w-8 h-8 object-contain transition-all duration-500 ${
                         activeIndex === index ? 'filter brightness-200' : 'group-hover:filter group-hover:brightness-150'
                       }`} 
                     />
@@ -110,9 +111,9 @@ export default function VerdiepingServices() {
                 </div>
                 
                 {/* Card content with improved spacing */}
-                <div className="p-8 pt-12">
-                  <h3 className={`text-xl font-medium mb-3 transition-all duration-300 ${
-                    activeIndex === index ? 'text-blue-400' : 'text-blue-500 group-hover:text-blue-400'
+                <div className="font-sans font-bold p-8 pt-12">
+                  <h3 className={`font-sans font-bold text-xl font-medium mb-3 transition-all duration-300 ${
+                    activeIndex === index ? 'font-sans font-bold text-blue-400' : ' font-sans font-bold text-blue-500 group-hover:text-blue-400'
                   }`}>
                     {service.title}
                   </h3>
@@ -168,7 +169,7 @@ export default function VerdiepingServices() {
           animation: widthExpand 0.8s ease-out forwards;
         }
         
-        .hover\:scale-102:hover {
+        .hover:scale-102:hover {
           transform: scale(1.02);
         }
       `}</style>

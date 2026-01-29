@@ -73,11 +73,11 @@ const CustomerReviews = () => {
     <section className="py-12 bg-[#161617]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-white mb-2">
+          <h2 className="font-sans font-extrabold text-3xl font-bold text-white mb-2">
             Customer Experiences
           </h2>
           <div className="inline-block w-20 h-1 bg-gradient-to-r from-[#F9672C] to-[#FFB800] rounded-full" />
-          <p className="text-gray-400 mt-4">
+          <p className="font-sans font-extrabold text-gray-400 mt-4">
             See what people are saying about our products
           </p>
         </div>

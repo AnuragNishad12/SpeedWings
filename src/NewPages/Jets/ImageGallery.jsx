@@ -58,30 +58,30 @@ const AircraftCard = ({ aircraft }) => {
         <div className="md:w-1/2 p-8 flex flex-col justify-between">
           <div>
             <div className="mb-2">
-              <h2 className="text-3xl font-bold text-white mb-2 font-serif">
+              <h2 className="text-3xl font-extrabold text-white mb-2 font-serif">
                 {aircraft.name}
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
             </div>
 
-            <h3 className="text-lg font-semibold text-white mb-3">Description</h3>
-            <p className="text-xs text-gray-600 leading-relaxed mb-5">
+            <h3 className="font-sans font-extrabold text-lg  text-white mb-3">Description</h3>
+            <p className=" font-sans font-bold text-xs text-gray-600 leading-relaxed mb-5">
               {aircraft.shortDescription}
             </p>
           </div>
 
           <div>
             <div className="flex gap-2 mb-6">
-              <button 
+              <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="w-1/2 py-3 bg-blue-900 text-white rounded-lg font-medium hover:bg-blue-800 transition-all duration-300"
+                className="w-1/2 py-3 bg-blue-900 text-white rounded-lg font-sans font-bold hover:bg-blue-800 transition-all duration-300"
               >
                 {showDetails ? "Hide Specifications" : "View Specifications"}
               </button>
               
               <button 
                 onClick={() => setShowEnquiryForm(true)}
-                className="w-1/2 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg font-medium hover:opacity-90 transition-all duration-300"
+                className="font-sans font-bold w-1/2 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg  hover:opacity-90 transition-all duration-300"
               >
                 Enquire Now
               </button>
@@ -364,12 +364,12 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
   return (
     <div>
       <div className="bg-black p-4 rounded-md shadow-sm border-1 border-blue-900">
-        <h2 className="text-lg font-semibold mb-3 text-white">Filter By</h2>
+        <h2 className="text-lg font-sans font-extrabold mb-3 text-white">Filter By</h2>
         
         <div className="border-b border-gray-200 my-3"></div>
        
         <div className="mt-3">
-          <h3 className="text-sm font-medium uppercase mb-3 text-white">AIRCRAFT TYPE</h3>
+          <h3 className="text-sm font-sans font-bold uppercase mb-3 text-white">AIRCRAFT TYPE</h3>
 
           <div className="space-y-1">
             {aircraftTypes.map((type) => (
@@ -382,7 +382,7 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
                   checked={selectedTypes.includes(type.id)}
                 />
                 <label htmlFor={`filter-${type.id}`} className="ml-2 flex-grow">
-                  <span className="text-white">{type.name}</span>
+                  <span className=" font-sans font-extrabold text-white">{type.name}</span>
                   <span className="text-gray-600 ml-1 text-xs">({type.count})</span>
                 </label>
               </div>
@@ -394,7 +394,7 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
   );
 };
 
-// Main Aircraft Showcase Component
+
 const AircraftShowcase = () => {
   const [aircraftData, setAircraftData] = useState([]);
   const [filteredAircraft, setFilteredAircraft] = useState([]);
@@ -488,7 +488,7 @@ const AircraftShowcase = () => {
     <div>
       <div className="bg-[#161617] py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-center text-white mb-12">Our fleet of Private Jets</h1>
+          <h1 className="text-4xl font-sans font-extrabold text-center text-white mb-12">Our fleet of Private Jets</h1>
          
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/4 mb-6 md:mb-0">
