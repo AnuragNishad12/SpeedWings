@@ -44,7 +44,7 @@ const ContactPage = () => {
                 href="mailto:support@example.com" 
                 className="mt-4 inline-block text-blue-600 hover:text-blue-700"
               >
-                support@xelevate.com
+                askus@xelevate.club
               </a>
             </div>
 

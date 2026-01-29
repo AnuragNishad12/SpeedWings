@@ -166,11 +166,84 @@ const HomeCarousel = () => {
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-12">
         <div className="flex flex-col justify-center items-center mb-8">
-          <h1 className="text-white text-6xl font-light animate-fadeIn"> Deal of The Day</h1>
-          <div className="inline-block w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mt-2" />
+          <h1 className="text-white text-6xl font-light animate-fadeIn"> Deals of The Day</h1>
+          {/* <div className="inline-block w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mt-2" /> */}
+          
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 pt-12">
+
+  {/* Jets Box */}
+  <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-blue-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 via-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+    <img 
+      src="https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+      alt="Luxury Private Jet" 
+      className="w-full h-48 object-cover brightness-75 group-hover:brightness-100 transition-all duration-700 scale-100 group-hover:scale-110"
+    />
+    <div className="relative z-10 p-7 text-center">
+      <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-blue-400 transition-colors duration-300">Jets</h3>
+      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Explore luxury private jets</p>
+    </div>
+  </div>
+
+  {/* Jets by Seats Box */}
+  <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-purple-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(168,85,247,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
+    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-pink-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+    <img 
+      src="https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=1208&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+      alt="Private Jet Cabin Seats" 
+      className="w-full h-48 object-cover brightness-75 group-hover:brightness-100 transition-all duration-700 scale-100 group-hover:scale-110"
+    />
+    <div className="relative z-10 p-7 text-center">
+      <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-purple-400 transition-colors duration-300">Jets by Seats</h3>
+      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Find jets by capacity & comfort</p>
+    </div>
+  </div>
+
+  {/* Choppers Box */}
+  <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(249,115,22,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
+    <div className="absolute inset-0 bg-gradient-to-br from-orange-600/30 via-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+    <img 
+      src="https://images.unsplash.com/photo-1728719812207-2ad4640ac986?q=80&w=1304&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+      alt="Luxury Helicopter Exterior" 
+      className="w-full h-48 object-cover brightness-75 group-hover:brightness-100 transition-all duration-700 scale-100 group-hover:scale-110"
+    />
+    <div className="relative z-10 p-7 text-center">
+      <div className="w-16 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-orange-400 transition-colors duration-300">Choppers</h3>
+      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Premium helicopter services</p>
+    </div>
+  </div>
+
+  {/* Choppers by Seats Box */}
+  <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-pink-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(236,72,153,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
+    <div className="absolute inset-0 bg-gradient-to-br from-pink-600/30 via-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+    <img 
+      src="https://images.unsplash.com/photo-1682597463829-4582d7f6569b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+      alt="Luxury Helicopter Interior Seats" 
+      className="w-full h-48 object-cover brightness-75 group-hover:brightness-100 transition-all duration-700 scale-100 group-hover:scale-110"
+    />
+    <div className="relative z-10 p-7 text-center">
+      <div className="w-16 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-pink-400 transition-colors duration-300">Choppers by Seats</h3>
+      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Search helicopters by passenger capacity</p>
+    </div>
+  </div>
+</div>
+
+
         </div>
 
-        <div className="relative">
+        {/* <div className="relative">
           <Slider {...settings}>
             {rentalData.map((rental, index) => (
               <RentalCard
@@ -185,10 +258,10 @@ const HomeCarousel = () => {
               />
             ))}
           </Slider>
-        </div>
+        </div> */}
 
         {/* Enquire Button Section */}
-        <div id="enquire-button-container" className="mt-16 text-center relative">
+        {/* <div id="enquire-button-container" className="mt-16 text-center relative">
           <div
             id="left-line"
             className="absolute left-0 top-1/2 w-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-purple-500 transform -translate-y-1/2 transition-all duration-1000 hidden md:block"
@@ -225,7 +298,7 @@ const HomeCarousel = () => {
               </svg>
             </span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Dialog Box */}

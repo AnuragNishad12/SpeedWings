@@ -67,11 +67,6 @@ const Navbar = () => {
     alt="logo"
     className="h-14 w-auto"
   /></a>
-  <span className="text-sm font-semibold text-white"
-    style={{ fontFamily: "'Roboto', cursive" }}
-  >
-    <a href="/#">Xelevate</a>
-  </span>
 </div>
 
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
@@ -102,7 +97,7 @@ const Navbar = () => {
             onMouseEnter={() => window.innerWidth > 768 && setExploreOpen(true)}
             onMouseLeave={() => window.innerWidth > 768 && setExploreOpen(false)}
             onClick={toggleExploreMenu} >
-            <a href="/#/dealoftheday">Deal of The Day</a>
+            <a href="/#/dealoftheday">Deals of The Day</a>
             <ul className={`submenu ${exploreOpen ? "show" : ""}`}>
               <li><a href="/#">Jets</a></li>
               <li><a href="/#">Jets by Seats</a></li>
@@ -121,7 +116,12 @@ const Navbar = () => {
           {/* Explore Dropdown */}
          
           {/* <li><a href="/#/blog">Blog</a></li> */}
-          <li><a href="/#/contact">Contact | No. 9999999991</a></li>
+          <li>
+  <a href="/#/contact" class="flex items-center">
+  <i class="fa-solid fa-phone mr-2"></i>
+  +91 99307 93335
+</a>
+</li>
           <li>
             <a 
               className="bg-blue-900 text-white px-4 py-2 rounded-md shadow-md hover:bg-purple-700 transition"
