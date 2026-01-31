@@ -187,7 +187,7 @@ export default function LuxuryCarSearch() {
               <div>
                 <h3 className="text-xl text-[#F9672C] font-semibold mb-4">About</h3>
                 <p className="text-gray-300 mb-6">{selectedCar.description || "Luxury redefined."}</p>
-                <button onClick={() => { setShowDetails(false); openEnquiry(selectedCar); }} className="w-full py-4 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg font-bold">Enquire Now</button>
+                {/* <button onClick={() => { setShowDetails(false); openEnquiry(selectedCar); }} className="w-full py-4 bg-gradient-to-r from-[#F9672C] to-purple-600 rounded-lg font-bold">Enquire Now</button> */}
               </div>
             </div>
           </div>

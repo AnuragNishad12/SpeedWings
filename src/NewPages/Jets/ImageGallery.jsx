@@ -7,27 +7,31 @@ import EnquiryForm from '../../components/EnquiryForm'; // Import the EnquiryFor
 // Image Gallery Component
 const ImageGallery = ({ images }) => {
   const [activeImage, setActiveImage] = useState(0);
-  
+
   return (
     <div className="w-full">
-      <div className="w-full h-50 md:h-60 mb-2 overflow-hidden rounded-lg">
-        <img 
-          src={images[activeImage]} 
+      {/* Main Image – FULL IMAGE, NO CROPPING */}
+      <div className="w-full mb-3 rounded-lg bg-black">
+        <img
+          src={images[activeImage]}
           alt="Aircraft view"
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-auto object-contain rounded-lg"
         />
       </div>
 
+      {/* Thumbnails */}
       <div className="flex space-x-2">
         {images.map((image, index) => (
-          <div 
+          <div
             key={index}
-            className={`h-16 w-16 cursor-pointer border-2 ${activeImage === index ? 'border-blue-900' : 'border-gray-300'}`}
+            className={`h-16 w-16 cursor-pointer border-2 ${
+              activeImage === index ? 'border-blue-900' : 'border-gray-300'
+            }`}
             onClick={() => setActiveImage(index)}
           >
-            <img 
-              src={image} 
-              alt={`Thumbnail ${index+1}`}
+            <img
+              src={image}
+              alt={`Thumbnail ${index + 1}`}
               className="w-full h-full object-cover"
             />
           </div>
@@ -37,12 +41,14 @@ const ImageGallery = ({ images }) => {
   );
 };
 
-// Individual Aircraft Card Component
+
+
+
 const AircraftCard = ({ aircraft }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
   
-  // Format the aircraft data for the enquiry form
+
   const helicopterData = {
     title: aircraft.name,
     price: aircraft.price

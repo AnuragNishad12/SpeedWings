@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { database } from '../firebaseConfig';
-
+import Home from '../NewPages/enquiryHome';
 import Footer from '../NewPages/Footer';
 import Navbar from '../components/Navbar';
 // import FlightBookingForm from '../NewPages/FlightBookingForm';
 import YachtHeader from './YatchHeader';     // Consider renaming file to YachtHeader.jsx
+import EnquiryForm from '../components/EnquiryForm';
 // import EnquiryForm from '../components/EnquiryForm';
 
 // ── Image Gallery Component ──
@@ -93,6 +94,11 @@ const YachtCard = ({ yacht }) => {
               >
                 Enquire Now
               </button>
+               <EnquiryForm
+        isOpen={showEnquiryForm}
+        closeForm={() => setShowEnquiryForm(false)}
+        yacht={yachtDataForEnquiry}
+      />
             </div>
 
             <div className="space-y-5 border-t border-gray-800 pt-6">
@@ -219,58 +225,123 @@ const LocationFilter = ({ onFilterChange, availableRoutes }) => {
 
   const popularRoutes = ['Mumbai', 'Goa', 'Dubai', 'Sri Lanka'];
 
-  return (
-    <div className="bg-black p-5 rounded-lg border border-blue-900 sticky top-4">
-      <h2 className="text-lg font-semibold mb-4 text-white">Filter By Location</h2>
+  const otherRoutes = availableRoutes
+    .filter((r) => !popularRoutes.includes(r))
+    .sort();
 
-      <div className="space-y-2">
+  return (
+    <div className="bg-gradient-to-b from-gray-950 to-black p-4 rounded-xl border border-blue-900/40 shadow-lg sticky top-4 z-10 backdrop-blur-sm text-sm font-sans">
+      {/* Header - smaller & bolder */}
+      <h2 className="text-base font-extrabold text-white mb-3 tracking-tight">
+        Filter by Location
+      </h2>
+
+      <div className="space-y-1 max-h-[50vh] overflow-y-auto custom-scrollbar">
+        {/* All Routes */}
         <button
           onClick={() => {
             setSelected('all');
             onFilterChange('all');
           }}
-          className={`w-full text-left px-4 py-2.5 rounded-md transition-colors ${
-            selected === 'all' ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
-          }`}
+          className={`
+            w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 font-sans font-bold
+            flex items-center justify-between text-xs
+            ${
+              selected === 'all'
+                ? 'bg-blue-900/75 text-white shadow-sm shadow-blue-900/20 border border-blue-700/40'
+                : 'text-gray-300 hover:bg-gray-800/50 hover:text-gray-100 border border-transparent'
+            }
+          `}
         >
-          All Routes
+          <span>All Routes</span>
+          {selected === 'all' && (
+            <span className="text-[10px] bg-blue-800/60 px-1.5 py-0.5 rounded font-medium">
+              Active
+            </span>
+          )}
         </button>
 
-        {popularRoutes.map((route) => (
-          <button
-            key={route}
-            onClick={() => {
-              setSelected(route);
-              onFilterChange(route);
-            }}
-            className={`w-full text-left px-4 py-2.5 rounded-md transition-colors flex justify-between items-center ${
-              selected === route ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
-            }`}
-          >
-            <span>{route}</span>
-            {!availableRoutes.includes(route) && (
-              <span className="text-xs text-gray-500 font-normal">Coming Soon</span>
-            )}
-          </button>
-        ))}
+        {/* Popular Routes */}
+        {popularRoutes.map((route) => {
+          const isAvailable = availableRoutes.includes(route);
+          const isSelected = selected === route;
 
-        {availableRoutes
-          .filter((r) => !popularRoutes.includes(r))
-          .map((route) => (
+          return (
             <button
               key={route}
               onClick={() => {
-                setSelected(route);
-                onFilterChange(route);
+                if (isAvailable) {
+                  setSelected(route);
+                  onFilterChange(route);
+                }
               }}
-              className={`w-full text-left px-4 py-2.5 rounded-md transition-colors ${
-                selected === route ? 'bg-blue-900 text-white' : 'text-gray-300 hover:bg-gray-800'
-              }`}
+              disabled={!isAvailable}
+              className={`
+                w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 font-sans font-bold
+                flex items-center justify-between text-xs group
+                ${
+                  isSelected
+                    ? 'bg-blue-900/75 text-white shadow-sm shadow-blue-900/20 border border-blue-700/40'
+                    : isAvailable
+                    ? 'text-gray-200 hover:bg-gray-800/50 hover:text-gray-100 border border-transparent'
+                    : 'text-gray-500 cursor-not-allowed bg-gray-900/30 border border-gray-800/40 font-normal'
+                }
+              `}
             >
-              {route}
+              <span>{route}</span>
+
+              {!isAvailable ? (
+                <span className="text-[10px] px-2 py-0.5 bg-amber-950/50 text-amber-300/90 rounded font-medium border border-amber-900/30">
+                  Soon
+                </span>
+              ) : isSelected ? (
+                <span className="text-[10px] bg-blue-800/60 px-1.5 py-0.5 rounded font-medium">
+                  Active
+                </span>
+              ) : null}
             </button>
-          ))}
+          );
+        })}
+
+        {/* Other Routes Section */}
+        {otherRoutes.length > 0 && (
+          <>
+            <div className="h-px bg-gray-800 my-3" />
+
+            {otherRoutes.map((route) => (
+              <button
+                key={route}
+                onClick={() => {
+                  setSelected(route);
+                  onFilterChange(route);
+                }}
+                className={`
+                  w-full text-left px-4 py-2.5 rounded-lg transition-all duration-200 font-sans font-bold
+                  flex items-center justify-between text-xs
+                  ${
+                    selected === route
+                      ? 'bg-blue-900/75 text-white shadow-sm shadow-blue-900/20 border border-blue-700/40'
+                      : 'text-gray-200 hover:bg-gray-800/50 hover:text-gray-100 border border-transparent'
+                  }
+                `}
+              >
+                <span>{route}</span>
+                {selected === route && (
+                  <span className="text-[10px] bg-blue-800/60 px-1.5 py-0.5 rounded font-medium">
+                    Active
+                  </span>
+                )}
+              </button>
+            ))}
+          </>
+        )}
       </div>
+
+      {otherRoutes.length === 0 && popularRoutes.length > 0 && (
+        <p className="text-[10px] text-gray-500 mt-3 text-center font-sans">
+          More routes coming soon
+        </p>
+      )}
     </div>
   );
 };
@@ -346,6 +417,10 @@ export default function YachtRental() {
           <h1 className="font-sans font-extrabold text-4xl  text-center text-white mb-12">
             Our fleet of yachts
           </h1>
+
+         
+          
+         {/* <EnquiryForm/> */}
           {/* <p className="text-center text-gray-400 mb-12 max-w-3xl mx-auto">
             Discover the finest yachts for unforgettable experiences on the water
           </p> */}
@@ -365,6 +440,8 @@ export default function YachtRental() {
                 availableRoutes={availableRoutes} 
               />
             </div>
+            
+            
 
             <div className="lg:w-3/4">
               {filteredYachts.length > 0 ? (
@@ -385,3 +462,4 @@ export default function YachtRental() {
     </div>
   );
 }
+
