@@ -7,6 +7,7 @@ export default function LuxuryCarSearch() {
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [availableCategories, setAvailableCategories] = useState([]); // Dynamic categories
 
   const [selectedCategories, setSelectedCategories] = useState([]); // multi-select
   const [carName, setCarName] = useState("");
@@ -22,14 +23,25 @@ export default function LuxuryCarSearch() {
     const unsubscribe = onValue(carsRef, (snapshot) => {
       if (snapshot.exists()) {
         const carsData = [];
+        const categoriesSet = new Set();
+        
         snapshot.forEach((child) => {
-          carsData.push({ id: child.key, ...child.val() });
+          const carData = { id: child.key, ...child.val() };
+          carsData.push(carData);
+          
+          // Collect unique categories
+          if (carData.category) {
+            categoriesSet.add(carData.category.toLowerCase());
+          }
         });
+        
         setCars(carsData);
         setFilteredCars(carsData);
+        setAvailableCategories(Array.from(categoriesSet).sort());
       } else {
         setCars([]);
         setFilteredCars([]);
+        setAvailableCategories([]);
       }
       setIsLoading(false);
     }, (err) => {
@@ -61,9 +73,12 @@ export default function LuxuryCarSearch() {
         });
       }
 
-      // Categories (multi-select)
+      // Categories (multi-select) - filter by car's category field
       if (selectedCategories.length > 0) {
-        result = result.filter(c => selectedCategories.includes(c.category));
+        result = result.filter(c => {
+          const carCategory = (c.category || '').toLowerCase();
+          return selectedCategories.includes(carCategory);
+        });
       }
 
       setFilteredCars(result);
@@ -82,7 +97,7 @@ export default function LuxuryCarSearch() {
   const openDetails = (car) => { setSelectedCar(car); setShowDetails(true); };
   const openEnquiry = (car) => { setSelectedCar(car); setShowEnquiryForm(true); };
 
-  // Car Card (horizontal layout)
+  // Car Card (horizontal layout) - ONLY THIS COMPONENT WAS CHANGED
   const CarCard = ({ car }) => {
     const images = [
       car.coverImg || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800",
@@ -93,16 +108,19 @@ export default function LuxuryCarSearch() {
     return (
       <div className="bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 mb-8">
         <div className="md:flex">
+          {/* Image container - FIXED to display full car like in the reference image */}
           <div className="md:w-1/2 p-5 md:p-6">
-            <img
-              src={images[0]}
-              alt={car.title}
-              className="w-full h-64 md:h-80 object-cover rounded-xl"
-            />
+            <div className="relative w-full h-64 md:h-80 bg-white rounded-xl overflow-hidden">
+              <img
+                src={images[0]}
+                alt={car.title}
+                className="absolute inset-0 w-full h-full object-contain p-4"
+              />
+            </div>
           </div>
           <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between text-white">
             <div>
-              <h2 className="text-3xl font-bold mb-3">{car.title || "Premium Vehicle"}</h2>
+              <h2 className="text-3xl font-sans font-extrabold mb-3">{car.title || "Premium Vehicle"}</h2>
               <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 mb-4"></div>
               <p className="text-gray-400 mb-6 line-clamp-3">
                 {car.description || "Exceptional luxury and performance in one masterpiece."}
@@ -110,14 +128,14 @@ export default function LuxuryCarSearch() {
             </div>
             <div>
               <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                <div className="flex items-center"><span className="text-[#F9672C] mr-2">⏱</span> {car.totalTime || "?"} h</div>
-                <div className="flex items-center"><span className="text-[#F9672C] mr-2">👤</span> {car.pax || "?"} pax</div>
-                <div className="flex items-center"><span className="text-[#F9672C] mr-2">🛣</span> {car.kilometers || "—"} km</div>
-                <div className="flex items-center"><span className="text-[#F9672C] mr-2">₹</span> {car.price || "—"}</div>
+                <div className="flex items-center"><span className="font-sans font-bold text-[#F9672C] mr-2">⏱</span> {car.totalTime || "?"} h</div>
+                <div className="flex items-center"><span className="font-sans font-bold text-[#F9672C] mr-2">👤</span> {car.pax || "?"} pax</div>
+                <div className="flex items-center"><span className="font-sans font-bold text-[#F9672C] mr-2">🛣</span> {car.kilometers || "—"} km</div>
+                <div className="flex items-center"><span className="font-sans font-bold text-[#F9672C] mr-2">₹</span> {car.price || "—"}</div>
               </div>
               <div className="flex gap-4">
-                <button onClick={() => openDetails(car)} className="flex-1 py-3 bg-blue-950 hover:bg-blue-900 rounded-lg">View Details</button>
-                <button onClick={() => openEnquiry(car)} className="flex-1 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 hover:brightness-110 rounded-lg">Enquire Now</button>
+                <button onClick={() => openDetails(car)} className="font-sans font-bold flex-1 py-3 bg-blue-950 hover:bg-blue-900 rounded-lg">View Details</button>
+                <button onClick={() => openEnquiry(car)} className="font-sans font-bold flex-1 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 hover:brightness-110 rounded-lg">Enquire Now</button>
               </div>
             </div>
           </div>
@@ -141,7 +159,7 @@ export default function LuxuryCarSearch() {
       <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4" onClick={() => setShowDetails(false)}>
         <div className="bg-[#161617] rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden" onClick={e => e.stopPropagation()}>
           <div className="bg-black p-6 border-b border-gray-800 relative">
-            <h2 className="text-3xl font-bold text-white">{selectedCar.title}</h2>
+            <h2 className="text-3xl font-sans font-extrabold text-white">{selectedCar.title}</h2>
             <button onClick={() => setShowDetails(false)} className="absolute top-5 right-6 text-gray-400 hover:text-white">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
@@ -161,9 +179,9 @@ export default function LuxuryCarSearch() {
               <div>
                 <h3 className="text-xl text-[#F9672C] font-semibold mb-4">Key Specs</h3>
                 <div className="space-y-3 text-gray-300">
-                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Price</span><span className="text-white">{selectedCar.price}</span></div>
-                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Km</span><span className="text-white">{selectedCar.kilometers} km</span></div>
-                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Passengers</span><span className="text-white">{selectedCar.pax}</span></div>
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Price</span><span className="font-sans font-bold text-white">{selectedCar.price}</span></div>
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Km</span><span className="font-sans font-bold text-white">{selectedCar.kilometers} km</span></div>
+                  <div className="flex justify-between border-b border-gray-800 pb-2"><span>Passengers</span><span className="font-sans font-bold text-white">{selectedCar.pax}</span></div>
                 </div>
               </div>
               <div>
@@ -188,7 +206,7 @@ export default function LuxuryCarSearch() {
           className="w-full h-80 md:h-96 lg:h-[500px] object-cover"
         />
         <div className="py-10 px-6 text-center bg-gradient-to-b from-transparent to-[#0f0f11]">
-          <h1 className="font-sans font-extrabold text-4xl font-bold text-center text-white mb-12">
+          <h1 className="font-sans font-extrabold text-4xl  text-center text-white mb-12">
            Our Premium Car's Collections
           </h1>
           {/* <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto">
@@ -230,17 +248,21 @@ export default function LuxuryCarSearch() {
               <div>
                 <h3 className="text-sm font-semibold uppercase mb-4 text-gray-200">Vehicle Type</h3>
                 <div className="space-y-3">
-                  {["luxury", "sports", "convertible"].map(cat => (
-                    <label key={cat} className="flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedCategories.includes(cat)}
-                        onChange={() => toggleCategory(cat)}
-                        className="w-4 h-4 text-[#F9672C] bg-gray-700 border-gray-600 rounded focus:ring-[#F9672C]"
-                      />
-                      <span className="ml-3 text-gray-300 capitalize">{cat}</span>
-                    </label>
-                  ))}
+                  {availableCategories.length > 0 ? (
+                    availableCategories.map(cat => (
+                      <label key={cat} className="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(cat)}
+                          onChange={() => toggleCategory(cat)}
+                          className="w-4 h-4 text-[#F9672C] bg-gray-700 border-gray-600 rounded focus:ring-[#F9672C]"
+                        />
+                        <span className="ml-3 text-gray-300 capitalize">{cat}</span>
+                      </label>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm">No categories available</p>
+                  )}
                 </div>
               </div>
             </div>

@@ -154,7 +154,7 @@ const HomeCarousel = () => {
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 py-12">
           <div className="flex flex-col justify-center items-center mb-8">
-            <h1 className="text-white text-6xl font-light animate-fadeIn"> Deal of The Day</h1>
+            <h1 className="text-white text-6xl font-sans font-extrabold animate-fadeIn"> Deals of The Day</h1>
             <div className="inline-block w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mt-2" />
           </div>
 
@@ -172,8 +172,8 @@ const HomeCarousel = () => {
     />
     <div className="relative z-10 p-7 text-center">
       <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-blue-400 transition-colors duration-300">Jets</h3>
-      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Explore luxury private jets</p>
+      <h3 className="font-sans font-extrabold text-white text-2xl  mb-3 tracking-wider group-hover:text-blue-400 transition-colors duration-300">Jets</h3>
+      <p className=" font-sans font-bold text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Explore luxury private jets</p>
     </div>
   </div>
 
@@ -189,8 +189,8 @@ const HomeCarousel = () => {
     />
     <div className="relative z-10 p-7 text-center">
       <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-purple-400 transition-colors duration-300">Jets by Seats</h3>
-      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Find jets by capacity & comfort</p>
+      <h3 className="font-sans font-extrabold text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-purple-400 transition-colors duration-300">Jets by Seats</h3>
+      <p className="font-sans font-bold text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Find jets by capacity & comfort</p>
     </div>
   </div>
 
@@ -206,8 +206,8 @@ const HomeCarousel = () => {
     />
     <div className="relative z-10 p-7 text-center">
       <div className="w-16 h-1 bg-gradient-to-r from-orange-500 to-red-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-orange-400 transition-colors duration-300">Choppers</h3>
-      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Premium helicopter services</p>
+      <h3 className="font-sans font-extrabold text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-orange-400 transition-colors duration-300">Choppers</h3>
+      <p className="font-sans font-bold text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Premium helicopter services</p>
     </div>
   </div>
 
@@ -223,8 +223,8 @@ const HomeCarousel = () => {
     />
     <div className="relative z-10 p-7 text-center">
       <div className="w-16 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-4 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-      <h3 className="text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-pink-400 transition-colors duration-300">Choppers by Seats</h3>
-      <p className="text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Search helicopters by passenger capacity</p>
+      <h3 className="font-sans font-extrabold text-white text-2xl font-bold mb-3 tracking-wider group-hover:text-pink-400 transition-colors duration-300">Choppers by Seats</h3>
+      <p className="font-sans font-bold text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Search helicopters by passenger capacity</p>
     </div>
   </div>
 </div>
