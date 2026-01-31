@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ref, push } from 'firebase/database';
-import { database } from '../firebaseConfig'; // Adjust path as needed
+import { database } from '../firebaseConfig';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -90,140 +90,203 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
 
   return (
     <>
+      <style jsx>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@200;300;400;500&display=swap');
+        
+        .luxury-input {
+          border: none;
+          border-bottom: 1px solid #d1d5db;
+          background: transparent;
+          transition: border-color 0.3s ease;
+        }
+        
+        .luxury-input:focus {
+          outline: none;
+          border-bottom-color: #C88A56;
+        }
+        
+        .luxury-select {
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 0.5rem center;
+          background-size: 1.5em 1.5em;
+          padding-right: 2.5rem;
+        }
+        
+        .luxury-textarea {
+          border: 1px solid #d1d5db;
+          transition: border-color 0.3s ease;
+        }
+        
+        .luxury-textarea:focus {
+          outline: none;
+          border-color: #C88A56;
+        }
+
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f1f1;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #C88A56;
+          border-radius: 3px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #a0753d;
+        }
+      `}</style>
+
       <ToastContainer />
       
-      {/* Backdrop */}
+      {/* Backdrop with blur */}
       <div
-        className={`fixed inset-0 bg-black z-40 transition-opacity duration-300 ${
-          isAnimating ? 'opacity-60' : 'opacity-0'
+        className={`fixed inset-0 bg-black z-[9998] transition-opacity duration-300 ${
+          isAnimating ? 'opacity-70' : 'opacity-0'
         }`}
         onClick={handleClose}
-        style={{ backdropFilter: 'blur(4px)' }}
+        style={{ backdropFilter: 'blur(8px)' }}
       />
 
-      {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none overflow-y-auto">
-        <div
-          className={`w-full max-w-xl bg-white rounded-xl shadow-2xl pointer-events-auto transform transition-all duration-300 my-8 ${
-            isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
-          }`}
-        >
-          {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-4 py-3 rounded-t-xl flex justify-between items-center">
-            <h3 className="text-lg font-bold text-white">
-               Request a Quote
-            </h3>
-            <button
-              type="button"
-              className="text-white hover:bg-white/20 rounded-lg p-1 transition-colors"
-              onClick={handleClose}
-              aria-label="Close"
-            >
-              <XMarkIcon className="h-5 w-5" />
-            </button>
-          </div>
+      {/* Modal - positioned below navbar with proper z-index */}
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pointer-events-none">
+        <div className="w-full h-full flex items-center justify-center py-20">
+          <div
+            className={`w-full max-w-2xl bg-white shadow-2xl pointer-events-auto transform transition-all duration-300 max-h-[85vh] flex flex-col ${
+              isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-8'
+            }`}
+          >
+            {/* Header */}
+            <div className="relative px-12 pt-12 pb-8 border-b border-gray-200">
+              <button
+                type="button"
+                className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+                onClick={handleClose}
+                aria-label="Close"
+              >
+                <XMarkIcon className="h-6 w-6" />
+              </button>
 
-          {/* Form content - scrollable */}
-          <div className="max-h-[calc(100vh-12rem)] overflow-y-auto px-4 py-4">
-            <div className="bg-blue-50 border-l-4 border-blue-600 p-3 mb-4 rounded-r-lg">
-              <p className="text-blue-900 text-xs">
-                💼 Fill in your travel details and we'll get back to you within 24 hours.
-              </p>
+              <h2 
+                className="text-4xl font-light text-black mb-2" 
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Enquiry Form
+              </h2>
+              <div className="w-16 h-px bg-[#C88A56]"></div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
-              {/* Name row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="firstName" className="block text-xs font-semibold text-gray-700 mb-1">
-                    First Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                    placeholder="John"
-                  />
+            {/* Form content - scrollable */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar px-12 py-8">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Name row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <label 
+                      htmlFor="firstName" 
+                      className="block text-xs tracking-widest text-gray-600 mb-3"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    >
+                      FULL NAME
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                      className="luxury-input w-full text-black px-0 py-3 text-base"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                      placeholder="Your Name"
+                    />
+                  </div>
+
+                  <div>
+                    <label 
+                      htmlFor="email" 
+                      className="block text-xs tracking-widest text-gray-600 mb-3"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    >
+                      EMAIL ADDRESS
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="luxury-input w-full text-black px-0 py-3 text-base"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label htmlFor="lastName" className="block text-xs font-semibold text-gray-700 mb-1">
-                    Last Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                    placeholder="Doe"
-                  />
-                </div>
-              </div>
+                {/* Phone and Transport row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <label 
+                      htmlFor="departureCity" 
+                      className="block text-xs tracking-widest text-gray-600 mb-3"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    >
+                      PHONE NUMBER
+                    </label>
+                    <input
+                      type="tel"
+                      id="departureCity"
+                      name="departureCity"
+                      value={formData.departureCity}
+                      onChange={handleChange}
+                      required
+                      className="luxury-input w-full text-black px-0 py-3 text-base"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                      placeholder="+1 234 567 8900"
+                    />
+                  </div>
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-xs font-semibold text-gray-700 mb-1">
-                  Email Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              {/* Cities row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="departureCity" className="block text-xs font-semibold text-gray-700 mb-1">
-                    🛫 Departure City <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="departureCity"
-                    name="departureCity"
-                    value={formData.departureCity}
-                    onChange={handleChange}
-                    required
-                    className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                    placeholder="e.g. Mumbai"
-                  />
+                  <div>
+                    <label 
+                      htmlFor="flightType" 
+                      className="block text-xs tracking-widest text-gray-600 mb-3"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    >
+                      PREFERRED TRANSPORT
+                    </label>
+                    <select
+                      id="flightType"
+                      name="flightType"
+                      value={formData.flightType}
+                      onChange={handleChange}
+                      required
+                      className="luxury-input luxury-select w-full text-black px-0 py-3 text-base"
+                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                    >
+                      <option value="">Select an option</option>
+                      <option value="One Way Charter">Yacht</option>
+                      <option value="Round Trip Charter">Car</option>
+                      <option value="Empty Leg">Helicopter</option>
+                      <option value="Multi-Leg Trip">Private Jet</option>
+                    </select>
+                  </div>
                 </div>
 
+                {/* Travel Date */}
                 <div>
-                  <label htmlFor="destinationCity" className="block text-xs font-semibold text-gray-700 mb-1">
-                    🛬 Destination City <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="destinationCity"
-                    name="destinationCity"
-                    value={formData.destinationCity}
-                    onChange={handleChange}
-                    required
-                    className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
-                    placeholder="e.g. Delhi"
-                  />
-                </div>
-              </div>
-
-              {/* Date & Passengers */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="departureDate" className="block text-xs font-semibold text-gray-700 mb-1">
-                    📅 Departure Date <span className="text-red-500">*</span>
+                  <label 
+                    htmlFor="departureDate" 
+                    className="block text-xs tracking-widest text-gray-600 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                  >
+                    TRAVEL DATE
                   </label>
                   <input
                     type="date"
@@ -233,98 +296,61 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
                     onChange={handleChange}
                     required
                     min={new Date().toISOString().split('T')[0]}
-                    className="w-full text-black bg-grey-200 px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none"
+                    className="luxury-input w-full text-black px-0 py-3 text-base"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
                   />
                 </div>
 
+                {/* Message */}
                 <div>
-                  <label htmlFor="passengers" className="block text-xs font-semibold text-gray-700 mb-1">
-                    👥 Passengers <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="passengers"
-                    name="passengers"
-                    value={formData.passengers}
-                    onChange={handleChange}
-                    required
-                    className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none text-black "
+                  <label 
+                    htmlFor="additionalRequirements" 
+                    className="block text-xs tracking-widest text-gray-600 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
                   >
-                    <option value="">Select passengers</option>
-                    <option value="1-2">1-2 Passengers</option>
-                    <option value="3-4">3-4 Passengers</option>
-                    <option value="5-8">5-8 Passengers</option>
-                    <option value="9-12">9-12 Passengers</option>
-                    <option value="13+">13+ Passengers</option>
-                  </select>
+                    MESSAGE (OPTIONAL)
+                  </label>
+                  <textarea
+                    id="additionalRequirements"
+                    name="additionalRequirements"
+                    value={formData.additionalRequirements}
+                    onChange={handleChange}
+                    rows={4}
+                    className="luxury-textarea w-full text-black px-4 py-3 text-base resize-none"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                    placeholder="Any additional details..."
+                  />
                 </div>
-              </div>
 
-              {/* Flight Type */}
-              <div>
-                <label htmlFor="flightType" className="block text-xs font-semibold text-gray-700 mb-1">
-                  ✈️ Flight Type <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="flightType"
-                  name="flightType"
-                  value={formData.flightType}
-                  onChange={handleChange}
-                  required
-                  className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none bg-white"
-                >
-                  <option value="">Select flight type</option>
-                  <option value="One Way Charter">One Way Charter</option>
-                  <option value="Round Trip Charter">Round Trip Charter</option>
-                  <option value="Empty Leg">Empty Leg</option>
-                  <option value="Multi-Leg Trip">Multi-Leg Trip</option>
-                </select>
-              </div>
+                {/* Submit Message */}
+                {/* {submitMessage && (
+                  <div className={`text-sm text-center p-3 ${
+                    submitMessage.includes('successfully') 
+                      ? 'bg-[#C88A56]/10 text-[#C88A56]' 
+                      : 'bg-red-500/10 text-red-600'
+                  }`}>
+                    {submitMessage}
+                  </div>
+                )} */}
 
-              {/* Additional Requirements */}
-              <div>
-                <label htmlFor="additionalRequirements" className="block text-xs font-semibold text-gray-700 mb-1">
-                  📝 Additional Requirements
-                </label>
-                <textarea
-                  id="additionalRequirements"
-                  name="additionalRequirements"
-                  value={formData.additionalRequirements}
-                  onChange={handleChange}
-                  rows={3}
-                  className="w-full text-black px-3 py-2 text-sm border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none resize-y"
-                  placeholder="Special requests, catering preferences, ground transportation, etc."
-                />
-              </div>
-
-              {/* Submit */}
-              <div className="pt-2 space-y-2">
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm"
+                  className="w-full bg-black text-white py-4 hover:bg-[#C88A56] transition-all duration-300"
+                  style={{ 
+                    fontFamily: "'Montserrat', sans-serif", 
+                    fontWeight: 300, 
+                    letterSpacing: '0.2em',
+                    fontSize: '0.875rem'
+                  }}
                 >
-                   Request Quote
+                  SUBMIT ENQUIRY
                 </button>
-                <p className="text-[10px] text-gray-500 text-center">
-                  🔒 By submitting, you agree to our privacy policy and terms.
-                </p>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-      `}</style>
     </>
   );
 };

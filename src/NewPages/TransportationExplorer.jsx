@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import car from '../assets/car.png';
 import yacht from '../assets/yatch.png';
 import chopper from '../assets/chopper.png';
@@ -57,27 +57,31 @@ export default function TransportOptions() {
   const [selected, setSelected] = useState(options[0]);
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-900 text-white">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-[#141414] to-[#1a1a1a] text-white">
       {/* Sidebar */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full lg:w-1/5 bg-gray-800 p-6 space-y-6"
+        className="w-full lg:w-1/5 bg-black/40 backdrop-blur-sm border-r border-[#C88A56]/20 p-6 space-y-6"
       >
-        <h1 className="font-sans font-extrabold text-2xl font-bold tracking-wider">LUXURY TRANSPORT</h1>
+        <h1 className="font-serif text-2xl font-light tracking-[0.3em] text-[#C88A56] uppercase">
+          Luxury Transport
+        </h1>
+        <div className="h-px bg-gradient-to-r from-transparent via-[#C88A56] to-transparent my-4"></div>
+        
         {options.map((option) => (
           <button
             key={option.name}
             onClick={() => setSelected(option)}
-            className={`w-full flex items-center gap-3 p-4 rounded-xl text-left transition-all duration-300 ${
+            className={`w-full flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-300 border ${
               selected.name === option.name
-                ? "bg-gradient-to-r from-orange-500 to-purple-600 text-white"
-                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                ? "bg-gradient-to-r from-[#C88A56] to-[#d4a574] text-black border-[#C88A56] shadow-lg shadow-[#C88A56]/30"
+                : "bg-black/30 text-[#C88A56]/80 border-[#C88A56]/20 hover:bg-black/50 hover:border-[#C88A56]/40"
             }`}
           >
-            <img src={option.icon} alt="icon" className="h-6 w-6 object-contain" />
-            <p className="font-sans font-extrabold ">{option.name}</p>
+            <img src={option.icon} alt="icon" className="h-6 w-6 object-contain brightness-0 invert" />
+            <p className="font-light tracking-wider text-sm uppercase">{option.name}</p>
           </button>
         ))}
       </motion.div>
@@ -95,9 +99,9 @@ export default function TransportOptions() {
           <img
             src={selected.image1}
             alt="Background"
-            className="w-full h-full object-cover opacity-90"
+            className="w-full h-full object-cover opacity-40"
           />
-          <div className="absolute inset-0 bg-black opacity-80"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#141414]/95 via-[#141414]/90 to-[#1a1a1a]/95"></div>
         </motion.div>
 
         {/* Detail Card */}
@@ -108,47 +112,59 @@ export default function TransportOptions() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full p-6 lg:p-12 gap-6"
+            className="relative z-10 flex flex-col lg:flex-row items-center justify-center h-full p-6 lg:p-12 gap-8"
           >
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center">
-              <img
-                src={selected.image2}
-                alt="Detail Image"
-                className="w-full max-w-md h-auto rounded-xl shadow-lg"
-              />
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#C88A56] to-[#d4a574] rounded-2xl blur opacity-30"></div>
+                <img
+                  src={selected.image2}
+                  alt="Detail Image"
+                  className="relative w-full max-w-md h-auto rounded-xl shadow-2xl border border-[#C88A56]/30"
+                />
+              </div>
             </div>
 
             {/* Text Section */}
-            <div className="w-full lg:w-1/2 bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl shadow-lg space-y-4">
-              <h2 className=" font-sans font-extrabold text-3xl lg:text-4xl font-bold uppercase tracking-wide">
-                {selected.name}
-              </h2>
-              <p className="text-gray-200 text-base lg:text-lg">
+            <div className="w-full lg:w-1/2 bg-black/50 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-[#C88A56]/30 space-y-6">
+              <div className="space-y-2">
+                <p className="text-[#C88A56] text-sm font-light tracking-[0.2em] uppercase">
+                  {selected.tagline}
+                </p>
+                <h2 className="font-serif text-4xl lg:text-5xl font-light text-[#C88A56] tracking-wide">
+                  {selected.name}
+                </h2>
+                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24"></div>
+              </div>
+
+              <p className="text-gray-300 text-base lg:text-lg font-light leading-relaxed">
                 {selected.description}
               </p>
-              <div className="space-y-2">
-                <p className="font-sans font-bold text-sm  text-gray-300 uppercase tracking-wider">
+
+              <div className="space-y-3">
+                <p className="text-sm text-[#C88A56] uppercase tracking-[0.15em] font-light">
                   Key Features
                 </p>
                 {selected.features.map((f, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-gray-200">
-                    <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                    <p>{f}</p>
+                  <div key={idx} className="flex items-center gap-3 text-gray-300">
+                    <div className="w-1.5 h-1.5 bg-[#C88A56] rounded-full"></div>
+                    <p className="font-light">{f}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex items-center justify-between pt-4">
-                <p className="text-xl lg:text-2xl font-semibold text-white">
+
+              <div className="flex items-center justify-between pt-6 border-t border-[#C88A56]/20">
+                <p className="text-2xl lg:text-3xl font-light text-[#C88A56]">
                   {selected.price}
                 </p>
                 <a
-                        href={`#${selected.path}`}
-                        className="font-sans font-extrabold inline-flex items-center justify-center px-6 py-3 bg-[#F9672C] hover:bg-opacity-90 text-white rounded-xl  transition-all transform hover:scale-[1.03] active:scale-[0.97]"
-                      >
-                        Reserve Now
-                        <ChevronRight size={18} className="ml-2" />
-                      </a>
+                  href={`#${selected.path}`}
+                  className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black rounded-lg font-light tracking-wider uppercase text-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#C88A56]/30"
+                >
+                  Reserve Now
+                  <ChevronRight size={18} className="ml-2" />
+                </a>
               </div>
             </div>
           </motion.div>

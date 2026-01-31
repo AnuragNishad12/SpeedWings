@@ -3,6 +3,7 @@ import car from '../assets/car.png';
 import yacht from '../assets/yatch.png'; // Fixed spelling from "yatch" to "yacht"
 import chopper from '../assets/chopper.png';
 import plane from '../assets/plane.png';
+import "../NewPages/CssAnimation/Services.module.css";
 
 export default function VerdiepingServices() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -50,24 +51,31 @@ export default function VerdiepingServices() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-black to-gray-900 w-full min-h-screen flex items-center justify-center p-6">
+    <div className="bg-[#1B1A1A] w-full min-h-screen flex items-center justify-center p-6">
       <div className="w-full max-w-7xl px-4 xl:px-0"> 
-        <div className="relative z-10 bg-opacity-80 bg-black backdrop-blur-lg rounded-3xl p-8 md:p-16 border border-gray-800 shadow-2xl overflow-hidden">
+        <div className="relative z-10 bg-opacity-80 bg-black backdrop-blur-lg  p-8 md:p-10 border border-gray-800 shadow-2xl overflow-hidden">
           {/* Decorative gradient orb in background */}
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-600/30 to-purple-600/20 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-600/20 to-blue-600/10 rounded-full blur-3xl"></div>
-          
+          <div className="absolute -top-40 -right-40 w-96 h-96 
+  bg-gradient-to-b from-[#141414]/40 to-[#C88A56]/30 
+  rounded-full blur-3xl">
+</div>
+
+<div className="absolute -bottom-40 -left-40 w-96 h-96 
+  bg-gradient-to-b from-[#141414]/30 to-[#C88A56]/20 
+  rounded-full blur-3xl">
+</div>
+
           {/* Header section with improved typography */}
           <div className="flex items-center mb-10 relative">
-            <div className="w-1 h-12 bg-gradient-to-b from-blue-500 to-purple-500 mr-6 rounded-full"></div>
+            <div className="w-1 h-12 bg-gradient-to-b from-[#141414] to-[#C88A56] mr-6 "></div>
             <h1 className="font-sans font-bold text-white text-4xl md:text-6xl  tracking-tight animate-fadeIn">
-              Premium <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Transportation</span> Solutions
+              Premium <span className="bg-clip-text text-transparent bg-gradient-to-b from-[#141414] to-[#C88A56]">Transportation</span> Solutions
             </h1>
           </div>
           
           <p 
   ref={textRef}
-  className={`transition-all duration-500 text-lg md:text-xl font-extrabold mb-12 md:mb-16 max-w-3xl leading-relaxed ${
+  className={`transition-all duration-500 text-sm  mb-12 md:mb-16 max-w-3xl leading-relaxed ${
     isScrolled ? 'text-gray-500' : 'text-gray-300'
   }`}
 >
@@ -80,7 +88,7 @@ export default function VerdiepingServices() {
             {services.map((service, index) => (
               <div 
                 key={index} 
-                className={`relative bg-black border rounded-2xl transition-all duration-500 cursor-pointer transform hover:scale-102 group ${
+                className={`relative bg-black border  transition-all duration-500 cursor-pointer transform hover:scale-102 group ${
   activeIndex === index 
     ? 'border-blue-500/50 bg-gradient-to-b from-black to-blue-950/30 shadow-lg shadow-blue-900/10'
     : 'border-gray-800 hover:border-gray-700'
@@ -97,9 +105,9 @@ export default function VerdiepingServices() {
                 <div className="font-sans font-bold absolute -top-5 left-6">
                   <div className={`bg-gradient-to-br ${
                     activeIndex === index 
-                      ? 'font-sans font-bold from-blue-600 to-indigo-800' 
-                      : 'font-sans font-bold from-gray-800 to-gray-900 group-hover:from-blue-900 group-hover:to-indigo-900'
-                    } w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-500 transform group-hover:rotate-3`}>
+                      ? 'font-sans font-bold from-[#141414] to-[#C88A56]' 
+                      : 'font-sans font-bold from-gray-800 to-gray-900 group-hover:from-[#141414] group-hover:to-[#C88A56]'
+                    } w-16 h-16 rounded-1xl flex items-center justify-center shadow-lg transition-all duration-500 transform group-hover:rotate-3`}>
                     <img 
                       src={service.icon} 
                       alt={service.title} 
@@ -113,20 +121,20 @@ export default function VerdiepingServices() {
                 {/* Card content with improved spacing */}
                 <div className="font-sans font-bold p-8 pt-12">
                   <h3 className={`font-sans font-bold text-xl font-medium mb-3 transition-all duration-300 ${
-                    activeIndex === index ? 'font-sans font-bold text-blue-400' : ' font-sans font-bold text-blue-500 group-hover:text-blue-400'
+                    activeIndex === index ? 'font-sans font-bold text-white' : ' font-sans font-bold text-white group-hover:text-white'
                   }`}>
                     {service.title}
                   </h3>
                   
-                  <p className="text-gray-400 group-hover:text-gray-300 transition-all duration-300 leading-relaxed">
+                  <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-all duration-300 leading-relaxed">
                     {service.description}
                   </p>
                   
                   {/* Enhanced indicator for active card */}
                   {activeIndex === index && (
                     <div className="mt-6 flex items-center">
-                      <div className="w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transform animate-widthExpand"></div>
-                      <div className="ml-2 text-blue-400 text-sm font-medium">Active</div>
+                      <div className="w-full h-0.5 bg-gradient-to-r from-[#141414] to-[#C88A56] transform animate-widthExpand"></div>
+                      <div className="ml-2 text-[#C88A56] text-sm font-medium">Active</div>
                     </div>
                   )}
                 </div>

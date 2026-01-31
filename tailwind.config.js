@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'], // override default
+        didot: ['"GFS Didot"', 'serif'], 
       },
       fontWeight: {
         extrabold: 800,

@@ -42,7 +42,7 @@ function App() {
       </div>
 
       <LuxurySlider />
-      <CustomerReviews />
+      {/* <CustomerReviews /> */}
       <LuxuryTransportSelector />
       <FaqSection />
       <Footer />

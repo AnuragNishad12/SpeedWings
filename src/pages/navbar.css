@@ -1,94 +1,110 @@
-/* Navbar Styles */
-.navbar {
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
+/* Emmanuelle Navbar Styles */
+.emmanuelle-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #000000;
+  padding: 10px 0;
+  z-index: 1000;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.emmanuelle-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
 }
 
-.logo a {
-  font-family: 'Roboto', cursive;
-  font-size: 10px;
-}
-
-/* .navbar.scrolled {
-  background: rgba(43, 43, 43, 0.868);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-} */
-
-/* Logo */
-.logo {
+/* Logo Styles */
+.emmanuelle-logo .brand-name {
+  text-decoration: none;
   color: #ffffff;
-  font-size: 10px;
-  font-family: 'Roboto', cursive;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  transition: transform 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
 }
 
-.logo:hover {
-  transform: scale(1.05);
+.emmanuelle-logo .brand-name:hover {
+  opacity: 0.8;
 }
 
 /* Navigation Links */
-.nav-links {
-  list-style: none;
+.emmanuelle-nav-links {
   display: flex;
-  gap: 15px; /* Reduced gap */
+  list-style: none;
+  margin: 0;
+  padding: 0;
   align-items: center;
+  gap: 20px;
 }
 
-.nav-links li {
+.emmanuelle-nav-links li {
   position: relative;
 }
 
-.nav-links a {
+.emmanuelle-nav-links .nav-link {
   text-decoration: none;
-  color: #808080;
-  font-size: 12px; /* Reduced text size */
-  font-weight: 500;
-  padding: 5px; /* Reduced padding */
-  border-radius: 5px;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.emmanuelle-nav-links .nav-link:hover {
+  /* opacity: 0.7; */
+  color: #C88A56;
+}
+
+/* Contact Link with Icon */
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-link i {
+  font-size: 14px;
+}
+
+/* Chat Button */
+.chat-button {
+  background-color: transparent;
+  color: #ffffff !important;
+  padding: 12px 12px;
+  border: 1px solid #ffffff;
+  /* border-radius: 4px; */
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
 }
 
-.nav-links a::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: white;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: right;
-}
-
-.nav-links a:hover::before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.nav-links a:hover {
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Active Link */
-.nav-links .active {
-  /* color: #1E3A8A; */
-  font-weight: 600;
+.chat-button:hover {
+  background-color: #ffffff;
+  color: #000000 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 /* Dropdown Styles */
@@ -96,127 +112,198 @@
   position: relative;
 }
 
-.dropdown .submenu {
-  display: none;
+.emmanuelle-submenu {
   position: absolute;
-  background-color: #0A0A0A;
   top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 160px; /* Reduced width */
+  left: 0;
+  background-color: #1a1a1a;
+  min-width: 200px;
+  list-style: none;
+  margin: 15px 0 0 0;
+  padding: 15px 0;
   border-radius: 8px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  padding: 5px 0; /* Reduced padding */
-  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
+  transform: translateY(-10px);
   transition: all 0.3s ease;
-}
-
-.dropdown:hover .submenu {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-
-.submenu li {
-  padding: 5px; /* Reduced padding */
-}
-
-.submenu a {
-  color: #e0e0e0;
-  display: block;
-  padding: 6px 10px; /* Reduced padding */
-  font-size: 12px; /* Reduced font size */
-  transition: background 0.3s ease;
-}
-
-.submenu a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-/* Hamburger Menu */
-.hamburger-menu {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
   z-index: 1001;
 }
 
-.hamburger-line {
-  width: 22px; /* Reduced size */
-  height: 2px; /* Reduced size */
-  background-color: white;
-  margin: 3px 0;
-  transition: 0.4s;
+.emmanuelle-submenu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .navbar {
-      padding: 10px 15px;
-  }
-
-  .hamburger-menu {
-      display: flex;
-  }
-
-  .nav-links {
-      position: fixed;
-      right: -100%;
-      top: 0;
-      flex-direction: column;
-      background: linear-gradient(135deg, #2c3e50, #34495e);
-      width: 100%;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      transition: right 0.3s ease-in-out;
-      z-index: 1000;
-      gap: 20px; /* Reduced gap */
-  }
-
-  .nav-links.active {
-      right: 0;
-  }
-
-  .dropdown .submenu {
-      position: static;
-      transform: none;
-      background: transparent;
-      box-shadow: none;
-      width: 100%;
-      opacity: 1;
-      visibility: visible;
-      padding: 0;
-      display: none;
-  }
-
-  .dropdown:hover .submenu {
-      display: block;
-  }
+.emmanuelle-submenu li {
+  margin: 0;
+  padding: 0;
 }
 
-/* Menu Icon Styles */
-.menu-icon {
+.emmanuelle-submenu a {
+  display: block;
+  padding: 12px 25px;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.emmanuelle-submenu a:hover {
+  /* background-color: #2a2a2a; */
+  color: #C88A56;
+  padding-left: 30px;
+}
+
+/* Mobile Menu Icon */
+.mobile-menu-icon {
   display: none;
-  color: white;
-  font-size: 26px; /* Reduced size */
+  flex-direction: column;
   cursor: pointer;
-  user-select: none;
-  transition: transform 0.3s ease;
+  gap: 5px;
 }
 
-.menu-icon:hover {
-  transform: scale(1.1);
+.mobile-menu-icon span {
+  width: 25px;
+  height: 3px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #333333;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #4169E1;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .menu-icon {
-      display: block;
-      position: relative;
-      z-index: 1100;
+@media (max-width: 1200px) {
+  .emmanuelle-nav-links {
+    gap: 25px;
+  }
+
+  .emmanuelle-nav-links .nav-link {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 940px) {
+  .mobile-menu-icon {
+    display: flex;
+  }
+
+  .emmanuelle-nav-links {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    max-width: 350px;
+    height: 100vh;
+    background-color: #000000;
+    flex-direction: column;
+    padding: 80px 30px 30px;
+    gap: 25px;
+    align-items: flex-start;
+    transition: left 0.4s ease;
+    overflow-y: auto;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .emmanuelle-nav-links.mobile-active {
+    left: 0;
+  }
+
+  .emmanuelle-nav-links li {
+    width: 100%;
+  }
+
+  .emmanuelle-nav-links .nav-link {
+    display: block;
+    font-size: 16px;
+    padding: 12px 0;
+  }
+
+  .emmanuelle-submenu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    margin: 10px 0 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    transition: max-height 0.4s ease;
+  }
+
+  .emmanuelle-submenu.show {
+    max-height: 400px;
+    padding: 10px 0;
+  }
+
+  .emmanuelle-submenu a {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  .chat-button {
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .emmanuelle-container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .emmanuelle-logo .brand-name {
+    font-size: 22px;
+    letter-spacing: 0.25em;
+  }
+
+  .emmanuelle-navbar {
+    padding: 15px 0;
   }
 }
