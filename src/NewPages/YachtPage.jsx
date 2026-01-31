@@ -125,14 +125,14 @@ const YachtCard = ({ yacht }) => {
         </div>
       </div>
 
-      {/* Specifications Modal */}
+      {/* Specifications Modal - FIXED */}
       {showDetails && (
         <div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 pb-8 px-4 overflow-y-auto"
           onClick={() => setShowDetails(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden relative"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-black p-6 relative">
@@ -149,7 +149,7 @@ const YachtCard = ({ yacht }) => {
               </button>
             </div>
 
-            <div className="overflow-y-auto max-h-[calc(90vh-80px)] p-6 bg-[#161617]">
+            <div className="overflow-y-auto max-h-[calc(100vh-250px)] p-6 bg-[#161617]">
               <div className="mb-10">
                 <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
                   <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,4 +462,3 @@ export default function YachtRental() {
     </div>
   );
 }
-
