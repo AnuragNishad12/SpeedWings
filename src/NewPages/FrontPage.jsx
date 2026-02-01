@@ -9,13 +9,15 @@ const HomePage = () => {
     <div className="relative w-full h-screen overflow-hidden">
       
       {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
+     <video
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  poster="/video-poster.jpg"
+  className="absolute inset-0 w-full h-full object-cover"
+>
         <source
           src={video}
           type="video/mp4"
