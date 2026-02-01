@@ -66,7 +66,7 @@ const FaqSection = () => {
               size={32} 
               className="mr-3 text-[#C88A56]" 
             />
-            <h2 className="font-serif text-4xl text-[#C88A56] font-light tracking-wider">
+            <h2 className="text-4xl text-[#C88A56] font-light tracking-wider">
               Frequently Asked Questions
             </h2>
           </div>
@@ -78,7 +78,7 @@ const FaqSection = () => {
           {faqData.map((item, index) => (
             <div 
               key={index} 
-              className="bg-black/40 backdrop-blur-sm rounded-lg border border-[#C88A56]/20 overflow-hidden hover:border-[#C88A56]/40 transition-all duration-300"
+              className="bg-black/40 backdrop-blur-sm  border border-[#C88A56]/20 overflow-hidden hover:border-[#C88A56]/40 transition-all duration-300"
             >
               <button
                 className="w-full px-6 py-5 flex justify-between items-center hover:bg-[#C88A56]/5 transition-all duration-300 focus:outline-none group"
@@ -133,7 +133,7 @@ const FaqSection = () => {
           </p>
           <a 
             href="/#/contact"
-            className="inline-flex items-center px-8 py-3 rounded-lg bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black font-light tracking-wider uppercase text-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#C88A56]/30"
+            className="inline-flex items-center px-8 py-3  bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black font-light tracking-wider uppercase text-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#C88A56]/30"
           >
             Contact Support
           </a>

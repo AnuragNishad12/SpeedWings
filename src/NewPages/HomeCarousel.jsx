@@ -92,16 +92,16 @@ const HomeCarousel = () => {
       listings: "6 LISTINGS",
       image: "https://images.unsplash.com/photo-1682597463829-4582d7f6569b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
-    {
-      title: "Luxury Yachts",
-      listings: "5 LISTINGS",
-      image: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1170&auto=format&fit=crop"
-    },
-    {
-      title: "Premium Cars",
-      listings: "20 LISTINGS",
-      image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1170&auto=format&fit=crop"
-    }
+    // {
+    //   title: "Luxury Yachts",
+    //   listings: "5 LISTINGS",
+    //   image: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1170&auto=format&fit=crop"
+    // },
+    // {
+    //   title: "Premium Cars",
+    //   listings: "20 LISTINGS",
+    //   image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1170&auto=format&fit=crop"
+    // }
   ];
 
   if (loading) {
@@ -251,24 +251,7 @@ const HomeCarousel = () => {
   text="Enquire now"
   onClick={handleDialogToggle}
 />
-          {/* <button
-            onClick={handleDialogToggle}
-            className="group relative px-12 py-4 bg-transparent border border-[#C88A56] text-[#C88A56] overflow-hidden transition-all duration-500 hover:text-black"
-            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, letterSpacing: '0.2em' }}
-          >
-            <span className="absolute inset-0 bg-[#C88A56] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-            <span className="relative flex items-center justify-center">
-              ENQUIRE NOW
-              <svg 
-                className="ml-3 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </button> */}
+        
           </div>
         
         

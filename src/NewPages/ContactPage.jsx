@@ -36,39 +36,40 @@ const ContactPage = () => {
         <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="bg-black p-6 rounded-lg shadow-lg">
-              <EnvelopeIcon className="h-8 w-8 text-blue-600" />
-              <h3 className="mt-4 text-xl font-bold text-blue-900">Email</h3>
-              <p className="mt-2 text-gray-600">Our support team will get back to you</p>
+            <div className="bg-[#141414] border border-white p-6 shadow-lg">
+
+              <EnvelopeIcon className="h-8 w-8 text-[#C88A56]" />
+              <h3 className="mt-4 text-xl font-bold text-white">Email</h3>
+              <p className="mt-2 text-[#C88A56]">Our support team will get back to you</p>
               <a 
                 href="mailto:support@example.com" 
-                className="mt-4 inline-block text-blue-600 hover:text-blue-700"
+                className="mt-4 inline-block text-lg text-white hover:text-[#C88A56]"
               >
                 askus@xelevate.club
               </a>
             </div>
 
-            <div className="bg-black p-6 rounded-lg shadow-lg">
-              <PhoneIcon className="h-8 w-8 text-blue-600" />
-              <h3 className="mt-4 text-xl font-bold text-blue-900">Phone</h3>
+             <div className="bg-[#141414] border border-white p-6 shadow-lg">
+              <PhoneIcon className="h-8 w-8 text-white" />
+              <h3 className="mt-4 text-xl font-bold text-white">Phone</h3>
               {/* <p className="mt-2 text-gray-600">Mon-Fri from 9am to 5pm</p> */}
               <a 
                 href="tel: +919916989179" 
-                className="mt-4 inline-block text-blue-600 hover:text-green-700"
+                className="mt-4 inline-block text-white hover:text-green-700"
               >
                  +919916989179
               </a>
             </div>
 
-            <div className="bg-black p-6 rounded-lg shadow-lg">
-              <ChatBubbleBottomCenterTextIcon className="h-8 w-8 text-green-500" />
-              <h3 className="mt-4 text-xl font-bold text-green-600">WhatsApp</h3>
-              <p className="mt-2 text-gray-600">24/7 instant messaging support</p>
+             <div className="bg-[#141414] border border-white p-6 shadow-lg">
+              <ChatBubbleBottomCenterTextIcon className="h-8 w-8 text-white" />
+              <h3 className="mt-4 text-xl font-bold text-white">WhatsApp</h3>
+              <p className="mt-2 text-[#C88A56]">24/7 instant messaging support</p>
               <a 
                 href="https://wa.me/918429014352?text=Hello!%20I%20need%20help." 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-500 hover:bg-green-600"
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium  text-white bg-[#C88A56] hover:bg-green-600"
               >
                 Start Chat
               </a>
@@ -76,7 +77,7 @@ const ContactPage = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-black p-6 rounded-lg shadow-lg">
+           <div className="bg-[#141414] border border-white p-6 shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-white">
@@ -90,7 +91,7 @@ const ContactPage = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -107,7 +108,7 @@ const ContactPage = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -124,7 +125,7 @@ const ContactPage = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
-                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-[#161617] border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   ></textarea>
                 </div>
               </div>
@@ -132,7 +133,7 @@ const ContactPage = () => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent  shadow-sm text-sm font-medium text-white bg-[#C88A56] hover:bg-[#141414] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Send Message
                 </button>

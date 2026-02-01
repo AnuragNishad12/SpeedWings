@@ -16,7 +16,7 @@ export default function Footer() {
           </div>
         </div>
         <div>
-          <h3 className="font-semibold">Our Services</h3>
+          <h3 className="">Our Services</h3>
           <ul className="mt-3 space-y-2 text-sm">
             <li>Our Products</li>
             <li>Membership</li>
@@ -28,8 +28,8 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h3 className="font-semibold">Quick Links</h3>
-          <ul className="mt-3 space-y-2 text-sm">
+          <h3 className="font-bold">Quick Links</h3>
+          <ul >
             <li>Blogs</li>
             <li>Career</li>
             <li>Contact Us</li>

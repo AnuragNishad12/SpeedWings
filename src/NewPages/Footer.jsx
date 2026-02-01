@@ -11,21 +11,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-8">
           {/* Brand Section */}
           <div>
-            <img src={logo} alt="Xelevate Logo" className="h-16 w-auto mb-4 brightness-110" />
-            <p className="font-light text-sm leading-relaxed text-gray-400">
+            <img src={logo} alt="Xelevate Logo" className="h-30 w-auto mb-4 brightness-110" />
+            {/* <p className="font-light text-sm leading-relaxed text-gray-400">
               Xelevate, a trusted choice for those valuing time, service, and reliability. 
               Explore unique features to customize your private flying experience your way.
-            </p>
-            <div className="flex items-center gap-3 mt-5 text-[#C88A56] hover:text-[#d4a574] transition-colors cursor-pointer">
+            </p> */}
+            {/* <div className="flex items-center gap-3 mt-5 text-[#C88A56] hover:text-[#d4a574] transition-colors cursor-pointer">
               <FaPhoneAlt className="text-sm" />
               <span className="font-light text-sm tracking-wide">IN +91 99307 93335</span>
-            </div>
+            </div> */}
           </div>
 
           {/* Services Section */}
           <div>
-            <h3 className="font-serif text-lg text-[#C88A56] mb-4 tracking-wider">Our Services</h3>
-            <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div>
+            <h3 className="text-lg text-[#C88A56] mb-4 tracking-wider">Our Services</h3>
+            {/* <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div> */}
             <ul className="space-y-2.5 text-sm">
               <li className="font-light text-gray-400 hover:text-[#C88A56] transition-colors">
                 <a href="/#/p">Private Jets</a>
@@ -56,8 +56,8 @@ export default function Footer() {
 
           {/* Quick Links Section */}
           <div>
-            <h3 className="font-serif text-lg text-[#C88A56] mb-4 tracking-wider">Quick Links</h3>
-            <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div>
+            <h3 className="text-lg text-[#C88A56] mb-4 tracking-wider">Quick Links</h3>
+            {/* <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div> */}
             <ul className="space-y-2.5 text-sm">
               <li className="font-light text-gray-400 hover:text-[#C88A56] transition-colors">
                 <a href="#">FAQs</a>
@@ -91,23 +91,38 @@ export default function Footer() {
 
           {/* Newsletter Section */}
           <div>
-            <h3 className="font-serif text-lg text-[#C88A56] mb-4 tracking-wider">Stay Connected</h3>
-            <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div>
+            <h3 className="text-lg text-[#C88A56] mb-4 tracking-wider">Stay Connected</h3>
+            {/* <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-16 mb-4"></div> */}
             
             {/* Email Subscription */}
             <div className="mb-6">
-              <p className="text-sm text-gray-400 font-light mb-3">Get the latest updates</p>
-              <div className="flex rounded-lg overflow-hidden border border-[#C88A56]/30">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="flex-grow px-4 py-2.5 bg-black/50 text-white text-sm font-light placeholder-gray-500 focus:outline-none focus:bg-black/70 transition-colors"
-                />
-                <button className="bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black px-5 py-2.5 font-light text-sm tracking-wide uppercase transition-all">
-                  Subscribe
-                </button>
-              </div>
-            </div>
+  <p className="text-sm text-gray-400 font-light mb-3">
+    Get the latest updates
+  </p>
+
+  <div className="flex w-full  border border-[#C88A56]/30 overflow-hidden">
+  <input 
+    type="email" 
+    placeholder="Enter your email" 
+    className="flex-grow px-1 py-2.5 bg-black/50 text-white text-sm font-light placeholder-gray-500 focus:outline-none focus:bg-black/70 transition-colors"
+  />
+
+  <button
+    className="
+      min-w-[130px]
+      shrink-0
+      bg-gradient-to-r from-[#C88A56] to-[#d4a574]
+      hover:from-[#d4a574] hover:to-[#C88A56]
+      text-black
+      font-light text-sm tracking-wide uppercase
+      transition-all
+    "
+  >
+    Join
+  </button>
+</div>
+</div>
+
 
             {/* Social Media Icons */}
             <div className="flex gap-3 mb-6">

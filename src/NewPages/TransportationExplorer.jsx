@@ -65,7 +65,7 @@ export default function TransportOptions() {
         transition={{ duration: 0.5 }}
         className="w-full lg:w-1/5 bg-black/40 backdrop-blur-sm border-r border-[#C88A56]/20 p-6 space-y-6"
       >
-        <h1 className="font-serif text-2xl font-light tracking-[0.3em] text-[#C88A56] uppercase">
+        <h1 className=" text-2xl font-light tracking-[0.3em] text-[#C88A56] uppercase">
           Luxury Transport
         </h1>
         <div className="h-px bg-gradient-to-r from-transparent via-[#C88A56] to-transparent my-4"></div>
@@ -74,14 +74,14 @@ export default function TransportOptions() {
           <button
             key={option.name}
             onClick={() => setSelected(option)}
-            className={`w-full flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-300 border ${
+            className={`w-full flex items-center gap-3 p-4  text-left transition-all duration-300 border ${
               selected.name === option.name
-                ? "bg-gradient-to-r from-[#C88A56] to-[#d4a574] text-black border-[#C88A56] shadow-lg shadow-[#C88A56]/30"
+                ? "bg-gradient-to-r from-[#C88A56] to-[#d4a574] text-white border-[#C88A56] shadow-lg shadow-[#C88A56]/30"
                 : "bg-black/30 text-[#C88A56]/80 border-[#C88A56]/20 hover:bg-black/50 hover:border-[#C88A56]/40"
             }`}
           >
             <img src={option.icon} alt="icon" className="h-6 w-6 object-contain brightness-0 invert" />
-            <p className="font-light tracking-wider text-sm uppercase">{option.name}</p>
+            <p className="font-bold tracking-wider text-sm uppercase">{option.name}</p>
           </button>
         ))}
       </motion.div>
@@ -117,22 +117,22 @@ export default function TransportOptions() {
             {/* Image Section */}
             <div className="w-full lg:w-1/2 flex justify-center">
               <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#C88A56] to-[#d4a574] rounded-2xl blur opacity-30"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#C88A56] to-[#d4a574]  blur opacity-30"></div>
                 <img
                   src={selected.image2}
                   alt="Detail Image"
-                  className="relative w-full max-w-md h-auto rounded-xl shadow-2xl border border-[#C88A56]/30"
+                  className="relative w-full max-w-md h-auto  shadow-2xl border border-[#C88A56]/30"
                 />
               </div>
             </div>
 
             {/* Text Section */}
-            <div className="w-full lg:w-1/2 bg-black/50 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-[#C88A56]/30 space-y-6">
+            <div className="w-full lg:w-1/2 bg-black/50 backdrop-blur-xl p-8  shadow-2xl border border-[#C88A56]/30 space-y-6">
               <div className="space-y-2">
                 <p className="text-[#C88A56] text-sm font-light tracking-[0.2em] uppercase">
                   {selected.tagline}
                 </p>
-                <h2 className="font-serif text-4xl lg:text-5xl font-light text-[#C88A56] tracking-wide">
+                <h2 className=" text-4xl lg:text-5xl font-light text-[#C88A56] tracking-wide">
                   {selected.name}
                 </h2>
                 <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24"></div>
@@ -148,7 +148,7 @@ export default function TransportOptions() {
                 </p>
                 {selected.features.map((f, idx) => (
                   <div key={idx} className="flex items-center gap-3 text-gray-300">
-                    <div className="w-1.5 h-1.5 bg-[#C88A56] rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-[#C88A56] "></div>
                     <p className="font-light">{f}</p>
                   </div>
                 ))}
@@ -160,7 +160,7 @@ export default function TransportOptions() {
                 </p>
                 <a
                   href={`#${selected.path}`}
-                  className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black rounded-lg font-light tracking-wider uppercase text-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#C88A56]/30"
+                  className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black  font-light tracking-wider uppercase text-sm transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#C88A56]/30"
                 >
                   Reserve Now
                   <ChevronRight size={18} className="ml-2" />

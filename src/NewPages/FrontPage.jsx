@@ -1,5 +1,6 @@
-import React from "react";
+
 import styles from "../NewPages/CssAnimation/FrontPage.module.css";
+import video from "../assets/video.mp4"
 
 const text = "XELEVATE";
 
@@ -7,15 +8,23 @@ const HomePage = () => {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       
-      {/* Background Image */}
-      <img
-        src="https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop"
-        alt="Luxury Background"
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
-      />
+      >
+        <source
+          src={video}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
 
-      {/* Dark Overlay */}
-      <div className={styles.videoOverlay}></div>
+      {/* Dark Color Overlay (#141414) */}
+      <div className="absolute inset-0 bg-[#141414]/70"></div>
 
       {/* Centered Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center">

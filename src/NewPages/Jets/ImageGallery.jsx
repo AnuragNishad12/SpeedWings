@@ -1,8 +1,10 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../Footer';
 import '../../index.css';
 import { getDatabase, ref, onValue } from 'firebase/database';
-import EnquiryForm from '../../components/EnquiryForm'; // Import the EnquiryForm component
+import EnquiryForm from '../../components/EnquiryForm';
+import "../CssAnimation/JetPage.css"
+import { X, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 
 // Image Gallery Component
 const ImageGallery = ({ images }) => {
@@ -10,8 +12,8 @@ const ImageGallery = ({ images }) => {
 
   return (
     <div className="w-full">
-      {/* Main Image – FULL IMAGE, NO CROPPING */}
-      <div className="w-full mb-3 rounded-lg bg-black">
+      {/* Main Image */}
+      <div className="w-full mb-3 rounded-lg bg-black/30 border border-[#C88A56]/20">
         <img
           src={images[activeImage]}
           alt="Aircraft view"
@@ -24,15 +26,17 @@ const ImageGallery = ({ images }) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`h-16 w-16 cursor-pointer border-2 ${
-              activeImage === index ? 'border-blue-900' : 'border-gray-300'
+            className={`h-16 w-16 cursor-pointer border-2 rounded transition-all duration-300 ${
+              activeImage === index 
+                ? 'border-[#C88A56] shadow-lg shadow-[#C88A56]/30' 
+                : 'border-[#C88A56]/20 hover:border-[#C88A56]/50'
             }`}
             onClick={() => setActiveImage(index)}
           >
             <img
               src={image}
               alt={`Thumbnail ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded"
             />
           </div>
         ))}
@@ -41,13 +45,9 @@ const ImageGallery = ({ images }) => {
   );
 };
 
-
-
-
 const AircraftCard = ({ aircraft }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-  
 
   const helicopterData = {
     title: aircraft.name,
@@ -55,61 +55,61 @@ const AircraftCard = ({ aircraft }) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-blue-900 rounded-md shadow-md overflow-hidden mb-6">
-      <div className="md:flex bg-black rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
+    <div className="max-w-5xl mx-auto mb-6">
+      <div className="md:flex bg-black/40 backdrop-blur-sm  shadow-xl overflow-hidden border border-[#C88A56]/20 transition-all duration-300 hover:border-[#C88A56]/40 hover:shadow-2xl hover:shadow-[#C88A56]/10">
         <div className="md:w-1/2 p-6">
           <ImageGallery images={aircraft.images} />
         </div>
         
         <div className="md:w-1/2 p-8 flex flex-col justify-between">
           <div>
-            <div className="mb-2">
-              <h2 className="text-3xl font-extrabold text-white mb-2 font-serif">
+            <div className="mb-4">
+              <h2 className="text-3xl text-[#C88A56] mb-2 tracking-wide">
                 {aircraft.name}
               </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#F9672C] to-indigo-600 rounded-full"></div>
+              <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24"></div>
             </div>
 
-            <h3 className="font-sans font-extrabold text-lg  text-white mb-3">Description</h3>
-            <p className=" font-sans font-bold text-xs text-gray-600 leading-relaxed mb-5">
+            <h3 className="text-sm text-[#C88A56] uppercase tracking-wider font-light mb-2">Description</h3>
+            <p className="text-sm text-gray-300 leading-relaxed mb-5 font-light">
               {aircraft.shortDescription}
             </p>
           </div>
 
           <div>
-            <div className="flex gap-2 mb-6">
+            <div className="flex gap-3 mb-6">
               <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="w-1/2 py-3 bg-blue-900 text-white rounded-lg font-sans font-bold hover:bg-blue-800 transition-all duration-300"
+                className="flex-1 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56]  font-light text-sm tracking-wide hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
               >
                 {showDetails ? "Hide Specifications" : "View Specifications"}
               </button>
               
               <button 
                 onClick={() => setShowEnquiryForm(true)}
-                className="font-sans font-bold w-1/2 py-3 bg-gradient-to-r from-[#F9672C] to-indigo-600 text-white rounded-lg  hover:opacity-90 transition-all duration-300"
+                className="flex-1 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black  font-light text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#C88A56]/30"
               >
                 Enquire Now
               </button>
             </div>
 
-            <div className="space-y-4 border-t border-gray-100 pt-6">
+            <div className="space-y-4 border-t border-[#C88A56]/20 pt-6">
               <div className="flex items-center">
-                <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-[#C88A56] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
-                <span className="text-white font-medium">
-                  Route: <span className="text-white font-semibold">{aircraft.destination}</span>
+                <span className="text-gray-300 font-light text-sm">
+                  Route: <span className="text-[#C88A56] font-normal">{aircraft.destination}</span>
                 </span>
               </div>
 
               <div className="flex items-center">
-                <svg className="w-5 h-5 text-white mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-[#C88A56] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <span className="text-white font-medium">
-                  Starting from <span className="text-2xl text-[#00FF00] font-bold">{aircraft.price}</span>
+                <span className="text-gray-300 font-light text-sm">
+                  Starting from <span className="text-2xl text-[#C88A56] font-normal ml-2">{aircraft.price}</span>
                 </span>
               </div>
             </div>
@@ -119,81 +119,66 @@ const AircraftCard = ({ aircraft }) => {
         
       {showDetails && (
         <div 
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
           onClick={() => setShowDetails(false)}
         >
           <div 
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden relative animate-slideUp"
+            className="bg-gradient-to-b from-[#141414] to-black rounded-xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden relative animate-slideUp border border-[#C88A56]/30"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-black p-6 relative mt-6">
-              <h2 className="text-2xl font-bold text-white">Aircraft Details</h2>
-              <p className="text-blue-100 mt-1 text-sm">Complete specifications and features</p>
+            <div className="bg-black/60 backdrop-blur-sm p-6 relative border-b border-[#C88A56]/20">
+              <h2 className="text-2xl text-[#C88A56] tracking-wide">Aircraft Details</h2>
+              <p className="text-gray-400 mt-1 text-sm font-light">Complete specifications and features</p>
               
               <button
                 onClick={() => setShowDetails(false)}
-                className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 rounded-full transition-colors border border-[#C88A56]/30"
                 aria-label="Close details"
               >
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="w-5 h-5 text-[#C88A56]" />
               </button>
             </div>
             
-            <div className="overflow-y-auto max-h-[calc(85vh-80px)] p-6 custom-scrollbar bg-[#161617]">
-              <div className="mb-8 mt-6">
-                <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+            <div className="overflow-y-auto max-h-[calc(85vh-140px)] p-6 custom-scrollbar">
+              <div className="mb-8">
+                <h3 className="text-lg font-light text-[#C88A56] mb-4 tracking-wider uppercase">
                   Aircraft Details
                 </h3>
+                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-32 mb-6"></div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">Guest Capacity</div>
-                    <div className="text-2xl font-semibold">{aircraft.aircraftDetails?.guestCapacity}</div>
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Guest Capacity</div>
+                    <div className="text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.guestCapacity}</div>
                   </div>
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">Number of Pilots</div>
-                    <div className="text-2xl font-semibold">{aircraft.aircraftDetails?.numberOfPilots}</div>
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Pilots</div>
+                    <div className="text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfPilots}</div>
                   </div>
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">Flight Attendants</div>
-                    <div className="text-2xl font-semibold">{aircraft.aircraftDetails?.numberOfFlightAttendants}</div>
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flight Attendants</div>
+                    <div className="text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfFlightAttendants}</div>
                   </div>
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">Luggage Capacity</div>
-                    <div className="text-2xl font-semibold">{aircraft.aircraftDetails?.luggageCapacity} ft³</div>
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Luggage Capacity</div>
+                    <div className="text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.luggageCapacity} ft³</div>
                   </div>
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">Number of Lavatory</div>
-                    <div className="text-2xl font-semibold">{aircraft.aircraftDetails?.numberOfLavatory}</div>
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Lavatory</div>
+                    <div className="text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfLavatory}</div>
                   </div>
-                  <div className="bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow transition-shadow text-white">
-                    <div className="text-sm font-medium text-gray-300">WiFi Available</div>
-                    <div className="text-2xl font-semibold flex items-center">
+                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">WiFi Available</div>
+                    <div className="text-2xl font-light text-[#C88A56] flex items-center">
                       {aircraft.aircraftDetails?.wifiAvailable === "Yes" ? (
                         <>
-                          <svg className="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <svg className="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                           Yes
                         </>
                       ) : (
                         <>
-                          <svg className="w-5 h-5 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <svg className="w-5 h-5 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                           No
@@ -205,137 +190,111 @@ const AircraftCard = ({ aircraft }) => {
               </div>
               
               <div className="mt-12">
-                <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                  </svg>
+                <h3 className="text-lg font-light text-[#C88A56] mb-4 tracking-wider uppercase">
                   Technical Specifications
                 </h3>
+                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-32 mb-6"></div>
                 
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
-                    </svg>
-                    Exterior
-                  </h4>
+                {/* Exterior */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Exterior</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Length</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.exterior?.length}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Length</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.length}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Wingspan</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.exterior?.wingspan}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Wingspan</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.wingspan}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Height</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.exterior?.height}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Height</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.height}</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                    Range
-                  </h4>
+                {/* Range */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Range</h4>
                   <div className="grid grid-cols-1 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Range (Km)</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.range?.rangeKm}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Range (Km)</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.range?.rangeKm}</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Speed
-                  </h4>
+                {/* Speed */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Speed</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">High Speed (Km/Hr)</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.speed?.highSpeed}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">High Speed (Km/Hr)</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.highSpeed}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Typical Cruise Speed (Km/Hr)</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.speed?.typicalCruiseSpeed}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Typical Cruise Speed</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.typicalCruiseSpeed}</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Engines
-                  </h4>
+                {/* Engines */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Engines</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Engine Model</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.engines?.engineModel}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Engine Model</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.engineModel}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Thrust (KN)</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.engines?.thrustKN}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Thrust (KN)</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.thrustKN}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Flat Rated To</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.engines?.flatRatedTo}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                    Airfield Performance
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Take Off Distance</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.airfieldPerformance?.takeOffDistance}</div>
-                    </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Landing Distance</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.airfieldPerformance?.landingDistance}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flat Rated To</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.flatRatedTo}</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mb-6 bg-gray-700 p-4 rounded-lg">
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3 flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    Other Specifications
-                  </h4>
+                {/* Airfield Performance */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Airfield Performance</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Avionics</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.avionics || "--"}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Take Off Distance</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.takeOffDistance}</div>
                     </div>
-                    <div className="bg-gray-600 p-3 rounded-md shadow-sm text-white">
-                      <div className="text-sm font-medium text-gray-300">Operating Altitude</div>
-                      <div className="text-lg font-semibold">{aircraft.technicalSpecifications?.operatingAltitude}</div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Landing Distance</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.landingDistance}</div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Other Specifications */}
+                <div className="mb-6 bg-black/30 backdrop-blur-sm p-5 rounded-lg border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-4 uppercase tracking-wider">Other Specifications</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Avionics</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.avionics || "--"}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 rounded-md border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Operating Altitude</div>
+                      <div className="text-lg font-light text-white">{aircraft.technicalSpecifications?.operatingAltitude}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="border-t border-gray-700 p-4 flex justify-end">
+            <div className="border-t border-[#C88A56]/20 p-4 bg-black/40 flex justify-end">
               <button
                 onClick={() => setShowDetails(false)}
-                className="px-4 py-2 bg-gradient-to-r from-[#F9672C] to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+                className="px-6 py-2.5 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black rounded-lg transition-all font-light tracking-wide uppercase text-sm shadow-lg shadow-[#C88A56]/30"
               >
                 Close
               </button>
@@ -344,7 +303,6 @@ const AircraftCard = ({ aircraft }) => {
         </div>
       )}
       
-      {/* Enquiry Form Modal */}
       <EnquiryForm 
         helicopter={helicopterData}
         isOpen={showEnquiryForm}
@@ -354,8 +312,8 @@ const AircraftCard = ({ aircraft }) => {
   );
 };
 
-// Aircraft Filter Component
-const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
+// Aircraft Filter Component - Slide from Right
+const AircraftFilter = ({ isOpen, onClose, onFilterChange, aircraftTypes }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   
   const handleCheckboxChange = (typeId) => {
@@ -367,39 +325,90 @@ const AircraftFilter = ({ onFilterChange, aircraftTypes }) => {
     onFilterChange(newSelectedTypes);
   };
   
+  const clearFilters = () => {
+    setSelectedTypes([]);
+    onFilterChange([]);
+  };
+  
   return (
-    <div>
-      <div className="bg-black p-4 rounded-md shadow-sm border-1 border-blue-900">
-        <h2 className="text-lg font-sans font-extrabold mb-3 text-white">Filter By</h2>
-        
-        <div className="border-b border-gray-200 my-3"></div>
-       
-        <div className="mt-3">
-          <h3 className="text-sm font-sans font-bold uppercase mb-3 text-white">AIRCRAFT TYPE</h3>
-
-          <div className="space-y-1">
-            {aircraftTypes.map((type) => (
-              <div key={type.id} className="flex items-center text-sm">
-                <input
-                  id={`filter-${type.id}`}
-                  type="checkbox"
-                  className="h-3.5 w-3.5 text-white border-gray-300 rounded"
-                  onChange={() => handleCheckboxChange(type.id)}
-                  checked={selectedTypes.includes(type.id)}
-                />
-                <label htmlFor={`filter-${type.id}`} className="ml-2 flex-grow">
-                  <span className=" font-sans font-extrabold text-white">{type.name}</span>
-                  <span className="text-gray-600 ml-1 text-xs">({type.count})</span>
-                </label>
+    <>
+      {/* Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Slide Panel */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-gradient-to-b from-[#141414] to-black border-l border-[#C88A56]/20 z-50 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="p-6 border-b border-[#C88A56]/20 flex items-center justify-between">
+            <h2 className="text-2xl text-[#C88A56] tracking-wider">FILTERS</h2>
+            <button 
+              onClick={onClose}
+              className="p-2 hover:bg-[#C88A56]/10  transition-colors"
+            >
+              <X className="w-6 h-6 text-[#C88A56]" />
+            </button>
+          </div>
+          
+          {/* Filter Content */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm text-gray-300 uppercase tracking-wider font-light">Aircraft Type</h3>
+                <button 
+                  onClick={clearFilters}
+                  className="text-xs text-[#C88A56] hover:text-[#d4a574] font-light underline transition-colors"
+                >
+                  Clear
+                </button>
               </div>
-            ))}
+              <div className="h-px bg-gradient-to-r from-[#C88A56]/30 to-transparent mb-4"></div>
+
+              <div className="space-y-3">
+                {aircraftTypes.map((type) => (
+                  <div key={type.id} className="flex items-center">
+                    <input
+                      id={`filter-${type.id}`}
+                      type="checkbox"
+                      className="h-4 w-4 text-[#C88A56] border-[#C88A56]/30 rounded focus:ring-[#C88A56] focus:ring-offset-0 bg-black/50"
+                      onChange={() => handleCheckboxChange(type.id)}
+                      checked={selectedTypes.includes(type.id)}
+                    />
+                    <label htmlFor={`filter-${type.id}`} className="ml-3 flex-grow cursor-pointer">
+                      <span className="text-white font-light">{type.name}</span>
+                      <span className="text-gray-500 ml-2 text-sm">({type.count})</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* Footer */}
+          <div className="p-6 border-t border-[#C88A56]/20">
+            <div className="text-center text-sm text-gray-400 mb-4 font-light">
+              Showing <span className="text-[#C88A56] font-normal">{selectedTypes.length > 0 ? 'filtered' : 'all'}</span> items
+            </div>
+            <button
+              onClick={clearFilters}
+              className="w-full py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black rounded-lg font-light tracking-wide uppercase text-sm transition-all shadow-lg shadow-[#C88A56]/30"
+            >
+              Reset all filters
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
-
 
 const AircraftShowcase = () => {
   const [aircraftData, setAircraftData] = useState([]);
@@ -407,6 +416,7 @@ const AircraftShowcase = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [aircraftTypes, setAircraftTypes] = useState([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -476,49 +486,88 @@ const AircraftShowcase = () => {
   
   if (loading) {
     return (
-      <div className="bg-[#161617] flex justify-center items-center h-screen">
-        <div className="text-white text-xl">Loading aircraft data...</div>
+      <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] flex justify-center items-center h-screen">
+        <div className="text-[#C88A56] text-xl font-light tracking-wider">Loading aircraft data...</div>
       </div>
     );
   }
   
   if (error) {
     return (
-      <div className="bg-[#161617] flex justify-center items-center h-screen">
-        <div className="text-red-500 text-xl">{error}</div>
+      <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] flex justify-center items-center h-screen">
+        <div className="text-red-400 text-xl font-light">{error}</div>
       </div>
     );
   }
   
   return (
     <div>
-      <div className="bg-[#161617] py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-sans font-extrabold text-center text-white mb-12">Our fleet of Private Jets</h1>
-         
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/4 mb-6 md:mb-0">
-              <AircraftFilter 
-                onFilterChange={handleFilterChange} 
-                aircraftTypes={aircraftTypes}
-              />
-            </div>
-            
-            <div className="md:w-3/4 md:pl-6">
-              {filteredAircraft.length > 0 ? (
-                filteredAircraft.map(aircraft => (
-                  <AircraftCard key={aircraft.id} aircraft={aircraft} />
-                ))
-              ) : (
-                <div className="bg-gray-700 p-8 rounded-lg shadow text-center">
-                  <p className="text-xl text-white">No aircraft match your selected filters.</p>
-                </div>
-              )}
-            </div>
+      {/* Hero Section - Clean Design */}
+      <div className="bg-black py-16 px-6 md:px-16">
+        <div className="max-w-7xl mx-auto">
+          {/* Breadcrumbs */}
+          <div className="flex items-center gap-3 mb-12">
+            <a href="/" className="text-gray-400 hover:text-[#C88A56] transition-colors font-light text-sm tracking-widest uppercase">
+              HOME
+            </a>
+            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+            <span className="text-[#C88A56] font-light text-sm tracking-widest uppercase">Private Jets</span>
+          </div>
+
+          {/* Title */}
+          <div>
+            <h1 className=" text-5xl md:text-7xl text-white mb-6 tracking-wide">
+              Our Fleet of Private Jets
+            </h1>
+            <p className="text-gray-400 text-base md:text-lg font-light max-w-4xl leading-relaxed">
+              Explore our exclusive collection of private jets, from light jets to ultra-long-range aircraft. 
+              Experience unparalleled luxury and efficiency tailored to your journey.
+            </p>
           </div>
         </div>
       </div>
-      <Footer/>
+
+      {/* Main Content */}
+      <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] py-12 px-4 min-h-screen">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Filter Button */}
+          <div className="flex justify-end mb-6">
+            <button
+              onClick={() => setIsFilterOpen(true)}
+              className="flex items-center text-white gap-2 px-6 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56]  font-light text-sm tracking-wider uppercase hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
+            >
+              <Filter size={18} />
+              Filters
+            </button>
+          </div>
+          
+          {/* Aircraft List */}
+          <div>
+            {filteredAircraft.length > 0 ? (
+              filteredAircraft.map(aircraft => (
+                <AircraftCard key={aircraft.id} aircraft={aircraft} />
+              ))
+            ) : (
+              <div className="bg-black/40 backdrop-blur-sm p-12 rounded-lg shadow text-center border border-[#C88A56]/20">
+                <p className="text-xl text-gray-300 font-light">No aircraft match your selected filters.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      {/* Filter Panel */}
+      <AircraftFilter 
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        onFilterChange={handleFilterChange} 
+        aircraftTypes={aircraftTypes}
+      />
+      
+      <Footer />
     </div>
   );
 };

@@ -51,35 +51,35 @@ function AboutUs() {
       <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="md:w-1/2 bg-[#161617]">
-          <h2 className="text-4xl font-sans font-extrabold mt-6 mb-6 text-white">Our Mission</h2>
+          <h2 className="text-4xl  font-extrabold mt-6 mb-6 text-white">Our Mission</h2>
 
-            <div className="h-1 w-16 bg-[#F9672C] mb-8"></div>
-            <p className="text-[#8b868a] text-lg leading-relaxed mb-8 font-sans font-bold
+            <div className="h-1 w-16 bg-[#C88A56] mb-8"></div>
+            <p className="text-[#8b868a] text-lg leading-relaxed mb-8 
 ">
               At Xelevate Aviation, we are committed to redefining air travel with cutting-edge technology and exceptional service. With a fleet of modern, fuel-efficient aircraft, we connect passengers to over 100 destinations worldwide, ensuring safety, comfort, and sustainability at every altitude.
             </p>
-            <p className="font-sans font-bold
+            <p className="
  text-[#8b868a] text-lg leading-relaxed mb-8">
               Our team of aviation experts brings decades of combined experience to deliver a seamless, luxurious flight experience that exceeds expectations and sets new industry standards.
             </p>
           </div>
           <div className="md:w-1/2">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-[#F9672C] p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-[#C88A56] p-8 text-white  shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">100+</h3>
-                <p className='font-sans font-bold'>Global Destinations</p>
+                <p >Global Destinations</p>
               </div>
-              <div className="bg-blue-900 p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-white p-8 text-black  shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">15+</h3>
-                <p className='font-sans font-bold'>Years Experience</p>
+                <p >Years Experience</p>
               </div>
-              <div className="bg-blue-900 p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-white p-8 text-black  shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">50+</h3>
-                <p className='font-sans font-bold'>Modern Aircraft</p>
+                <p>Modern Aircraft</p>
               </div>
-              <div className="bg-[#F9672C] p-8 text-white rounded-lg shadow-lg">
+              <div className="bg-[#C88A56] p-8 text-white  shadow-lg">
                 <h3 className="text-2xl font-bold mb-2">24/7</h3>
-                <p className='font-sans font-bold'>Customer Support</p>
+                <p>Customer Support</p>
               </div>
             </div>
           </div>
@@ -90,9 +90,9 @@ function AboutUs() {
       <div className="bg-[#161617] py-16">
         <div className="container mx-auto px-6 bg-[#161617]">
           <div className="text-center mb-12 bg-[#161617]">
-            <h2 className="font-sans font-extrabold text-4xl text-white">Our Leadership Team</h2>
-            <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
-            <p className="font-sans font-bold text-[#8b868a] text-lg leading-relaxed mb-8">
+            <h2 className=" font-extrabold text-4xl text-white">Our Leadership Team</h2>
+            <div className="h-1 w-24 bg-[#C88A56] mx-auto my-4"></div>
+            <p className=" text-[#8b868a] text-lg leading-relaxed mb-8">
               Meet the experts behind SkyWings Aviation's success, driving innovation and excellence in private aviation.
             </p>
           </div>
@@ -100,7 +100,7 @@ function AboutUs() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member, index) => (
               <div key={index} className="group">
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-xl">
+                <div className="bg-white  shadow-lg overflow-hidden transform transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-xl">
                   <div className="h-64 overflow-hidden">
                     <img
                       src={member.image}
@@ -108,7 +108,7 @@ function AboutUs() {
                       className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
-                  <div className="px-6 py-6 bg-black border-t-4 border-blue-900">
+                  <div className="px-6 py-6 bg-black border-t-4 border-[#C88A56]">
                     <h3 className="text-xl font-bold text-white">{member.name}</h3>
                     <p className="text-white font-small mb-3">{member.role}</p>
                     <p className="text-[#8b868a] text-sm">{member.bio}</p>
@@ -140,43 +140,43 @@ function AboutUs() {
       {/* Values Section */}
       <div className="container mx-auto px-6 py-16 bg-[#161617]">
         <div className="text-center mb-12">
-          <h2 className="font-sans font-extrabold text-4xl font-bold text-white">Our Core Values</h2>
-          <div className="h-1 w-24 bg-[#F9672C] mx-auto my-4"></div>
+          <h2 className="font-extrabold text-4xl font-bold text-white">Our Core Values</h2>
+          <div className="h-1 w-24 bg-[#C88A56] mx-auto my-4"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#161617]">
-          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
-            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6 ">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-[#C88A56]">
+            <div className="w-16 h-16 bg-[#C88A56] rounded-full flex items-center justify-center mb-6 ">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
               </svg>
             </div>
-            <h3 className="font-sans font-extrabold text-xl font-bold mb-4 text-white">Safety First</h3>
-            <p className="font-sans font-bold text-[#8b868a]">
+            <h3 className=" font-extrabold text-xl font-bold mb-4 text-white">Safety First</h3>
+            <p className=" font-bold text-[#8b868a]">
               We maintain the highest safety standards across our fleet and operations, ensuring peace of mind for every passenger.
             </p>
           </div>
           
-          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
-            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-[#C88A56]">
+            <div className="w-16 h-16 bg-[#C88A56] rounded-full flex items-center justify-center mb-6">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
               </svg>
             </div>
-            <h3 className="font-sans font-extrabold text-xl font-bold mb-4 text-white">Innovation</h3>
-            <p className="font-sans font-bold text-[#8b868a]">
+            <h3 className="font-extrabold text-xl font-bold mb-4 text-white">Innovation</h3>
+            <p className="font-bold text-[#8b868a]">
               We continuously explore new technologies and approaches to enhance the aviation experience and lead industry advancement.
             </p>
           </div>
           
-          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-blue-900">
-            <div className="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-6">
+          <div className="bg-black p-8 rounded-xl shadow-lg border-t-4 border-[#C88A56]">
+            <div className="w-16 h-16 bg-[#C88A56] rounded-full flex items-center justify-center mb-6">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
               </svg>
             </div>
-            <h3 className="font-sans font-extrabold text-xl font-bold mb-4 text-white">Sustainability</h3>
-            <p className="font-sans font-bold text-[#8b868a]">
+            <h3 className="font-extrabold text-xl font-bold mb-4 text-white">Sustainability</h3>
+            <p className="font-bold text-[#8b868a]">
               We're committed to environmentally responsible operations, investing in fuel-efficient aircraft and green initiatives.
             </p>
           </div>

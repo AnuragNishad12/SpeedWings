@@ -4,6 +4,7 @@ import { ref, get, push } from 'firebase/database';
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
+import EnquireButton from "../NewPages/CssAnimation/EnquireButton"
 
 // const RentalCard = ({ aircraft, from, capacity, date, time, quote, imageUrl }) => {
 //   return (
@@ -129,6 +130,38 @@ const HomeCarousel = () => {
 
     fetchRentalData();
   }, []);
+  const categories = [
+    {
+      title: "Jets",
+      listings: "14 LISTINGS",
+      image: "https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      title: "Jets by Seats",
+      listings: "8 LISTINGS",
+      image: "https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=1208&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      title: "Choppers",
+      listings: "12 LISTINGS",
+      image: "https://images.unsplash.com/photo-1728719812207-2ad4640ac986?q=80&w=1304&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      title: "Choppers by Seats",
+      listings: "6 LISTINGS",
+      image: "https://images.unsplash.com/photo-1682597463829-4582d7f6569b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    // {
+    //   title: "Luxury Yachts",
+    //   listings: "5 LISTINGS",
+    //   image: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=1170&auto=format&fit=crop"
+    // },
+    // {
+    //   title: "Premium Cars",
+    //   listings: "20 LISTINGS",
+    //   image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1170&auto=format&fit=crop"
+    // }
+  ];
 
   if (loading) {
     return <div className="max-w-6xl mx-auto px-4 py-6 text-center text-white">Loading deals...</div>;
@@ -145,22 +178,22 @@ const HomeCarousel = () => {
   return (
     <div>
       {!isDialogOpen && <Navbar />}
-      <div className="relative mt-16">
+      <div className="relative ">
         <div className="absolute inset-0 bg-black overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-black to-black opacity-80"></div>
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-700 rounded-full filter blur-3xl opacity-20"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-700 rounded-full filter blur-3xl opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#141414] via-black to-black opacity-80"></div>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#C88A56] rounded-full filter blur-3xl opacity-20"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#C88A56] rounded-full filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 py-12">
-          <div className="flex flex-col justify-center items-center mb-8">
+          {/* <div className="flex flex-col justify-center items-center mb-8">
             <h1 className="text-white text-6xl font-sans font-extrabold animate-fadeIn"> Deals of The Day</h1>
             <div className="inline-block w-16 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 rounded-full mt-2" />
-          </div>
+          </div> */}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 pt-12">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 pt-12">
 
-  {/* Jets Box */}
+  
   <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-blue-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
     <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 via-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
@@ -177,7 +210,7 @@ const HomeCarousel = () => {
     </div>
   </div>
 
-  {/* Jets by Seats Box */}
+
   <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-purple-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(168,85,247,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
     <div className="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-pink-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
@@ -194,7 +227,7 @@ const HomeCarousel = () => {
     </div>
   </div>
 
-  {/* Choppers Box */}
+
   <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-orange-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(249,115,22,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
     <div className="absolute inset-0 bg-gradient-to-br from-orange-600/30 via-red-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
@@ -211,7 +244,7 @@ const HomeCarousel = () => {
     </div>
   </div>
 
-  {/* Choppers by Seats Box */}
+ 
   <div className="group relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden border border-gray-800 hover:border-pink-500 transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(236,72,153,0.5)] cursor-pointer transform hover:-translate-y-4 hover:scale-105">
     <div className="absolute inset-0 bg-gradient-to-br from-pink-600/30 via-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
@@ -227,207 +260,252 @@ const HomeCarousel = () => {
       <p className="font-sans font-bold text-gray-400 text-base group-hover:text-gray-300 transition-colors duration-300">Search helicopters by passenger capacity</p>
     </div>
   </div>
-</div>
+</div> */}
+<div className="max-w-7xl mx-auto px-6 py-20">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-light tracking-tight mb-4" 
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: '#C88A56' }}>
+            Deals of The Day
+          </h1>
+          <div className="w-24 h-px bg-[#C88A56] mx-auto"></div>
+        </div>
 
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {rentalData.map((rental, index) => (
-              <RentalCard
-                key={rental.id || index}
-                aircraft={rental.aircraft || "Unknown Aircraft"}
-                from={rental.from || "Unknown Route"}
-                capacity={rental.capacity || "N/A"}
-                date={rental.date || "N/A"}
-                time={rental.time || "N/A"}
-                quote={rental.quote || "N/A"}
-                imageUrl={rental.imageUrl || ""}
-              />
-            ))}
-          </div>
-
-          
-          <div id="enquire-button-container" className="mt-16 text-center relative">
-            <div
-              id="left-line"
-              className="absolute left-0 top-1/2 w-0 h-px bg-gradient-to-r from-transparent via-blue-500 to-purple-500 transform -translate-y-1/2 transition-all duration-1000 hidden md:block"
-            ></div>
-            <div
-              id="right-line"
-              className="absolute right-0 top-1/2 w-0 h-px bg-gradient-to-l from-transparent via-purple-500 to-pink-500 transform -translate-y-1/2 transition-all duration-1000 hidden md:block"
-            ></div>
-            <button
-              onClick={handleDialogToggle}
-              className="inline-block relative px-8 py-3 text-white font-medium overflow-hidden group z-10"
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {categories.map((category, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              className="luxury-card bg-white group"
             >
-              <span className="absolute inset-0 border border-transparent group-hover:border-white transition-all duration-300"></span>
-              <span className="absolute inset-0 bg-black"></span>
-              <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500"></span>
-              <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-blue-500 via-blue-500 to-blue-500"></span>
-              <span className="absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-500 to-blue-500"></span>
-              <span className="absolute inset-y-0 right-0 w-0.5 bg-gradient-to-b from-blue-500 via-blue-500 to-blue-500"></span>
-              <span className="relative flex items-center">
-                Enquire now
-                <svg
-                  className="ml-2 w-4 h-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5 12H19M19 12L12 5M19 12L12 19"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            </button>
-          </div> */}
+              {/* Image Container */}
+              <div className="relative h-72 overflow-hidden bg-black">
+                <img 
+                  src={category.image} 
+                  alt={category.title}
+                  className="w-full h-full object-cover"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+              </div>
+
+              {/* Content */}
+              <div className="bg-white p-8 relative">
+                {/* Gold accent line */}
+                <div className="gold-line absolute top-0 left-8"></div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-2xl font-light mb-2 text-black" 
+                        style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      {category.title}
+                    </h3>
+                    <p className="text-sm tracking-widest text-gray-600" 
+                       style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}>
+                      {category.listings}
+                    </p>
+                  </div>
+                  
+                  {/* Arrow */}
+                  <div className="arrow-icon">
+                    <svg 
+                      width="24" 
+                      height="24" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="#C88A56" 
+                      strokeWidth="1.5"
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Enquire Button */}
+        <div className="mt-24 text-center">
+          <EnquireButton
+  text="Enquire now"
+  onClick={handleDialogToggle}
+/>
+        
+          </div>
+        
+        
+
+      </div>
         </div>
 
         {/* Dialog Box */}
         <AnimatePresence>
-          {isDialogOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                className="bg-gray-900 rounded-xl w-full max-w-lg relative overflow-hidden"
-              >
-                {/* Close Button */}
-                <button
-                  onClick={handleDialogToggle}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-
-                {/* Form Header */}
-                <h2 className="text-2xl font-bold text-white p-6 pb-2">
-                  Enquiry Form
-                </h2>
-
-                {/* Submit Message (Success/Error) */}
-                {submitMessage && (
-                  <div className={`mx-6 p-2 rounded-md text-center text-sm ${
-                    submitMessage.includes('success') 
-                      ? 'bg-green-900 text-green-100' 
-                      : 'bg-red-900 text-red-100'
-                    }`}
-                  >
-                    {submitMessage}
-                  </div>
-                )}
-
-                {/* Form Content */}
-                <div className="p-6 pt-2">
-                  <form onSubmit={handleSubmit}>
-                    {/* Full Name & Email */}
-                    <div className="flex flex-col md:flex-row gap-4 mb-4">
-                      <div className="w-full md:w-1/2">
-                        <label className="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
-                        <input
-                          type="text"
-                          name="name"
-                          required
-                          placeholder="Your Name"
-                          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div className="w-full md:w-1/2">
-                        <label className="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
-                        <input
-                          type="email"
-                          name="email"
-                          required
-                          placeholder="your.email@example.com"
-                          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Phone & Transport */}
-                    <div className="flex flex-col md:flex-row gap-4 mb-4">
-                      <div className="w-full md:w-1/2">
-                        <label className="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          required
-                          placeholder="+1 234 567 8900"
-                          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </div>
-                      <div className="w-full md:w-1/2">
-                        <label className="block text-sm font-medium text-gray-300 mb-1">Preferred Transport</label>
-                        <select
-                          name="transport"
-                          required
-                          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                          <option value="" disabled selected>Select an option</option>
-                          <option value="yacht">Yacht</option>
-                          <option value="car">Car</option>
-                          <option value="chopper">Helicopter</option>
-                          <option value="jet">Private Jet</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    {/* Travel Date */}
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-300 mb-1">Travel Date</label>
-                      <input
-                        type="date"
-                        name="travelDate"
-                        required
-                        className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="mm/dd/yyyy"
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <div className="mb-6">
-                      <label className="block text-sm font-medium text-gray-300 mb-1">Message (Optional)</label>
-                      <textarea
-                        name="message"
-                        rows="3"
-                        placeholder="Any additional details..."
-                        className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                      ></textarea>
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 rounded-md hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-                    >
-                      Submit Enquiry
-                    </button>
-                  </form>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
+         {isDialogOpen && (
+                 <motion.div
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   exit={{ opacity: 0 }}
+                   className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+                 >
+                   <motion.div
+                     initial={{ scale: 0.95, opacity: 0 }}
+                     animate={{ scale: 1, opacity: 1 }}
+                     exit={{ scale: 0.95, opacity: 0 }}
+                     transition={{ duration: 0.3 }}
+                     className="bg-white w-full max-w-2xl relative overflow-hidden"
+                   >
+                     {/* Gold accent bar */}
+                     <div className="h-1 bg-[#C88A56]"></div>
+                     
+                     {/* Close Button */}
+                     <button
+                       onClick={handleDialogToggle}
+                       className="absolute top-6 right-6 text-black hover:text-[#C88A56] transition-colors z-10"
+                     >
+                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12"/>
+                       </svg>
+                     </button>
+       
+                     {/* Form Content */}
+                     <div className="p-12">
+                       <h2 className="text-4xl font-light mb-2 text-black" 
+                           style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                         Enquiry Form
+                       </h2>
+                       <div className="w-16 h-px bg-[#C88A56] mb-8"></div>
+       
+                       <form onSubmit={handleSubmit} className="space-y-6">
+                         {/* Name and Email */}
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                           <div>
+                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                               FULL NAME
+                             </label>
+                             <input
+                               type="text"
+                               name="name"
+                               required
+                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
+                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                               placeholder="Your Name"
+                             />
+                           </div>
+       
+                           <div>
+                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                               EMAIL ADDRESS
+                             </label>
+                             <input
+                               type="email"
+                               name="email"
+                               required
+                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
+                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                               placeholder="your.email@example.com"
+                             />
+                           </div>
+                         </div>
+       
+                         {/* Phone and Transport */}
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                           <div>
+                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                               PHONE NUMBER
+                             </label>
+                             <input
+                               type="tel"
+                               name="phone"
+                               required
+                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
+                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                               placeholder="+1 234 567 8900"
+                             />
+                           </div>
+       
+                           <div>
+                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                               PREFERRED TRANSPORT
+                             </label>
+                             <select
+                               name="transport"
+                               required
+                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
+                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                             >
+                               <option value="" disabled selected>Select an option</option>
+                               <option value="yacht">Yacht</option>
+                               <option value="car">Car</option>
+                               <option value="chopper">Helicopter</option>
+                               <option value="jet">Private Jet</option>
+                             </select>
+                           </div>
+                         </div>
+       
+                         {/* Travel Date */}
+                         <div>
+                           <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                             TRAVEL DATE
+                           </label>
+                           <input
+                             type="date"
+                             name="travelDate"
+                             required
+                             className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
+                             style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                           />
+                         </div>
+       
+                         {/* Message */}
+                         <div>
+                           <label className="block text-xs tracking-widest text-gray-600 mb-2" 
+                                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
+                             MESSAGE (OPTIONAL)
+                           </label>
+                           <textarea
+                             name="message"
+                             rows="3"
+                             className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors resize-none"
+                             style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                             placeholder="Any additional details..."
+                           ></textarea>
+                         </div>
+       
+                         {/* Submit Message */}
+                         {submitMessage && (
+                           <div className={`text-sm text-center p-3 ${
+                             submitMessage.includes('successfully') 
+                               ? 'bg-[#C88A56]/10 text-[#C88A56]' 
+                               : 'bg-red-500/10 text-red-600'
+                           }`}>
+                             {submitMessage}
+                           </div>
+                         )}
+       
+                         {/* Submit Button */}
+                         <button
+                           type="submit"
+                           className="w-full bg-black text-white py-4 hover:bg-[#C88A56] transition-colors duration-300"
+                           style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, letterSpacing: '0.2em' }}
+                         >
+                           SUBMIT ENQUIRY
+                         </button>
+                       </form>
+                     </div>
+                   </motion.div>
+                 </motion.div>
+               )}
         </AnimatePresence>
       </div>
       <Footer/>

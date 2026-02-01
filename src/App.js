@@ -5,10 +5,11 @@ import Footer from './NewPages/Footer.jsx';
 import FaqSection from './components/FaqSection.jsx';
 import HomePage from './NewPages/FrontPage.jsx';
 import HomeCarousel from './NewPages/HomeCarousel.jsx';
-import CustomerReviews from './NewPages/CustomerReviews.jsx';
+// import CustomerReviews from './NewPages/CustomerReviews.jsx';
 import Services from './NewPages/Services.jsx';
 import LuxurySlider from './NewPages/LuxurySlider.jsx';
 import LuxuryTransportSelector from './NewPages/TransportationExplorer.jsx';
+// import "./NewPages/CssAnimation"
 
 function App() {
   const location = useLocation();

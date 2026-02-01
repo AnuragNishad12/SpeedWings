@@ -84,9 +84,14 @@ const Navbar = () => {
               onMouseEnter={() => window.innerWidth > 768 && setDealsOpen(true)}
               onMouseLeave={() => window.innerWidth > 768 && setDealsOpen(false)}
             >
-              <a href="/#/dealoftheday" className="nav-link" onClick={(e) => { e.preventDefault(); toggleDealsMenu(); }}>
-                DEALS OF THE DAY
-              </a>
+              <a
+  href="/#/dealoftheday"
+  className="nav-link"
+  onClick={toggleDealsMenu}
+>
+  DEALS OF THE DAY
+</a>
+
               <ul className={`emmanuelle-submenu ${dealsOpen ? "show" : ""}`}>
                 <li><a href="/#">Jets</a></li>
                 <li><a href="/#">Jets by Seats</a></li>
