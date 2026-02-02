@@ -10,6 +10,7 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
     firstName: '',
     lastName: '',
     email: '',
+    phoneNumber: '',
     departureCity: '',
     destinationCity: '',
     departureDate: '',
@@ -23,14 +24,10 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
   useEffect(() => {
     if (isOpen) {
       setIsAnimating(true);
-      document.body.style.overflow = 'hidden';
+      // Don't lock body scroll - let the user scroll the modal
     } else {
-      document.body.style.overflow = 'unset';
+      // No need to reset anything
     }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
   const handleChange = (e) => {
@@ -61,6 +58,7 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
         firstName: '',
         lastName: '',
         email: '',
+        phoneNumber: '',
         departureCity: '',
         destinationCity: '',
         departureDate: '',
@@ -124,169 +122,212 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
           border-color: #C88A56;
         }
 
-        /* Custom scrollbar */
-        .custom-scrollbar::-webkit-scrollbar {
+        /* Custom scrollbar for form content */
+        .form-scroll::-webkit-scrollbar {
           width: 6px;
         }
         
-        .custom-scrollbar::-webkit-scrollbar-track {
+        .form-scroll::-webkit-scrollbar-track {
           background: #f1f1f1;
         }
         
-        .custom-scrollbar::-webkit-scrollbar-thumb {
+        .form-scroll::-webkit-scrollbar-thumb {
           background: #C88A56;
           border-radius: 3px;
         }
         
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        .form-scroll::-webkit-scrollbar-thumb:hover {
           background: #a0753d;
+        }
+
+        /* Prevent clicks from going through backdrop */
+        .modal-backdrop {
+          pointer-events: auto;
         }
       `}</style>
 
       <ToastContainer />
       
-      {/* Backdrop with blur */}
+      {/* Backdrop - Fixed, non-scrollable */}
       <div
-        className={`fixed inset-0 bg-black z-[9998] transition-opacity duration-300 ${
+        className={`modal-backdrop fixed inset-0 bg-black z-[9998] transition-opacity duration-300 ${
           isAnimating ? 'opacity-70' : 'opacity-0'
         }`}
         onClick={handleClose}
         style={{ backdropFilter: 'blur(8px)' }}
       />
 
-      {/* Modal - positioned below navbar with proper z-index */}
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pointer-events-none">
-        <div className="w-full h-full flex items-center justify-center py-20">
-          <div
-            className={`w-full max-w-2xl bg-white shadow-2xl pointer-events-auto transform transition-all duration-300 max-h-[85vh] flex flex-col ${
-              isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-8'
-            }`}
-          >
-            {/* Header */}
-            <div className="relative px-12 pt-12 pb-8 border-b border-gray-200">
-              <button
-                type="button"
-                className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
-                onClick={handleClose}
-                aria-label="Close"
-              >
-                <XMarkIcon className="h-6 w-6" />
-              </button>
+      {/* Modal Container - Centered */}
+      <div 
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+        onClick={handleClose}
+      >
+        <div
+          className={`w-full max-w-2xl bg-white shadow-2xl transform transition-all duration-300 flex flex-col ${
+            isAnimating ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-8'
+          }`}
+          style={{ maxHeight: '90vh' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header - Fixed */}
+          <div className="relative px-12 pt-12 pb-8 border-b border-gray-200 flex-shrink-0">
+            <button
+              type="button"
+              className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors"
+              onClick={handleClose}
+              aria-label="Close"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
 
-              <h2 
-                className="text-4xl font-light text-black mb-2" 
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Enquiry Form
-              </h2>
-              <div className="w-16 h-px bg-[#C88A56]"></div>
-            </div>
+            <h2 
+              className="text-4xl font-light text-black mb-2" 
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Request a Quote
+            </h2>
+            <div className="w-16 h-px bg-[#C88A56]"></div>
+          </div>
 
-            {/* Form content - scrollable */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar px-12 py-8">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Name row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <label 
-                      htmlFor="firstName" 
-                      className="block text-xs tracking-widest text-gray-600 mb-3"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
-                    >
-                      FULL NAME
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                      className="luxury-input w-full text-black px-0 py-3 text-base"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                      placeholder="Your Name"
-                    />
-                  </div>
-
-                  <div>
-                    <label 
-                      htmlFor="email" 
-                      className="block text-xs tracking-widest text-gray-600 mb-3"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
-                    >
-                      EMAIL ADDRESS
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="luxury-input w-full text-black px-0 py-3 text-base"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
+          {/* Form content - Scrollable */}
+          <div className="px-12 py-8 overflow-y-auto form-scroll flex-1">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* First Name & Last Name */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label 
+                    htmlFor="firstName" 
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    First Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    className="luxury-input w-full text-black px-0 py-3 text-base"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                  />
                 </div>
 
-                {/* Phone and Transport row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <label 
-                      htmlFor="departureCity" 
-                      className="block text-xs tracking-widest text-gray-600 mb-3"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
-                    >
-                      PHONE NUMBER
-                    </label>
-                    <input
-                      type="tel"
-                      id="departureCity"
-                      name="departureCity"
-                      value={formData.departureCity}
-                      onChange={handleChange}
-                      required
-                      className="luxury-input w-full text-black px-0 py-3 text-base"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                      placeholder="+1 234 567 8900"
-                    />
-                  </div>
+                <div>
+                  <label 
+                    htmlFor="lastName" 
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Last Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                    className="luxury-input w-full text-black px-0 py-3 text-base"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                  />
+                </div>
+              </div>
 
-                  <div>
-                    <label 
-                      htmlFor="flightType" 
-                      className="block text-xs tracking-widest text-gray-600 mb-3"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
-                    >
-                      PREFERRED TRANSPORT
-                    </label>
-                    <select
-                      id="flightType"
-                      name="flightType"
-                      value={formData.flightType}
-                      onChange={handleChange}
-                      required
-                      className="luxury-input luxury-select w-full text-black px-0 py-3 text-base"
-                      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                    >
-                      <option value="">Select an option</option>
-                      <option value="One Way Charter">Yacht</option>
-                      <option value="Round Trip Charter">Car</option>
-                      <option value="Empty Leg">Helicopter</option>
-                      <option value="Multi-Leg Trip">Private Jet</option>
-                    </select>
-                  </div>
+              {/* Email Address */}
+              <div>
+                <label 
+                  htmlFor="email" 
+                  className="block text-sm font-medium text-gray-900 mb-3"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="luxury-input w-full text-black px-0 py-3 text-base"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                />
+              </div>
+
+              {/* Phone Number */}
+              <div>
+                <label 
+                  htmlFor="phoneNumber" 
+                  className="block text-sm font-medium text-gray-900 mb-3"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="luxury-input w-full text-black px-0 py-3 text-base"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                />
+              </div>
+
+              {/* Departure City & Destination City */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <label 
+                    htmlFor="departureCity" 
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Departure City *
+                  </label>
+                  <input
+                    type="text"
+                    id="departureCity"
+                    name="departureCity"
+                    value={formData.departureCity}
+                    onChange={handleChange}
+                    required
+                    className="luxury-input w-full text-black px-0 py-3 text-base"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                  />
                 </div>
 
-                {/* Travel Date */}
+                <div>
+                  <label 
+                    htmlFor="destinationCity" 
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Destination City *
+                  </label>
+                  <input
+                    type="text"
+                    id="destinationCity"
+                    name="destinationCity"
+                    value={formData.destinationCity}
+                    onChange={handleChange}
+                    required
+                    className="luxury-input w-full text-black px-0 py-3 text-base"
+                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                  />
+                </div>
+              </div>
+
+              {/* Departure Date & Passengers */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <label 
                     htmlFor="departureDate" 
-                    className="block text-xs tracking-widest text-gray-600 mb-3"
-                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
-                    TRAVEL DATE
+                    Departure Date *
                   </label>
                   <input
                     type="date"
@@ -301,53 +342,97 @@ const EnquiryForm = ({ isOpen, closeForm }) => {
                   />
                 </div>
 
-                {/* Message */}
                 <div>
                   <label 
-                    htmlFor="additionalRequirements" 
-                    className="block text-xs tracking-widest text-gray-600 mb-3"
-                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}
+                    htmlFor="passengers" 
+                    className="block text-sm font-medium text-gray-900 mb-3"
+                    style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
-                    MESSAGE (OPTIONAL)
+                    Passengers *
                   </label>
-                  <textarea
-                    id="additionalRequirements"
-                    name="additionalRequirements"
-                    value={formData.additionalRequirements}
+                  <select
+                    id="passengers"
+                    name="passengers"
+                    value={formData.passengers}
                     onChange={handleChange}
-                    rows={4}
-                    className="luxury-textarea w-full text-black px-4 py-3 text-base resize-none"
+                    required
+                    className="luxury-input luxury-select w-full text-black px-0 py-3 text-base"
                     style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                    placeholder="Any additional details..."
-                  />
+                  >
+                    <option value="">Select passengers</option>
+                    <option value="1">1 Passenger</option>
+                    <option value="2">2 Passengers</option>
+                    <option value="3">3 Passengers</option>
+                    <option value="4">4 Passengers</option>
+                    <option value="5">5 Passengers</option>
+                    <option value="6">6 Passengers</option>
+                    <option value="7">7 Passengers</option>
+                    <option value="8">8 Passengers</option>
+                    <option value="9+">9+ Passengers</option>
+                  </select>
                 </div>
+              </div>
 
-                {/* Submit Message */}
-                {/* {submitMessage && (
-                  <div className={`text-sm text-center p-3 ${
-                    submitMessage.includes('successfully') 
-                      ? 'bg-[#C88A56]/10 text-[#C88A56]' 
-                      : 'bg-red-500/10 text-red-600'
-                  }`}>
-                    {submitMessage}
-                  </div>
-                )} */}
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-black text-white py-4 hover:bg-[#C88A56] transition-all duration-300"
-                  style={{ 
-                    fontFamily: "'Montserrat', sans-serif", 
-                    fontWeight: 300, 
-                    letterSpacing: '0.2em',
-                    fontSize: '0.875rem'
-                  }}
+              {/* Flight Type */}
+              <div>
+                <label 
+                  htmlFor="flightType" 
+                  className="block text-sm font-medium text-gray-900 mb-3"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
                 >
-                  SUBMIT ENQUIRY
-                </button>
-              </form>
-            </div>
+                  Flight Type
+                </label>
+                <select
+                  id="flightType"
+                  name="flightType"
+                  value={formData.flightType}
+                  onChange={handleChange}
+                  className="luxury-input luxury-select w-full text-black px-0 py-3 text-base"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                >
+                  <option value="">Select flight type</option>
+                  <option value="One Way Charter">One Way Charter</option>
+                  <option value="Round Trip Charter">Round Trip Charter</option>
+                  <option value="Empty Leg">Empty Leg</option>
+                  <option value="Multi-Leg Trip">Multi-Leg Trip</option>
+                </select>
+              </div>
+
+              {/* Additional Requirements */}
+              <div>
+                <label 
+                  htmlFor="additionalRequirements" 
+                  className="block text-sm font-medium text-gray-900 mb-3"
+                  style={{ fontFamily: "'Montserrat', sans-serif" }}
+                >
+                  Additional Requirements (Optional)
+                </label>
+                <textarea
+                  id="additionalRequirements"
+                  name="additionalRequirements"
+                  value={formData.additionalRequirements}
+                  onChange={handleChange}
+                  rows={4}
+                  className="luxury-textarea w-full text-black px-4 py-3 text-base resize-none"
+                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
+                  placeholder="Any additional details..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-4 hover:bg-[#C88A56] transition-all duration-300"
+                style={{ 
+                  fontFamily: "'Montserrat', sans-serif", 
+                  fontWeight: 300, 
+                  letterSpacing: '0.2em',
+                  fontSize: '0.875rem'
+                }}
+              >
+                SUBMIT ENQUIRY
+              </button>
+            </form>
           </div>
         </div>
       </div>

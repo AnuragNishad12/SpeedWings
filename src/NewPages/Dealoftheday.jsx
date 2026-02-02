@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from '../components/Navbar';
 import Footer from './Footer';
 import EnquireButton from "../NewPages/CssAnimation/EnquireButton"
+import EnquiryForm from '../components/EnquiryForm';
 
 // const RentalCard = ({ aircraft, from, capacity, date, time, quote, imageUrl }) => {
 //   return (
@@ -345,168 +346,16 @@ const HomeCarousel = () => {
         </div>
 
         {/* Dialog Box */}
-        <AnimatePresence>
+        
          {isDialogOpen && (
-                 <motion.div
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   exit={{ opacity: 0 }}
-                   className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-                 >
-                   <motion.div
-                     initial={{ scale: 0.95, opacity: 0 }}
-                     animate={{ scale: 1, opacity: 1 }}
-                     exit={{ scale: 0.95, opacity: 0 }}
-                     transition={{ duration: 0.3 }}
-                     className="bg-white w-full max-w-2xl relative overflow-hidden"
-                   >
-                     {/* Gold accent bar */}
-                     <div className="h-1 bg-[#C88A56]"></div>
-                     
-                     {/* Close Button */}
-                     <button
-                       onClick={handleDialogToggle}
-                       className="absolute top-6 right-6 text-black hover:text-[#C88A56] transition-colors z-10"
-                     >
-                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12"/>
-                       </svg>
-                     </button>
-       
-                     {/* Form Content */}
-                     <div className="p-12">
-                       <h2 className="text-4xl font-light mb-2 text-black" 
-                           style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                         Enquiry Form
-                       </h2>
-                       <div className="w-16 h-px bg-[#C88A56] mb-8"></div>
-       
-                       <form onSubmit={handleSubmit} className="space-y-6">
-                         {/* Name and Email */}
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                           <div>
-                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                               FULL NAME
-                             </label>
-                             <input
-                               type="text"
-                               name="name"
-                               required
-                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
-                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                               placeholder="Your Name"
-                             />
-                           </div>
-       
-                           <div>
-                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                               EMAIL ADDRESS
-                             </label>
-                             <input
-                               type="email"
-                               name="email"
-                               required
-                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
-                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                               placeholder="your.email@example.com"
-                             />
-                           </div>
-                         </div>
-       
-                         {/* Phone and Transport */}
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                           <div>
-                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                               PHONE NUMBER
-                             </label>
-                             <input
-                               type="tel"
-                               name="phone"
-                               required
-                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
-                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                               placeholder="+1 234 567 8900"
-                             />
-                           </div>
-       
-                           <div>
-                             <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                    style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                               PREFERRED TRANSPORT
-                             </label>
-                             <select
-                               name="transport"
-                               required
-                               className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
-                               style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                             >
-                               <option value="" disabled selected>Select an option</option>
-                               <option value="yacht">Yacht</option>
-                               <option value="car">Car</option>
-                               <option value="chopper">Helicopter</option>
-                               <option value="jet">Private Jet</option>
-                             </select>
-                           </div>
-                         </div>
-       
-                         {/* Travel Date */}
-                         <div>
-                           <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                             TRAVEL DATE
-                           </label>
-                           <input
-                             type="date"
-                             name="travelDate"
-                             required
-                             className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors"
-                             style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                           />
-                         </div>
-       
-                         {/* Message */}
-                         <div>
-                           <label className="block text-xs tracking-widest text-gray-600 mb-2" 
-                                  style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 400 }}>
-                             MESSAGE (OPTIONAL)
-                           </label>
-                           <textarea
-                             name="message"
-                             rows="3"
-                             className="w-full px-0 py-3 bg-transparent border-b border-gray-300 text-black focus:outline-none focus:border-[#C88A56] transition-colors resize-none"
-                             style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300 }}
-                             placeholder="Any additional details..."
-                           ></textarea>
-                         </div>
-       
-                         {/* Submit Message */}
-                         {submitMessage && (
-                           <div className={`text-sm text-center p-3 ${
-                             submitMessage.includes('successfully') 
-                               ? 'bg-[#C88A56]/10 text-[#C88A56]' 
-                               : 'bg-red-500/10 text-red-600'
-                           }`}>
-                             {submitMessage}
-                           </div>
-                         )}
-       
-                         {/* Submit Button */}
-                         <button
-                           type="submit"
-                           className="w-full bg-black text-white py-4 hover:bg-[#C88A56] transition-colors duration-300"
-                           style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, letterSpacing: '0.2em' }}
-                         >
-                           SUBMIT ENQUIRY
-                         </button>
-                       </form>
-                     </div>
-                   </motion.div>
-                 </motion.div>
-               )}
-        </AnimatePresence>
+  <EnquiryForm 
+    isOpen={isDialogOpen} 
+    closeForm={handleDialogToggle} 
+  />
+)}
+        {/* <AnimatePresence>
+        
+        </AnimatePresence> */}
       </div>
       <Footer/>
     </div>
