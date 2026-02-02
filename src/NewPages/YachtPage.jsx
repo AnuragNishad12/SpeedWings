@@ -124,83 +124,86 @@ const YachtCard = ({ yacht }) => {
       </div>
 
       {/* Specifications Modal */}
-      {showDetails && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+     {showDetails && (
+  <div
+    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+    onClick={() => setShowDetails(false)}
+  >
+    <div
+      className="bg-gradient-to-b from-[#141414] to-black w-full max-w-4xl max-h-[90vh] overflow-hidden relative border border-[#C88A56]/30 flex flex-col"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Header - Fixed */}
+      <div className="bg-black/60 backdrop-blur-sm p-4 md:p-6 relative border-b border-[#C88A56]/20 flex-shrink-0">
+        <h2 className="text-xl md:text-2xl text-[#C88A56] tracking-wide">Yacht Specifications</h2>
+        <p className="text-gray-400 mt-1 text-xs md:text-sm font-light">Complete details & features</p>
+
+        <button
           onClick={() => setShowDetails(false)}
+          className="absolute top-4 right-4 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 transition-colors border border-[#C88A56]/30"
         >
-          <div
-            className="bg-gradient-to-b from-[#141414] to-black rounded-xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden relative border border-[#C88A56]/30"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="bg-black/60 backdrop-blur-sm p-6 relative border-b border-[#C88A56]/20">
-              <h2 className="text-2xl text-[#C88A56] tracking-wide">Yacht Specifications</h2>
-              <p className="text-gray-400 mt-1 text-sm font-light">Complete details & features</p>
+          <X className="w-5 h-5 text-[#C88A56]" />
+        </button>
+      </div>
 
-              <button
-                onClick={() => setShowDetails(false)}
-                className="absolute top-4 right-4 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 rounded-full transition-colors border border-[#C88A56]/30"
-              >
-                <X className="w-5 h-5 text-[#C88A56]" />
-              </button>
+      {/* Scrollable Content */}
+      <div className="overflow-y-auto flex-1 p-4 md:p-6">
+        <div className="mb-6">
+          <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
+            Yacht Overview
+          </h3>
+          <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Guest Capacity</div>
+              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{yacht.specifications?.guests || '—'}</div>
             </div>
-
-            <div className="overflow-y-auto max-h-[calc(85vh-140px)] p-6">
-              <div className="mb-8">
-                <h3 className="text-lg font-light text-[#C88A56] mb-4 tracking-wider uppercase">
-                  Yacht Overview
-                </h3>
-                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-32 mb-6"></div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Guest Capacity</div>
-                    <div className="text-2xl font-light text-[#C88A56]">{yacht.specifications?.guests || '—'}</div>
-                  </div>
-                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Cabins</div>
-                    <div className="text-2xl font-light text-[#C88A56]">{yacht.specifications?.cabins || '—'}</div>
-                  </div>
-                  <div className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Route</div>
-                    <div className="text-lg font-light text-[#C88A56]">{yacht.route || '—'}</div>
-                  </div>
-                </div>
-              </div>
-
-              {yacht.specifications && Object.keys(yacht.specifications).length > 3 && (
-                <div>
-                  <h3 className="text-lg font-light text-[#C88A56] mb-4 tracking-wider uppercase">
-                    Technical Specifications
-                  </h3>
-                  <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-32 mb-6"></div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {Object.entries(yacht.specifications)
-                      .filter(([key]) => !['guests', 'cabins'].includes(key))
-                      .map(([key, value]) => (
-                        <div key={key} className="bg-black/50 backdrop-blur-sm p-4 rounded-lg border border-[#C88A56]/20">
-                          <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">
-                            {key.replace(/([A-Z])/g, ' $1')}
-                          </div>
-                          <div className="text-lg font-light text-white">{value}</div>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              )}
+            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Cabins</div>
+              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{yacht.specifications?.cabins || '—'}</div>
             </div>
-
-            <div className="border-t border-[#C88A56]/20 p-4 bg-black/40 flex justify-end">
-              <button
-                onClick={() => setShowDetails(false)}
-                className="px-6 py-2.5 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black rounded-lg transition-all font-light tracking-wide uppercase text-sm shadow-lg shadow-[#C88A56]/30"
-              >
-                Close
-              </button>
+            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Route</div>
+              <div className="text-base md:text-lg font-light text-[#C88A56]">{yacht.route || '—'}</div>
             </div>
           </div>
         </div>
-      )}
+
+        {yacht.specifications && Object.keys(yacht.specifications).length > 3 && (
+          <div className="mt-6">
+            <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
+              Technical Specifications
+            </h3>
+            <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {Object.entries(yacht.specifications)
+                .filter(([key]) => !['guests', 'cabins'].includes(key))
+                .map(([key, value]) => (
+                  <div key={key} className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">
+                      {key.replace(/([A-Z])/g, ' $1')}
+                    </div>
+                    <div className="text-base md:text-lg font-light text-white">{value}</div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer - Fixed */}
+      <div className="border-t border-[#C88A56]/20 p-3 md:p-4 bg-black/40 flex justify-end flex-shrink-0">
+        <button
+          onClick={() => setShowDetails(false)}
+          className="px-5 py-2 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black transition-all font-light tracking-wide uppercase text-sm shadow-lg shadow-[#C88A56]/30"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       <EnquiryForm
         isOpen={showEnquiryForm}

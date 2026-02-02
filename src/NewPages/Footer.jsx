@@ -5,7 +5,7 @@ import logo from '../assets/logo.png'
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-[#141414] to-black text-white py-12 px-6 md:px-16 border-t border-[#C88A56]/20">
+    <footer className="bg-black text-white py-12 px-6 md:px-16 border-t border-[#C88A56]/20">
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-8">

@@ -259,7 +259,7 @@ const HelicopterBooking = () => {
                     </Dialog.Title>
                     <button 
                       onClick={() => setIsModalOpen(false)} 
-                      className="absolute top-5 right-6 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 rounded-full transition-colors border border-[#C88A56]/30"
+                      className="absolute top-5 right-6 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30  transition-colors border border-[#C88A56]/30"
                     >
                       <XMarkIcon className="h-6 w-6 text-[#C88A56]" />
                     </button>
@@ -270,13 +270,13 @@ const HelicopterBooking = () => {
                       <img 
                         src={images[activeImg]} 
                         alt="view" 
-                        className="w-full h-64 md:h-96 object-cover rounded-xl mb-4 border border-[#C88A56]/20" 
+                        className="w-full h-64 md:h-96 object-cover  mb-4 border border-[#C88A56]/20" 
                       />
                       <div className="flex gap-3 overflow-x-auto">
                         {images.map((img, i) => (
                           <div 
                             key={i} 
-                            className={`cursor-pointer w-24 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                            className={`cursor-pointer w-24 h-16  overflow-hidden border-2 transition-all ${
                               activeImg === i ? 'border-[#C88A56] shadow-lg shadow-[#C88A56]/30' : 'border-[#C88A56]/20 hover:border-[#C88A56]/50'
                             }`} 
                             onClick={() => setActiveImg(i)}
@@ -372,10 +372,10 @@ const HelicopterBooking = () => {
         {/* Helicopter List */}
         {isLoading ? (
           <div className="flex justify-center items-center py-32">
-            <div className="animate-spin h-12 w-12 border-4 border-[#C88A56] rounded-full border-t-transparent"></div>
+            <div className="animate-spin h-12 w-12 border-4 border-[#C88A56]  border-t-transparent"></div>
           </div>
         ) : filteredHelicopters.length === 0 ? (
-          <div className="text-center py-20 bg-black/40 backdrop-blur-sm rounded-2xl border border-[#C88A56]/20">
+          <div className="text-center py-20 bg-black/40 backdrop-blur-sm  border border-[#C88A56]/20">
             <h3 className="text-2xl mb-4 text-gray-300 font-light">No helicopters found</h3>
             <p className="text-gray-400 mb-6 font-light">Try adjusting filters</p>
             <button
