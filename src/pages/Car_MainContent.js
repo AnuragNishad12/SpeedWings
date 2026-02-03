@@ -103,6 +103,32 @@ export default function LuxuryCarSearch() {
   const openDetails = (car) => { setSelectedCar(car); setShowDetails(true); };
   const openEnquiry = (car) => { setSelectedCar(car); setShowEnquiryForm(true); };
 
+  // Helper function to get all images from car data
+  const getCarImages = (car) => {
+    const images = [];
+    
+    // Add cover image first
+    if (car.coverImg) {
+      images.push(car.coverImg);
+    }
+    
+    // Add additional images from the additionalImages array
+    if (car.additionalImages && Array.isArray(car.additionalImages)) {
+      car.additionalImages.forEach(imgUrl => {
+        if (imgUrl && typeof imgUrl === 'string') {
+          images.push(imgUrl);
+        }
+      });
+    }
+    
+    // Fallback to default image if no images found
+    if (images.length === 0) {
+      images.push("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800");
+    }
+    
+    return images;
+  };
+
   // Car Card Component
   const CarCard = ({ car }) => {
     return (
@@ -114,7 +140,7 @@ export default function LuxuryCarSearch() {
               <img
                 src={car.coverImg || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800"}
                 alt={car.title}
-                className="absolute inset-0 w-full h-full object-contain p-4"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
           </div>
@@ -214,7 +240,7 @@ export default function LuxuryCarSearch() {
               {/* Max Price */}
               <div className="mb-8">
                 <label className="block text-sm text-gray-300 uppercase tracking-wider font-light mb-3">
-                  Max Price ()
+                  Max Price (€)
                 </label>
                 <input
                   type="number"
@@ -283,11 +309,8 @@ export default function LuxuryCarSearch() {
     const [activeImg, setActiveImg] = useState(0);
     if (!selectedCar || !showDetails) return null;
 
-    const images = [
-      selectedCar.coverImg || "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600",
-      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=1600",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1600",
-    ];
+    // Get all images from the car data
+    const images = getCarImages(selectedCar);
 
     return (
       <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
@@ -305,7 +328,7 @@ export default function LuxuryCarSearch() {
                 {images.map((img, i) => (
                   <div 
                     key={i} 
-                    className={`cursor-pointer w-24 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`cursor-pointer w-24 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 ${
                       activeImg === i ? 'border-[#C88A56] shadow-lg shadow-[#C88A56]/30' : 'border-[#C88A56]/20 hover:border-[#C88A56]/50'
                     }`} 
                     onClick={() => setActiveImg(i)}
@@ -332,6 +355,18 @@ export default function LuxuryCarSearch() {
                     <span>Passengers</span>
                     <span className="text-white">{selectedCar.pax}</span>
                   </div>
+                  {selectedCar.totalTime && (
+                    <div className="flex justify-between border-b border-[#C88A56]/20 pb-2">
+                      <span>Performance</span>
+                      <span className="text-white">{selectedCar.totalTime}</span>
+                    </div>
+                  )}
+                  {selectedCar.city && (
+                    <div className="flex justify-between border-b border-[#C88A56]/20 pb-2">
+                      <span>Available Cities</span>
+                      <span className="text-white text-right">{selectedCar.city}</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div>
