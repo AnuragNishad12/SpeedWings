@@ -137,7 +137,7 @@ export default function LuxuryCarSearch() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-400 font-light text-sm uppercase tracking-wider">Starting from</span>
                   <div className="flex items-center text-[#C88A56] text-2xl font-light">
-                    <span className="mr-1">₹</span>
+                    <span className="mr-1"></span>
                     <span>{car.price || "—"}</span>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function LuxuryCarSearch() {
               {/* Max Price */}
               <div className="mb-8">
                 <label className="block text-sm text-gray-300 uppercase tracking-wider font-light mb-3">
-                  Max Price (₹)
+                  Max Price ()
                 </label>
                 <input
                   type="number"
