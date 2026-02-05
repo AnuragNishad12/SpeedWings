@@ -314,7 +314,7 @@ export default function LuxuryCarSearch() {
 
     return (
       <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowDetails(false)}>
-        <div className="bg-gradient-to-b from-[#141414] to-black rounded-xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-[#C88A56]/30" onClick={e => e.stopPropagation()}>
+        <div className="bg-gradient-to-b from-[#141414] to-black  w-full max-w-5xl max-h-[90vh] overflow-hidden border border-[#C88A56]/30" onClick={e => e.stopPropagation()}>
           <div className="bg-black/60 backdrop-blur-sm p-6 border-b border-[#C88A56]/20 relative">
             <h2 className="text-3xl text-[#C88A56] tracking-wide">{selectedCar.title}</h2>
             <button onClick={() => setShowDetails(false)} className="absolute top-5 right-6 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 rounded-full transition-colors border border-[#C88A56]/30">
@@ -323,8 +323,19 @@ export default function LuxuryCarSearch() {
           </div>
           <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-140px)]">
             <div className="mb-8">
-              <img src={images[activeImg]} alt="view" className="w-full h-64 md:h-96 object-cover rounded-xl mb-4 border border-[#C88A56]/20" />
-              <div className="flex gap-3 overflow-x-auto">
+              {/* Main Image - Border wraps around actual image size */}
+              <div className="w-full flex justify-center mb-4">
+                <div className="inline-block border border-[#C88A56]/20  overflow-hidden bg-black/30">
+                  <img 
+                    src={images[activeImg]} 
+                    alt="view" 
+                    className="max-w-full h-auto max-h-[500px] object-contain block"
+                  />
+                </div>
+              </div>
+              
+              {/* Thumbnails */}
+              <div className="flex gap-3 overflow-x-auto pb-2">
                 {images.map((img, i) => (
                   <div 
                     key={i} 
