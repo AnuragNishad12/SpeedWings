@@ -11,6 +11,7 @@ import AboutUs from './NewPages/AboutUs'
 import ContactPage from './NewPages/ContactPage'
 import YachtPage from './NewPages/YachtPage' 
 import DealoftheDay from './NewPages/Dealoftheday'
+import EventsPage from './NewPages/EventsPage'
 // export default function all_routes() {
 //   let  all_allroutes = createBrowserRouter(
 //     [
@@ -68,7 +69,8 @@ export default function all_routes() {
     { path: "yacht", element: <YachtPage /> },
     { path: "Enqiry", element: <InquiryForm /> },
     { path: "contact", element: <ContactPage /> },
-    {path:"dealoftheday", element:<DealoftheDay/>}
+    {path:"dealoftheday", element:<DealoftheDay/>},
+    {path:"EventsPage",element:<EventsPage/>}
   ]);
 
   return all_allroutes;

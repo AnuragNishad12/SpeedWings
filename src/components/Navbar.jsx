@@ -73,7 +73,7 @@ const Navbar = () => {
                 <li><a href="/#/helicopter">Choppers</a></li>
                 <li><a href="/#/yacht">Yachts</a></li>
                 <li><a href="/#/c">Cars</a></li>
-                <li><a href="/#">Events</a></li>
+                <li><a href="/#/EventsPage">Events</a></li>
                 <li><a href="/#">Tirth Yatra</a></li>
               </ul>
             </li>
