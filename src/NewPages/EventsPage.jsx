@@ -11,7 +11,7 @@ import {
   User, Mail, Phone, Loader2
 } from 'lucide-react';
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 const DB_PATH          = 'xelevateEvents';
 const BOOKINGS_DB_PATH = 'EventBookingDetails';
 
@@ -30,7 +30,7 @@ function formatDateTime(iso) {
   });
 }
 
-// ─── Booking Dialog ───────────────────────────────────────────────────────────
+
 const BookingDialog = ({ event, onClose }) => {
   const [step, setStep]         = useState('form'); // 'form' | 'success'
   const [saving, setSaving]     = useState(false);
@@ -622,12 +622,12 @@ const SkeletonCard = () => (
   </div>
 );
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+
 export default function EventsPage() {
   const [events, setEvents]               = useState([]);
   const [loading, setLoading]             = useState(true);
-  const [selectedEvent, setSelectedEvent] = useState(null); // spec dialog
-  const [bookingEvent, setBookingEvent]   = useState(null); // booking dialog
+  const [selectedEvent, setSelectedEvent] = useState(null); 
+  const [bookingEvent, setBookingEvent]   = useState(null); 
 
   useEffect(() => {
     const eventsRef = dbRef(database, DB_PATH);

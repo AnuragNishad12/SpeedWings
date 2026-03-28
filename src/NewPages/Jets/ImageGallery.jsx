@@ -4,9 +4,9 @@ import '../../index.css';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import EnquiryForm from '../../components/EnquiryForm';
 import "../CssAnimation/JetPage.css"
-import { X, Filter, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, Filter } from 'lucide-react';
 
-// Image Gallery Component
+// ─── Image Gallery Component ──────────────────────────────────────────────────
 const ImageGallery = ({ images }) => {
   const [activeImage, setActiveImage] = useState(0);
 
@@ -27,8 +27,8 @@ const ImageGallery = ({ images }) => {
           <div
             key={index}
             className={`h-16 w-16 cursor-pointer border-2 rounded transition-all duration-300 ${
-              activeImage === index 
-                ? 'border-[#C88A56] shadow-lg shadow-[#C88A56]/30' 
+              activeImage === index
+                ? 'border-[#C88A56] shadow-lg shadow-[#C88A56]/30'
                 : 'border-[#C88A56]/20 hover:border-[#C88A56]/50'
             }`}
             onClick={() => setActiveImage(index)}
@@ -45,22 +45,29 @@ const ImageGallery = ({ images }) => {
   );
 };
 
+// ─── Aircraft Card ────────────────────────────────────────────────────────────
 const AircraftCard = ({ aircraft }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [showEnquiryForm, setShowEnquiryForm] = useState(false);
 
+  // ✅ Pass full aircraft data so EnquiryForm can:
+  //    1. Show the aircraft name + capacity badge in the header
+  //    2. Cap the passengers dropdown to guestCapacity
+  //    3. Store aircraft details in the Firebase submission
   const helicopterData = {
-    title: aircraft.name,
-    price: aircraft.price
+    title:         aircraft.name,
+    price:         aircraft.price,
+    aircraftType:  aircraft.aircraftType,
+    maxPassengers: aircraft.aircraftDetails?.guestCapacity ?? null,
   };
 
   return (
     <div className="max-w-5xl mx-auto mb-6">
-      <div className="md:flex bg-black/40 backdrop-blur-sm  shadow-xl overflow-hidden border border-[#C88A56]/20 transition-all duration-300 hover:border-[#C88A56]/40 hover:shadow-2xl hover:shadow-[#C88A56]/10">
+      <div className="md:flex bg-black/40 backdrop-blur-sm shadow-xl overflow-hidden border border-[#C88A56]/20 transition-all duration-300 hover:border-[#C88A56]/40 hover:shadow-2xl hover:shadow-[#C88A56]/10">
         <div className="md:w-1/2 p-6">
           <ImageGallery images={aircraft.images} />
         </div>
-        
+
         <div className="md:w-1/2 p-8 flex flex-col justify-between">
           <div>
             <div className="mb-4">
@@ -80,14 +87,14 @@ const AircraftCard = ({ aircraft }) => {
             <div className="flex gap-3 mb-6">
               <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="flex-1 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56]  font-light text-sm tracking-wide hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
+                className="flex-1 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56] font-light text-sm tracking-wide hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
               >
                 {showDetails ? "Hide Specifications" : "View Specifications"}
               </button>
-              
-              <button 
+
+              <button
                 onClick={() => setShowEnquiryForm(true)}
-                className="flex-1 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black  font-light text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#C88A56]/30"
+                className="flex-1 py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black font-light text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#C88A56]/30"
               >
                 Enquire Now
               </button>
@@ -116,197 +123,201 @@ const AircraftCard = ({ aircraft }) => {
           </div>
         </div>
       </div>
-        
+
+      {/* ── Specifications Modal ─────────────────────────────────────────────── */}
       {showDetails && (
-  <div 
-    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
-    onClick={() => setShowDetails(false)}
-  >
-    <div 
-      className="bg-gradient-to-b from-[#141414] to-black w-full max-w-4xl max-h-[90vh] overflow-hidden relative animate-slideUp border border-[#C88A56]/30 flex flex-col"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Header - Fixed */}
-      <div className="bg-black/60 backdrop-blur-sm p-4 md:p-6 relative border-b border-[#C88A56]/20 flex-shrink-0">
-        <h2 className="text-xl md:text-2xl text-[#C88A56] tracking-wide">Aircraft Details</h2>
-        <p className="text-gray-400 mt-1 text-xs md:text-sm font-light">Complete specifications and features</p>
-        
-        <button
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
           onClick={() => setShowDetails(false)}
-          className="absolute top-4 right-4 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 transition-colors border border-[#C88A56]/30"
-          aria-label="Close details"
         >
-          <X className="w-5 h-5 text-[#C88A56]" />
-        </button>
-      </div>
-      
-      {/* Scrollable Content */}
-      <div className="overflow-y-auto flex-1 p-4 md:p-6 custom-scrollbar">
-        <div className="mb-6">
-          <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
-            Aircraft Details
-          </h3>
-          <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Guest Capacity</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.guestCapacity}</div>
+          <div
+            className="bg-gradient-to-b from-[#141414] to-black w-full max-w-4xl max-h-[90vh] overflow-hidden relative animate-slideUp border border-[#C88A56]/30 flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header - Fixed */}
+            <div className="bg-black/60 backdrop-blur-sm p-4 md:p-6 relative border-b border-[#C88A56]/20 flex-shrink-0">
+              <h2 className="text-xl md:text-2xl text-[#C88A56] tracking-wide">Aircraft Details</h2>
+              <p className="text-gray-400 mt-1 text-xs md:text-sm font-light">Complete specifications and features</p>
+
+              <button
+                onClick={() => setShowDetails(false)}
+                className="absolute top-4 right-4 p-2 bg-[#C88A56]/20 hover:bg-[#C88A56]/30 transition-colors border border-[#C88A56]/30"
+                aria-label="Close details"
+              >
+                <X className="w-5 h-5 text-[#C88A56]" />
+              </button>
             </div>
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Pilots</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfPilots}</div>
-            </div>
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flight Attendants</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfFlightAttendants}</div>
-            </div>
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Luggage Capacity</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.luggageCapacity} ft³</div>
-            </div>
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Lavatory</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfLavatory}</div>
-            </div>
-            <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
-              <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">WiFi Available</div>
-              <div className="text-xl md:text-2xl font-light text-[#C88A56] flex items-center">
-                {aircraft.aircraftDetails?.wifiAvailable === "Yes" ? (
-                  <>
-                    <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Yes
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    No
-                  </>
-                )}
+
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto flex-1 p-4 md:p-6 custom-scrollbar">
+              {/* Aircraft Details */}
+              <div className="mb-6">
+                <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
+                  Aircraft Details
+                </h3>
+                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Guest Capacity</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.guestCapacity}</div>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Pilots</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfPilots}</div>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flight Attendants</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfFlightAttendants}</div>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Luggage Capacity</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.luggageCapacity} ft³</div>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Number of Lavatory</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56]">{aircraft.aircraftDetails?.numberOfLavatory}</div>
+                  </div>
+                  <div className="bg-black/50 backdrop-blur-sm p-3 border border-[#C88A56]/20 hover:border-[#C88A56]/40 transition-all">
+                    <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">WiFi Available</div>
+                    <div className="text-xl md:text-2xl font-light text-[#C88A56] flex items-center">
+                      {aircraft.aircraftDetails?.wifiAvailable === "Yes" ? (
+                        <>
+                          <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Yes
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          No
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {/* Technical Specifications */}
+              <div className="mt-8">
+                <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
+                  Technical Specifications
+                </h3>
+                <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
+
+                {/* Exterior */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Exterior</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Length</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.length}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Wingspan</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.wingspan}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Height</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.height}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Range */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Range</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Range (Km)</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.range?.rangeKm}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Speed */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Speed</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">High Speed (Km/Hr)</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.highSpeed}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Typical Cruise Speed</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.typicalCruiseSpeed}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Engines */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Engines</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Engine Model</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.engineModel}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Thrust (KN)</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.thrustKN}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flat Rated To</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.flatRatedTo}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Airfield Performance */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Airfield Performance</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Take Off Distance</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.takeOffDistance}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Landing Distance</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.landingDistance}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Other Specifications */}
+                <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
+                  <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Other Specifications</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Avionics</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.avionics || "--"}</div>
+                    </div>
+                    <div className="bg-black/50 p-3 border border-[#C88A56]/10">
+                      <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Operating Altitude</div>
+                      <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.operatingAltitude}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer - Fixed */}
+            <div className="border-t border-[#C88A56]/20 p-3 md:p-4 bg-black/40 flex justify-end flex-shrink-0">
+              <button
+                onClick={() => setShowDetails(false)}
+                className="px-5 py-2 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black transition-all font-light tracking-wide uppercase text-sm shadow-lg shadow-[#C88A56]/30"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
-        
-        <div className="mt-8">
-          <h3 className="text-base md:text-lg font-light text-[#C88A56] mb-3 tracking-wider uppercase">
-            Technical Specifications
-          </h3>
-          <div className="h-px bg-gradient-to-r from-[#C88A56] to-transparent w-24 mb-4"></div>
-          
-          {/* Exterior */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Exterior</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Length</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.length}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Wingspan</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.wingspan}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Height</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.exterior?.height}</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Range */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Range</h4>
-            <div className="grid grid-cols-1 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Range (Km)</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.range?.rangeKm}</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Speed */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Speed</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">High Speed (Km/Hr)</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.highSpeed}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Typical Cruise Speed</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.speed?.typicalCruiseSpeed}</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Engines */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Engines</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Engine Model</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.engineModel}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Thrust (KN)</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.thrustKN}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Flat Rated To</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.engines?.flatRatedTo}</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Airfield Performance */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Airfield Performance</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Take Off Distance</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.takeOffDistance}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Landing Distance</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.airfieldPerformance?.landingDistance}</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Other Specifications */}
-          <div className="mb-4 bg-black/30 backdrop-blur-sm p-4 border border-[#C88A56]/20">
-            <h4 className="text-sm font-light text-gray-300 mb-3 uppercase tracking-wider">Other Specifications</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Avionics</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.avionics || "--"}</div>
-              </div>
-              <div className="bg-black/50 p-3 border border-[#C88A56]/10">
-                <div className="text-xs font-light text-gray-400 uppercase tracking-wider mb-1">Operating Altitude</div>
-                <div className="text-base md:text-lg font-light text-white">{aircraft.technicalSpecifications?.operatingAltitude}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Footer - Fixed */}
-      <div className="border-t border-[#C88A56]/20 p-3 md:p-4 bg-black/40 flex justify-end flex-shrink-0">
-        <button
-          onClick={() => setShowDetails(false)}
-          className="px-5 py-2 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black transition-all font-light tracking-wide uppercase text-sm shadow-lg shadow-[#C88A56]/30"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-      
-      <EnquiryForm 
+      )}
+
+      {/* ✅ EnquiryForm receives full aircraft data including maxPassengers */}
+      <EnquiryForm
         helicopter={helicopterData}
         isOpen={showEnquiryForm}
         closeForm={() => setShowEnquiryForm(false)}
@@ -315,36 +326,36 @@ const AircraftCard = ({ aircraft }) => {
   );
 };
 
-// Aircraft Filter Component - Slide from Right
+// ─── Aircraft Filter Component ────────────────────────────────────────────────
 const AircraftFilter = ({ isOpen, onClose, onFilterChange, aircraftTypes }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
-  
+
   const handleCheckboxChange = (typeId) => {
     const newSelectedTypes = selectedTypes.includes(typeId)
       ? selectedTypes.filter(id => id !== typeId)
       : [...selectedTypes, typeId];
-    
+
     setSelectedTypes(newSelectedTypes);
     onFilterChange(newSelectedTypes);
   };
-  
+
   const clearFilters = () => {
     setSelectedTypes([]);
     onFilterChange([]);
   };
-  
+
   return (
     <>
       {/* Backdrop */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300"
           onClick={onClose}
         />
       )}
-      
+
       {/* Slide Panel */}
-      <div 
+      <div
         className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-gradient-to-b from-[#141414] to-black border-l border-[#C88A56]/20 z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
@@ -353,20 +364,20 @@ const AircraftFilter = ({ isOpen, onClose, onFilterChange, aircraftTypes }) => {
           {/* Header */}
           <div className="p-6 border-b border-[#C88A56]/20 flex items-center justify-between">
             <h2 className="text-2xl text-[#C88A56] tracking-wider">FILTERS</h2>
-            <button 
+            <button
               onClick={onClose}
-              className="p-2 hover:bg-[#C88A56]/10  transition-colors"
+              className="p-2 hover:bg-[#C88A56]/10 transition-colors"
             >
               <X className="w-6 h-6 text-[#C88A56]" />
             </button>
           </div>
-          
+
           {/* Filter Content */}
           <div className="flex-1 overflow-y-auto p-6">
             <div className="mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm text-gray-300 uppercase tracking-wider font-light">Aircraft Type</h3>
-                <button 
+                <button
                   onClick={clearFilters}
                   className="text-xs text-[#C88A56] hover:text-[#d4a574] font-light underline transition-colors"
                 >
@@ -394,7 +405,7 @@ const AircraftFilter = ({ isOpen, onClose, onFilterChange, aircraftTypes }) => {
               </div>
             </div>
           </div>
-          
+
           {/* Footer */}
           <div className="p-6 border-t border-[#C88A56]/20">
             <div className="text-center text-sm text-gray-400 mb-4 font-light">
@@ -413,20 +424,21 @@ const AircraftFilter = ({ isOpen, onClose, onFilterChange, aircraftTypes }) => {
   );
 };
 
+// ─── Main Page ────────────────────────────────────────────────────────────────
 const AircraftShowcase = () => {
-  const [aircraftData, setAircraftData] = useState([]);
+  const [aircraftData, setAircraftData]       = useState([]);
   const [filteredAircraft, setFilteredAircraft] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [aircraftTypes, setAircraftTypes] = useState([]);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
+  const [loading, setLoading]                 = useState(true);
+  const [error, setError]                     = useState(null);
+  const [aircraftTypes, setAircraftTypes]     = useState([]);
+  const [isFilterOpen, setIsFilterOpen]       = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const db = getDatabase();
         const aircraftRef = ref(db, 'aircraft');
-        
+
         onValue(aircraftRef, (snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
@@ -434,26 +446,23 @@ const AircraftShowcase = () => {
               id: key,
               ...data[key]
             }));
-            
+
             setAircraftData(aircraftArray);
             setFilteredAircraft(aircraftArray);
-            
+
+            // Build aircraft type filter options
             const types = {};
             aircraftArray.forEach(aircraft => {
               if (aircraft.aircraftType) {
                 const typeId = aircraft.aircraftType.toLowerCase().replace(/\s+/g, '-');
                 if (!types[typeId]) {
-                  types[typeId] = {
-                    id: typeId,
-                    name: aircraft.aircraftType,
-                    count: 1
-                  };
+                  types[typeId] = { id: typeId, name: aircraft.aircraftType, count: 1 };
                 } else {
                   types[typeId].count++;
                 }
               }
             });
-            
+
             setAircraftTypes(Object.values(types));
             setLoading(false);
           } else {
@@ -464,16 +473,16 @@ const AircraftShowcase = () => {
           setError("Error fetching aircraft data: " + error.message);
           setLoading(false);
         });
-        
+
       } catch (err) {
         setError("Error connecting to database: " + err.message);
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);
-  
+
   const handleFilterChange = (selectedTypes) => {
     if (selectedTypes.length === 0) {
       setFilteredAircraft(aircraftData);
@@ -482,11 +491,10 @@ const AircraftShowcase = () => {
         const aircraftTypeId = aircraft.aircraftType.toLowerCase().replace(/\s+/g, '-');
         return selectedTypes.some(type => aircraftTypeId.includes(type));
       });
-      
       setFilteredAircraft(filtered);
     }
   };
-  
+
   if (loading) {
     return (
       <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] flex justify-center items-center h-screen">
@@ -494,7 +502,7 @@ const AircraftShowcase = () => {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] flex justify-center items-center h-screen">
@@ -502,10 +510,10 @@ const AircraftShowcase = () => {
       </div>
     );
   }
-  
+
   return (
     <div>
-      {/* Hero Section - Clean Design */}
+      {/* Hero Section */}
       <div className="bg-black py-16 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           {/* Breadcrumbs */}
@@ -521,11 +529,11 @@ const AircraftShowcase = () => {
 
           {/* Title */}
           <div>
-            <h1 className=" text-5xl md:text-7xl text-white mb-6 tracking-wide">
+            <h1 className="text-5xl md:text-7xl text-white mb-6 tracking-wide">
               Our Fleet of Private Jets
             </h1>
             <p className="text-gray-400 text-base md:text-lg font-light max-w-4xl leading-relaxed">
-              Explore our exclusive collection of private jets, from light jets to ultra-long-range aircraft. 
+              Explore our exclusive collection of private jets, from light jets to ultra-long-range aircraft.
               Experience unparalleled luxury and efficiency tailored to your journey.
             </p>
           </div>
@@ -535,18 +543,18 @@ const AircraftShowcase = () => {
       {/* Main Content */}
       <div className="bg-gradient-to-br from-[#141414] to-[#1a1a1a] py-12 px-4 min-h-screen">
         <div className="max-w-6xl mx-auto">
-          
+
           {/* Filter Button */}
           <div className="flex justify-end mb-6">
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="flex items-center text-white gap-2 px-6 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56]  font-light text-sm tracking-wider uppercase hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
+              className="flex items-center gap-2 px-6 py-3 bg-black/50 border border-[#C88A56]/30 text-[#C88A56] font-light text-sm tracking-wider uppercase hover:bg-[#C88A56]/10 hover:border-[#C88A56] transition-all duration-300"
             >
               <Filter size={18} />
               Filters
             </button>
           </div>
-          
+
           {/* Aircraft List */}
           <div>
             {filteredAircraft.length > 0 ? (
@@ -561,15 +569,15 @@ const AircraftShowcase = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Filter Panel */}
-      <AircraftFilter 
+      <AircraftFilter
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
-        onFilterChange={handleFilterChange} 
+        onFilterChange={handleFilterChange}
         aircraftTypes={aircraftTypes}
       />
-      
+
       <Footer />
     </div>
   );

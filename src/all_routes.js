@@ -57,6 +57,7 @@ import EventsPage from './NewPages/EventsPage'
 
 // }
 import { createHashRouter } from "react-router-dom";
+import EmptyLegsPage from './NewPages/Emptylegspage'
 
 export default function all_routes() {
   let all_allroutes = createHashRouter([
@@ -70,7 +71,8 @@ export default function all_routes() {
     { path: "Enqiry", element: <InquiryForm /> },
     { path: "contact", element: <ContactPage /> },
     {path:"dealoftheday", element:<DealoftheDay/>},
-    {path:"EventsPage",element:<EventsPage/>}
+    {path:"EventsPage",element:<EventsPage/>},
+    {path:"EmptyLeg",element:<EmptyLegsPage/>}
   ]);
 
   return all_allroutes;
