@@ -3,6 +3,7 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 import { X, Filter, PlaneTakeoff, MapPin, Users, Clock, Tag } from 'lucide-react';
 // import Footer from '../NewPages/Footer';
 import EnquiryForm from '../components/EnquiryForm';
+import Navbar from '../components/Navbar';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const fmt = (iso) => {
@@ -28,8 +29,13 @@ const FLIGHT_TYPE_LABELS = {
 };
 
 // ─── Empty Leg Card ───────────────────────────────────────────────────────────
+// ─── Empty Leg Card ───────────────────────────────────────────────────────────
 const EmptyLegCard = ({ leg }) => {
   const [showEnquiry, setShowEnquiry] = useState(false);
+
+  const maxPassengers = leg.aircraftDetails?.maxPassengers || 0;
+  const bookedSeats   = leg.seats?.booked || 0;
+  const availableSeats = maxPassengers - bookedSeats;
 
   const helicopterData = {
     title        : leg.aircraftDetails?.name,
@@ -40,6 +46,7 @@ const EmptyLegCard = ({ leg }) => {
 
   return (
     <div className="max-w-5xl mx-auto mb-6">
+      <Navbar/>
       <div className="bg-black/40 backdrop-blur-sm border border-[#C88A56]/20 shadow-xl transition-all duration-300 hover:border-[#C88A56]/50 hover:shadow-[#C88A56]/10 hover:shadow-2xl">
 
         {/* Top strip — route hero */}
@@ -100,11 +107,56 @@ const EmptyLegCard = ({ leg }) => {
                       {leg.aircraftDetails.aircraftType}
                     </span>
                   )}
-                  {leg.aircraftDetails?.maxPassengers && (
+                  {maxPassengers > 0 && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 text-gray-300 text-xs font-light rounded-full">
                       <Users className="w-3 h-3" />
-                      Max {leg.aircraftDetails.maxPassengers} pax
+                      Max {maxPassengers} pax
                     </span>
+                  )}
+                </div>
+
+                {/* ── Seat Availability Bar ── */}
+                <div className="mt-5 pt-4 border-t border-[#C88A56]/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-gray-500 uppercase tracking-wider">Seat Availability</span>
+                    <span className={`text-xs font-light ${availableSeats === 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                      {availableSeats} / {maxPassengers} available
+                    </span>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        availableSeats === 0
+                          ? 'bg-red-500'
+                          : availableSeats <= maxPassengers * 0.3
+                          ? 'bg-amber-400'
+                          : 'bg-emerald-400'
+                      }`}
+                      style={{ width: `${(availableSeats / maxPassengers) * 100}%` }}
+                    />
+                  </div>
+
+                  {/* Seat icons */}
+                  <div className="flex gap-1.5 mt-3 flex-wrap">
+                    {Array.from({ length: maxPassengers }).map((_, i) => (
+                      <div
+                        key={i}
+                        title={i < bookedSeats ? 'Booked' : 'Available'}
+                        className={`w-5 h-5 rounded-sm flex items-center justify-center transition-colors ${
+                          i < bookedSeats
+                            ? 'bg-red-500/30 border border-red-500/50'
+                            : 'bg-emerald-500/20 border border-emerald-500/40'
+                        }`}
+                      >
+                        <Users className={`w-3 h-3 ${i < bookedSeats ? 'text-red-400' : 'text-emerald-400'}`} />
+                      </div>
+                    ))}
+                  </div>
+
+                  {availableSeats === 0 && (
+                    <p className="text-xs text-red-400 mt-2 font-light tracking-wide">Fully booked</p>
                   )}
                 </div>
               </>
@@ -151,9 +203,14 @@ const EmptyLegCard = ({ leg }) => {
 
             <button
               onClick={() => setShowEnquiry(true)}
-              className="mt-6 w-full py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black font-light text-sm tracking-widest uppercase transition-all duration-300 shadow-lg shadow-[#C88A56]/30"
+              disabled={availableSeats === 0}
+              className={`mt-6 w-full py-3 font-light text-sm tracking-widest uppercase transition-all duration-300 shadow-lg ${
+                availableSeats === 0
+                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed shadow-none'
+                  : 'bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black shadow-[#C88A56]/30'
+              }`}
             >
-              Enquire Now
+              {availableSeats === 0 ? 'Fully Booked' : 'Enquire Now'}
             </button>
           </div>
         </div>
@@ -167,6 +224,10 @@ const EmptyLegCard = ({ leg }) => {
     </div>
   );
 };
+
+
+
+
 
 // ─── Filter Panel ─────────────────────────────────────────────────────────────
 const EmptyLegFilter = ({ isOpen, onClose, aircraftTypes, onFilterChange }) => {

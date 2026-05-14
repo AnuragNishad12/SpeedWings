@@ -11,8 +11,6 @@ function BookingDialog({ car, onClose }) {
   // Step 1
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
-  const [extraKm, setExtraKm] = useState('');
-  const [extraHr, setExtraHr] = useState('');
   const [step1Error, setStep1Error] = useState('');
 
   // Step 2
@@ -29,16 +27,9 @@ function BookingDialog({ car, onClose }) {
 
   // Pricing calculations
   const basePrice = Number((car.price || '0').replace(/[^0-9.]/g, '')) || 0;
-  const extraKmRate = Number(car.extraKmRate) || Math.round(basePrice * 0.01) || 310;
-  const extraHrRate = Number(car.extraHrRate) || Math.round(basePrice * 0.1) || 3100;
-  const extraKmCost = (Number(extraKm) || 0) * extraKmRate;
-  const extraHrCost = (Number(extraHr) || 0) * extraHrRate;
-  const estimatedTotal = basePrice + extraKmCost + extraHrCost;
+  const estimatedTotal = basePrice;
 
   const fmt = (v) => new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(v);
-
-  // Max 4 digit numeric input
-  const numInput = (val, setter) => setter(val.replace(/\D/g, '').slice(0, 4));
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -63,7 +54,7 @@ function BookingDialog({ car, onClose }) {
     setIsSubmitting(true);
     setSubmitError('');
     try {
-      await push(ref(database, 'bookings'), {
+      await push(ref(database, 'Carsbookings'), {
         carId: car.id,
         carTitle: car.title || '',
         carPrice: car.price || '',
@@ -71,10 +62,6 @@ function BookingDialog({ car, onClose }) {
         carCountry: car.country || '',
         date: selectedDate,
         time: selectedTime,
-        extraKm: Number(extraKm) || 0,
-        extraHr: Number(extraHr) || 0,
-        extraKmRate,
-        extraHrRate,
         estimatedTotal,
         firstName,
         lastName,
@@ -99,7 +86,7 @@ function BookingDialog({ car, onClose }) {
     <div className="fixed inset-0 z-[70] flex items-start justify-center p-4 pt-[80px] overflow-y-auto">
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
       <div
-        className="relative bg-gradient-to-b from-[#1c1c1c] to-[#111] border border-[#C88A56]/30 rounded-2xl w-full max-w-2xl shadow-2xl shadow-black/70 overflow-hidden my-4"
+        className="relative bg-gradient-to-b from-[#1c1c1c] to-[#111] border border-[#C88A56]/30  w-full max-w-2xl shadow-2xl shadow-black/70 overflow-hidden my-4"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -168,40 +155,11 @@ function BookingDialog({ car, onClose }) {
               </div>
             </div>
 
-            {/* Extra KM & HR */}
-            <div className="grid grid-cols-2 gap-5 mb-7">
-              {[
-                { label: 'Extra KMs', badge: `+ ₹${fmt(extraKmRate)} / KM`, val: extraKm, set: setExtraKm },
-                { label: 'Extra HRS', badge: `+ ₹${fmt(extraHrRate)} / HR`, val: extraHr, set: setExtraHr },
-              ].map(({ label, badge, val, set }) => (
-                <div key={label}>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="text-xs text-gray-400 tracking-[0.15em] uppercase font-light">{label}</label>
-                    <span className="text-xs text-gray-500 bg-white/5 border border-[#C88A56]/15 rounded-full px-2.5 py-0.5 font-light">{badge}</span>
-                  </div>
-                  <input
-                    type="text" inputMode="numeric" value={val} maxLength={4}
-                    onChange={e => numInput(e.target.value, set)}
-                    placeholder="0"
-                    className="w-full px-4 py-3 bg-black/50 border border-[#C88A56]/25 rounded-lg text-white text-sm font-light placeholder-gray-600 focus:outline-none focus:border-[#C88A56] transition-colors"
-                  />
-                  <div className="mt-1 h-0.5 bg-gradient-to-r from-[#C88A56]/30 to-transparent rounded" />
-                </div>
-              ))}
-            </div>
-
             {/* Estimated Total */}
             <div className="bg-black/40 border border-[#C88A56]/20 rounded-xl px-5 py-4 mb-6">
               <p className="text-xs text-gray-500 tracking-[0.15em] uppercase font-light mb-1">Estimated Total</p>
               <div className="flex items-end gap-3">
-                <p className="text-4xl text-white font-light tracking-wide">₹ {fmt(estimatedTotal)}</p>
-                {(extraKmCost > 0 || extraHrCost > 0) && (
-                  <div className="pb-1 text-xs font-light space-x-1">
-                    {extraKmCost > 0 && <span className="text-emerald-400/70">+₹{fmt(extraKmCost)} km</span>}
-                    {extraKmCost > 0 && extraHrCost > 0 && <span className="text-gray-600">·</span>}
-                    {extraHrCost > 0 && <span className="text-emerald-400/70">+₹{fmt(extraHrCost)} hr</span>}
-                  </div>
-                )}
+                <p className="text-4xl text-white font-light tracking-wide"> {fmt(estimatedTotal)}</p>
               </div>
             </div>
 
@@ -290,11 +248,6 @@ function BookingDialog({ car, onClose }) {
             <div className="bg-[#C88A56]/8 border border-[#C88A56]/20 rounded-xl px-4 py-3 mb-6 flex items-center justify-between">
               <div className="text-xs text-gray-400 font-light space-y-0.5">
                 <p>{selectedDate} · {selectedTime}</p>
-                {(extraKm || extraHr) && (
-                  <p className="text-gray-500">
-                    {extraKm ? `+${extraKm} km` : ''}{extraKm && extraHr ? ' · ' : ''}{extraHr ? `+${extraHr} hr` : ''}
-                  </p>
-                )}
               </div>
               <div className="text-right">
                 <p className="text-xs text-gray-500 font-light">Total</p>

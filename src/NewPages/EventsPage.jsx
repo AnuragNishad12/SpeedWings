@@ -32,75 +32,138 @@ function formatDateTime(iso) {
 
 
 const BookingDialog = ({ event, onClose }) => {
-  const [step, setStep]         = useState('form'); // 'form' | 'success'
-  const [saving, setSaving]     = useState(false);
-  const [error, setError]       = useState('');
-  const [seats, setSeats]       = useState(1);
-  const [form, setForm]         = useState({ name: '', email: '', phone: '' });
-  const [touched, setTouched]   = useState({});
-
+  const [step, setStep]               = useState('form'); // 'form' | 'success'
+  const [saving, setSaving]           = useState(false);
+  const [error, setError]             = useState('');
+  const [seats, setSeats]             = useState(1);
+  const [form, setForm]               = useState({ name: '', email: '', phone: '' });
+  const [touched, setTouched]         = useState({});
+  // Array of attendee names — index 0 is always the primary booker's name (synced with form.name)
+  const [attendeeNames, setAttendeeNames] = useState(['']);
+  const [attendeeTouched, setAttendeeTouched] = useState([false]);
+ 
   if (!event) return null;
-
+ 
   const maxSeats   = event.availableSeats ?? 0;
   const soldOut    = maxSeats === 0;
   const lowStock   = maxSeats > 0 && maxSeats <= 10;
   const totalPrice = (Number(event.pricePerSeat) * seats).toFixed(2);
-
+ 
   const fillPercent = event.totalSeats
     ? Math.round(((event.totalSeats - maxSeats) / event.totalSeats) * 100)
     : 0;
-
-  // ── field change ──
+ 
+  // ── seat count change — grow/shrink attendee name list ──
+  const changeSeats = (delta) => {
+    setSeats((prev) => {
+      const next = Math.min(maxSeats, Math.max(1, prev + delta));
+      setAttendeeNames((names) => {
+        if (next > names.length) {
+          return [...names, ...Array(next - names.length).fill('')];
+        }
+        return names.slice(0, next);
+      });
+      setAttendeeTouched((t) => {
+        if (next > t.length) {
+          return [...t, ...Array(next - t.length).fill(false)];
+        }
+        return t.slice(0, next);
+      });
+      return next;
+    });
+  };
+ 
+  // ── primary form fields ──
   const handleChange = (field) => (e) => {
-    setForm((f) => ({ ...f, [field]: e.target.value }));
+    const val = e.target.value;
+    setForm((f) => ({ ...f, [field]: val }));
+    // Keep attendee[0] in sync with the primary name field
+    if (field === 'name') {
+      setAttendeeNames((names) => {
+        const updated = [...names];
+        updated[0] = val;
+        return updated;
+      });
+    }
     setError('');
   };
-
+ 
   const handleBlur = (field) => () => setTouched((t) => ({ ...t, [field]: true }));
-
-  // ── simple validation ──
+ 
+  // ── attendee name fields (index 1+) ──
+  const handleAttendeeName = (idx) => (e) => {
+    const val = e.target.value;
+    setAttendeeNames((names) => {
+      const updated = [...names];
+      updated[idx] = val;
+      return updated;
+    });
+    setError('');
+  };
+ 
+  const handleAttendeeBlur = (idx) => () => {
+    setAttendeeTouched((t) => {
+      const updated = [...t];
+      updated[idx] = true;
+      return updated;
+    });
+  };
+ 
+  // ── validation ──
   const validate = () => {
-    if (!form.name.trim())                     return 'Full name is required.';
-    if (!form.email.trim())                    return 'Email address is required.';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return 'Enter a valid email address.';
-    if (!form.phone.trim())                    return 'Phone number is required.';
-    if (seats < 1 || seats > maxSeats)         return `Seats must be between 1 and ${maxSeats}.`;
+    if (!form.name.trim())                                           return 'Full name is required.';
+    if (!form.email.trim())                                          return 'Email address is required.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))             return 'Enter a valid email address.';
+    if (!form.phone.trim())                                          return 'Phone number is required.';
+    if (seats < 1 || seats > maxSeats)                               return `Seats must be between 1 and ${maxSeats}.`;
+    for (let i = 1; i < attendeeNames.length; i++) {
+      if (!attendeeNames[i].trim()) return `Name for Attendee ${i + 1} is required.`;
+    }
     return null;
   };
-
+ 
   // ── submit ──
   const handleSubmit = async () => {
+    // Touch all attendee fields so errors show
+    setAttendeeTouched(Array(seats).fill(true));
     const err = validate();
-    if (err) { setError(err); setTouched({ name: true, email: true, phone: true }); return; }
-
+    if (err) {
+      setError(err);
+      setTouched({ name: true, email: true, phone: true });
+      return;
+    }
+ 
     setSaving(true);
     setError('');
-
+ 
     try {
       const bookingPayload = {
-        // ── User Info ──
-        userName:     form.name.trim(),
-        userEmail:    form.email.trim(),
-        userPhone:    form.phone.trim(),
-        seatsBooked:  seats,
-
+        // ── Primary Contact ──
+        userName:      form.name.trim(),
+        userEmail:     form.email.trim(),
+        userPhone:     form.phone.trim(),
+        seatsBooked:   seats,
+ 
+        // ── All Attendees (array of names, index 0 = primary booker) ──
+        attendeeNames: attendeeNames.map((n) => n.trim()),
+ 
         // ── Event Info ──
-        eventId:      event.id,
-        eventTitle:   event.eventTitle,
-        dateTime:     event.dateTime ?? null,
-        location:     event.location ?? null,
-        organisedBy:  event.organisedBy ?? null,
-        pricePerSeat: Number(event.pricePerSeat),
-        totalAmount:  Number(event.pricePerSeat) * seats,
-
+        eventId:       event.id,
+        eventTitle:    event.eventTitle,
+        dateTime:      event.dateTime   ?? null,
+        location:      event.location   ?? null,
+        organisedBy:   event.organisedBy ?? null,
+        pricePerSeat:  Number(event.pricePerSeat),
+        totalAmount:   Number(event.pricePerSeat) * seats,
+ 
         // ── Meta ──
-        bookedAt:     serverTimestamp(),
-        status:       'pending',
+        bookedAt:      serverTimestamp(),
+        status:        'pending',
       };
-
+ 
       const bookingsRef = dbRef(database, BOOKINGS_DB_PATH);
       await push(bookingsRef, bookingPayload);
-
+ 
       setStep('success');
     } catch (e) {
       console.error(e);
@@ -109,7 +172,7 @@ const BookingDialog = ({ event, onClose }) => {
       setSaving(false);
     }
   };
-
+ 
   return (
     <div
       className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center px-4 pt-24 pb-6"
@@ -119,7 +182,7 @@ const BookingDialog = ({ event, onClose }) => {
         className="bg-gradient-to-b from-[#141414] to-[#0d0d0d] w-full max-w-lg border border-[#C88A56]/30 rounded-xl overflow-hidden shadow-2xl shadow-black/80 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
-
+ 
         {/* ── Success State ── */}
         {step === 'success' ? (
           <div className="flex flex-col items-center justify-center p-10 text-center gap-4">
@@ -131,13 +194,30 @@ const BookingDialog = ({ event, onClose }) => {
               Your booking for <span className="text-[#C88A56]">{event.eventTitle}</span> has been received.
               We'll reach out to <span className="text-white">{form.email}</span> with confirmation details.
             </p>
-
+ 
             {/* Summary pill */}
             <div className="mt-2 w-full bg-black/50 border border-[#C88A56]/20 rounded-lg p-4 text-left space-y-2">
               <SummaryRow label="Seats Booked" value={seats} />
               <SummaryRow label="Total Amount" value={`€${totalPrice}`} accent />
+              {/* Attendee list */}
+              {attendeeNames.length > 0 && (
+                <div className="pt-2 border-t border-[#C88A56]/10 space-y-1">
+                  <p className="text-xs text-gray-500 font-light uppercase tracking-wider mb-2">Attendees</p>
+                  {attendeeNames.map((name, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-[#C88A56]/10 border border-[#C88A56]/30 flex items-center justify-center text-[10px] text-[#C88A56] font-light flex-shrink-0">
+                        {i + 1}
+                      </span>
+                      <span className="text-xs text-white font-light">{name}</span>
+                      {i === 0 && (
+                        <span className="text-[10px] text-[#C88A56]/60 font-light ml-auto">Primary</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-
+ 
             <button
               onClick={onClose}
               className="mt-4 w-full py-3 bg-gradient-to-r from-[#C88A56] to-[#d4a574] hover:from-[#d4a574] hover:to-[#C88A56] text-black font-light text-xs tracking-widest uppercase rounded transition-all shadow-lg shadow-[#C88A56]/20"
@@ -146,7 +226,7 @@ const BookingDialog = ({ event, onClose }) => {
             </button>
           </div>
         ) : (
-
+ 
           <>
             {/* ── Header ── */}
             <div className="relative flex-shrink-0 border-b border-[#C88A56]/20">
@@ -156,14 +236,14 @@ const BookingDialog = ({ event, onClose }) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/50 to-transparent" />
                 </div>
               )}
-
+ 
               <div className={`${event.imageUrl ? 'absolute bottom-0 left-0 right-0' : ''} px-6 pt-5 pb-4`}>
                 <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light mb-1">Reserve Your Seat</p>
                 <h2 className="text-xl text-white font-light tracking-wide leading-tight line-clamp-2">
                   {event.eventTitle}
                 </h2>
               </div>
-
+ 
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 p-1.5 bg-black/60 hover:bg-[#C88A56]/20 border border-[#C88A56]/30 rounded transition-colors"
@@ -171,16 +251,16 @@ const BookingDialog = ({ event, onClose }) => {
                 <X className="w-4 h-4 text-[#C88A56]" />
               </button>
             </div>
-
+ 
             {/* ── Body (scrollable) ── */}
             <div className="overflow-y-auto flex-1 p-6 space-y-6">
-
+ 
               {/* Event Quick-Info */}
               <div className="grid grid-cols-2 gap-2">
                 <MiniInfoTile icon={<Calendar className="w-3.5 h-3.5" />} label="Date & Time" value={formatDateTime(event.dateTime)} />
                 <MiniInfoTile icon={<MapPin className="w-3.5 h-3.5" />}   label="Location"   value={event.location} />
               </div>
-
+ 
               {/* Seat Availability */}
               <div className="bg-black/40 border border-[#C88A56]/20 rounded-lg p-4 space-y-3">
                 <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light">Seat Availability</p>
@@ -200,7 +280,7 @@ const BookingDialog = ({ event, onClose }) => {
                     <p className="text-lg text-[#C88A56] font-light">€{Number(event.pricePerSeat).toFixed(2)}</p>
                   </div>
                 </div>
-
+ 
                 {/* Fill bar */}
                 <div>
                   <div className="flex justify-between text-xs text-gray-500 mb-1 font-light">
@@ -222,28 +302,28 @@ const BookingDialog = ({ event, onClose }) => {
                   </div>
                 </div>
               </div>
-
+ 
               {/* Seat Picker */}
               <div>
                 <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light mb-3">Number of Seats</p>
                 <div className="flex items-center gap-4">
                   <button
-                    onClick={() => setSeats((s) => Math.max(1, s - 1))}
+                    onClick={() => changeSeats(-1)}
                     disabled={seats <= 1}
                     className="w-9 h-9 flex items-center justify-center border border-[#C88A56]/30 text-[#C88A56] hover:bg-[#C88A56]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-
+ 
                   <div className="flex-1 text-center">
                     <span className="text-3xl text-white font-light tabular-nums">{seats}</span>
                     <p className="text-xs text-gray-500 font-light mt-0.5">
                       {seats === 1 ? 'seat' : 'seats'} · €{totalPrice} total
                     </p>
                   </div>
-
+ 
                   <button
-                    onClick={() => setSeats((s) => Math.min(maxSeats, s + 1))}
+                    onClick={() => changeSeats(+1)}
                     disabled={seats >= maxSeats}
                     className="w-9 h-9 flex items-center justify-center border border-[#C88A56]/30 text-[#C88A56] hover:bg-[#C88A56]/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all rounded"
                   >
@@ -251,14 +331,14 @@ const BookingDialog = ({ event, onClose }) => {
                   </button>
                 </div>
               </div>
-
+ 
               {/* Divider */}
               <div className="h-px bg-gradient-to-r from-[#C88A56]/20 to-transparent" />
-
-              {/* User Form */}
+ 
+              {/* Primary Contact Details */}
               <div className="space-y-4">
-                <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light">Your Details</p>
-
+                <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light">Primary Contact</p>
+ 
                 <BookingField
                   icon={<User className="w-4 h-4" />}
                   label="Full Name"
@@ -269,7 +349,7 @@ const BookingDialog = ({ event, onClose }) => {
                   onBlur={handleBlur('name')}
                   error={touched.name && !form.name.trim() ? 'Name is required' : ''}
                 />
-
+ 
                 <BookingField
                   icon={<Mail className="w-4 h-4" />}
                   label="Email Address"
@@ -286,7 +366,7 @@ const BookingDialog = ({ event, onClose }) => {
                       : ''
                   }
                 />
-
+ 
                 <BookingField
                   icon={<Phone className="w-4 h-4" />}
                   label="Phone Number"
@@ -298,7 +378,63 @@ const BookingDialog = ({ event, onClose }) => {
                   error={touched.phone && !form.phone.trim() ? 'Phone is required' : ''}
                 />
               </div>
-
+ 
+              {/* ── Additional Attendees (shown only when seats > 1) ── */}
+              {seats > 1 && (
+                <>
+                  <div className="h-px bg-gradient-to-r from-[#C88A56]/20 to-transparent" />
+ 
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs text-[#C88A56] uppercase tracking-widest font-light">
+                        Additional Attendees
+                      </p>
+                      <p className="text-xs text-gray-500 font-light mt-1">
+                        Please provide the full name for each seat holder.
+                      </p>
+                    </div>
+ 
+                    {/* Seats 2..N — index 1+ in attendeeNames */}
+                    {Array.from({ length: seats - 1 }, (_, i) => i + 1).map((idx) => (
+                      <div key={idx}>
+                        <label className="text-xs text-gray-400 font-light uppercase tracking-wider mb-1.5 flex items-center gap-2">
+                          <span
+                            className="w-5 h-5 rounded-full bg-[#C88A56]/10 border border-[#C88A56]/30 flex items-center justify-center text-[10px] text-[#C88A56] font-light flex-shrink-0"
+                          >
+                            {idx + 1}
+                          </span>
+                          Attendee {idx + 1} Name
+                        </label>
+                        <div
+                          className={`flex items-center gap-3 bg-black/50 border ${
+                            attendeeTouched[idx] && !attendeeNames[idx]?.trim()
+                              ? 'border-red-500/50'
+                              : 'border-[#C88A56]/20'
+                          } focus-within:border-[#C88A56]/60 rounded px-3 py-2.5 transition-colors`}
+                        >
+                          <span className="text-[#C88A56] flex-shrink-0">
+                            <User className="w-4 h-4" />
+                          </span>
+                          <input
+                            type="text"
+                            placeholder={`e.g. Attendee ${idx + 1} full name`}
+                            value={attendeeNames[idx] ?? ''}
+                            onChange={handleAttendeeName(idx)}
+                            onBlur={handleAttendeeBlur(idx)}
+                            className="flex-1 bg-transparent text-white text-sm font-light placeholder-gray-600 outline-none"
+                          />
+                        </div>
+                        {attendeeTouched[idx] && !attendeeNames[idx]?.trim() && (
+                          <p className="text-xs text-red-400 font-light mt-1">
+                            Name for Attendee {idx + 1} is required
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+ 
               {/* Global error */}
               {error && (
                 <p className="text-xs text-red-400 font-light bg-red-500/10 border border-red-500/20 px-3 py-2 rounded">
@@ -306,7 +442,7 @@ const BookingDialog = ({ event, onClose }) => {
                 </p>
               )}
             </div>
-
+ 
             {/* ── Footer ── */}
             <div className="border-t border-[#C88A56]/20 p-4 bg-black/40 flex-shrink-0 flex items-center gap-3">
               <div className="flex flex-col">
@@ -315,7 +451,7 @@ const BookingDialog = ({ event, onClose }) => {
                   {seats} {seats === 1 ? 'seat' : 'seats'} total
                 </span>
               </div>
-
+ 
               <button
                 onClick={handleSubmit}
                 disabled={saving || soldOut}
