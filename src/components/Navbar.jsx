@@ -95,7 +95,7 @@ const Navbar = () => {
               <ul className={`emmanuelle-submenu ${dealsOpen ? "show" : ""}`}>
                 <li><a href="/#/p">Jets</a></li>
                 <li><a href="/#/EmptyLeg">Jets by Seats</a></li>
-                <li><a href="/#">Choppers</a></li>
+                <li><a href="/#/helicopter">Choppers</a></li>
                 <li><a href="/#">Choppers by Seats</a></li>
               </ul>
             </li>

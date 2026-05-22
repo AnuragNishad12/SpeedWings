@@ -8,7 +8,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { X, Filter } from 'lucide-react';
 
-import EnquiryForm from '../components/EnquiryForm';
+import EnquiryForm from '../Helicopter/EnquiryformHeli';
 import Navbar from '../components/Navbar';
 import Footer from '../NewPages/Footer';
 
